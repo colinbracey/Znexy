@@ -50,7 +50,7 @@ class _GMapState extends State<GMap> {
         onTapInfoWindow: (_) {
           print("Tapped on source info window");
         },
-        //assetPath: "assets/images/restaurant-marker-icon.png",
+        assetPath: "assets/images/restaurant-marker-icon.png",
       ),
     );
   }

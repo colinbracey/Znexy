@@ -360,12 +360,15 @@ class _AcceptedOfferRequesterWidgetState
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
                                 ),
-                                child: const SizedBox(
+                                child: SizedBox(
                                   width: double.infinity,
                                   height: double.infinity,
-                                  child: custom_widgets.GMap(
+                                  child: custom_widgets.GMapWidget2(
                                     width: double.infinity,
                                     height: double.infinity,
+                                    trackOrderRef:
+                                        columnTrackOrderRecord!.reference,
+                                    trackOrderDoc: columnTrackOrderRecord,
                                   ),
                                 ),
                               ),
@@ -452,73 +455,82 @@ class _AcceptedOfferRequesterWidgetState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: 12.0,
-                                                  height: 12.0,
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 5.0, 0.0, 0.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF585858),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .accepted ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0xFF00AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation1']!),
+                                                  if (columnTrackOrderRecord
+                                                          .accepted ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0x3200AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation2']!),
+                                                ],
+                                              ),
+                                              ClipRRect(
+                                                child: Container(
+                                                  width: 2.0,
+                                                  height: 30.0,
                                                   decoration: const BoxDecoration(
-                                                    color: Color(0xFF585858),
-                                                    shape: BoxShape.circle,
+                                                    color: Color(0xFFBDBDBD),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      if (columnTrackOrderRecord
+                                                              .accepted ??
+                                                          true)
+                                                        Container(
+                                                          width: 2.0,
+                                                          height: 30.0,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color: Color(
+                                                                0xFF00AA07),
+                                                          ),
+                                                        ).animateOnPageLoad(
+                                                            animationsMap[
+                                                                'containerOnPageLoadAnimation3']!),
+                                                    ],
                                                   ),
                                                 ),
-                                                if (columnTrackOrderRecord
-                                                        ?.accepted ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation1']!),
-                                                if (columnTrackOrderRecord
-                                                        ?.accepted ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0x3200AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation2']!),
-                                              ],
-                                            ),
-                                            ClipRRect(
-                                              child: Container(
-                                                width: 2.0,
-                                                height: 30.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFFBDBDBD),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    if (columnTrackOrderRecord
-                                                            ?.accepted ??
-                                                        true)
-                                                      Container(
-                                                        width: 2.0,
-                                                        height: 30.0,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              Color(0xFF00AA07),
-                                                        ),
-                                                      ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation3']!),
-                                                  ],
-                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                         Expanded(
                                           child: Padding(
@@ -536,14 +548,15 @@ class _AcceptedOfferRequesterWidgetState
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
                                                               0.0, -1.0),
-                                                      child: Icon(
-                                                        Icons.check_circle,
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkCircle,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -576,42 +589,33 @@ class _AcceptedOfferRequesterWidgetState
                                                       ),
                                                     ),
                                                     if (columnTrackOrderRecord
-                                                            ?.acceptedDate !=
+                                                            .acceptedDate !=
                                                         null)
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
                                                               const AlignmentDirectional(
                                                                   1.0, 0.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                dateTimeFormat(
-                                                                    'relative',
-                                                                    columnTrackOrderRecord
-                                                                        ?.acceptedDate),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Urbanist',
-                                                                    color: const Color(
-                                                                        0xFF585858),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                  ),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  columnTrackOrderRecord
+                                                                      .acceptedDate),
+                                                              '0',
                                                             ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: const Color(
+                                                                      0xFF585858),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -642,7 +646,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ),
                                                 ),
                                                 if (columnTrackOrderRecord
-                                                        ?.headingYourWay ??
+                                                        .headingYourWay ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -654,7 +658,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ).animateOnPageLoad(animationsMap[
                                                       'containerOnPageLoadAnimation4']!),
                                                 if (columnTrackOrderRecord
-                                                        ?.headingYourWay ??
+                                                        .headingYourWay ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -677,7 +681,7 @@ class _AcceptedOfferRequesterWidgetState
                                                 child: Stack(
                                                   children: [
                                                     if (columnTrackOrderRecord
-                                                            ?.headingYourWay ??
+                                                            .headingYourWay ??
                                                         true)
                                                       Container(
                                                         width: 2.0,
@@ -712,15 +716,20 @@ class _AcceptedOfferRequesterWidgetState
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Icon(
-                                                      Icons.directions_car,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              0.0, -1.0),
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons.car,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 24.0,
+                                                      ),
                                                     ),
                                                     Align(
                                                       alignment:
@@ -747,42 +756,33 @@ class _AcceptedOfferRequesterWidgetState
                                                       ),
                                                     ),
                                                     if (columnTrackOrderRecord
-                                                            ?.headingYourWayDate !=
+                                                            .headingYourWayDate !=
                                                         null)
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
                                                               const AlignmentDirectional(
                                                                   1.0, 0.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                dateTimeFormat(
-                                                                    'relative',
-                                                                    columnTrackOrderRecord
-                                                                        ?.headingYourWayDate),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Urbanist',
-                                                                    color: const Color(
-                                                                        0xFF585858),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                  ),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  columnTrackOrderRecord
+                                                                      .headingYourWayDate),
+                                                              '0',
                                                             ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: const Color(
+                                                                      0xFF585858),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -813,7 +813,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ),
                                                 ),
                                                 if (columnTrackOrderRecord
-                                                        ?.arrived ??
+                                                        .arrived ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -825,7 +825,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ).animateOnPageLoad(animationsMap[
                                                       'containerOnPageLoadAnimation7']!),
                                                 if (columnTrackOrderRecord
-                                                        ?.arrived ??
+                                                        .arrived ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -848,7 +848,7 @@ class _AcceptedOfferRequesterWidgetState
                                                 child: Stack(
                                                   children: [
                                                     if (columnTrackOrderRecord
-                                                            ?.arrived ??
+                                                            .arrived ??
                                                         true)
                                                       Container(
                                                         width: 2.0,
@@ -883,7 +883,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     FaIcon(
                                                       FontAwesomeIcons
@@ -919,42 +919,33 @@ class _AcceptedOfferRequesterWidgetState
                                                       ),
                                                     ),
                                                     if (columnTrackOrderRecord
-                                                            ?.arrivedDate !=
+                                                            .arrivedDate !=
                                                         null)
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
                                                               const AlignmentDirectional(
                                                                   1.0, 0.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                dateTimeFormat(
-                                                                    'relative',
-                                                                    columnTrackOrderRecord
-                                                                        ?.arrivedDate),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Urbanist',
-                                                                    color: const Color(
-                                                                        0xFF585858),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                  ),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  columnTrackOrderRecord
+                                                                      .arrivedDate),
+                                                              '0',
                                                             ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: const Color(
+                                                                      0xFF585858),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -985,7 +976,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ),
                                                 ),
                                                 if (columnTrackOrderRecord
-                                                        ?.workUnderWay ??
+                                                        .workUnderWay ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -997,7 +988,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ).animateOnPageLoad(animationsMap[
                                                       'containerOnPageLoadAnimation10']!),
                                                 if (columnTrackOrderRecord
-                                                        ?.workUnderWay ??
+                                                        .workUnderWay ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -1020,7 +1011,7 @@ class _AcceptedOfferRequesterWidgetState
                                                 child: Stack(
                                                   children: [
                                                     if (columnTrackOrderRecord
-                                                            ?.workUnderWay ??
+                                                            .workUnderWay ??
                                                         true)
                                                       Container(
                                                         width: 2.0,
@@ -1055,10 +1046,11 @@ class _AcceptedOfferRequesterWidgetState
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     FaIcon(
-                                                      FontAwesomeIcons.play,
+                                                      FontAwesomeIcons
+                                                          .playCircle,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1090,42 +1082,33 @@ class _AcceptedOfferRequesterWidgetState
                                                       ),
                                                     ),
                                                     if (columnTrackOrderRecord
-                                                            ?.workUnderWayDate !=
+                                                            .workUnderWayDate !=
                                                         null)
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
                                                               const AlignmentDirectional(
                                                                   1.0, 0.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                dateTimeFormat(
-                                                                    'relative',
-                                                                    columnTrackOrderRecord
-                                                                        ?.workUnderWayDate),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Urbanist',
-                                                                    color: const Color(
-                                                                        0xFF585858),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                  ),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  columnTrackOrderRecord
+                                                                      .workUnderWayDate),
+                                                              '0',
                                                             ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: const Color(
+                                                                      0xFF585858),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -1156,7 +1139,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ),
                                                 ),
                                                 if (columnTrackOrderRecord
-                                                        ?.workCompleted ??
+                                                        .workCompleted ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -1168,7 +1151,7 @@ class _AcceptedOfferRequesterWidgetState
                                                   ).animateOnPageLoad(animationsMap[
                                                       'containerOnPageLoadAnimation13']!),
                                                 if (columnTrackOrderRecord
-                                                        ?.workCompleted ??
+                                                        .workCompleted ??
                                                     true)
                                                   Container(
                                                     width: 12.0,
@@ -1199,11 +1182,10 @@ class _AcceptedOfferRequesterWidgetState
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     FaIcon(
-                                                      FontAwesomeIcons
-                                                          .solidGrinStars,
+                                                      FontAwesomeIcons.grin,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1235,42 +1217,33 @@ class _AcceptedOfferRequesterWidgetState
                                                       ),
                                                     ),
                                                     if (columnTrackOrderRecord
-                                                            ?.workCompletedDate !=
+                                                            .workCompletedDate !=
                                                         null)
                                                       Flexible(
                                                         child: Align(
                                                           alignment:
                                                               const AlignmentDirectional(
                                                                   1.0, 0.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                dateTimeFormat(
-                                                                    'relative',
-                                                                    columnTrackOrderRecord
-                                                                        ?.workCompletedDate),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Urbanist',
-                                                                    color: const Color(
-                                                                        0xFF585858),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                  ),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  columnTrackOrderRecord
+                                                                      .workCompletedDate),
+                                                              '0',
                                                             ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: const Color(
+                                                                      0xFF585858),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -1337,7 +1310,7 @@ class _AcceptedOfferRequesterWidgetState
                                             await actions.updateTrackingStatus(
                                           valueOrDefault<String>(
                                             columnTrackOrderRecord
-                                                ?.reference.id,
+                                                .reference.id,
                                             '0',
                                           ),
                                           _model.dropDownValue!,
