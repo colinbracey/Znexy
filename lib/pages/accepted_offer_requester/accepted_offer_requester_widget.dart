@@ -49,6 +49,18 @@ class _AcceptedOfferRequesterWidgetState
       ],
     ),
     'containerOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 1000.ms,
+          begin: const Offset(0.0, -100.0),
+          end: const Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation3': AnimationInfo(
       loop: true,
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -58,18 +70,6 @@ class _AcceptedOfferRequesterWidgetState
           duration: 900.ms,
           begin: const Offset(1.0, 1.0),
           end: const Offset(1.5, 1.5),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        MoveEffect(
-          curve: Curves.easeIn,
-          delay: 0.ms,
-          duration: 1000.ms,
-          begin: const Offset(0.0, -100.0),
-          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -355,7 +355,7 @@ class _AcceptedOfferRequesterWidgetState
                             children: [
                               Container(
                                 width: double.infinity,
-                                height: 250.0,
+                                height: 390.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -446,20 +446,19 @@ class _AcceptedOfferRequesterWidgetState
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 24.0, 20.0, 0.0),
-                                child: Column(
+                                    20.0, 20.0, 10.0, 0.0),
+                                child: Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 5.0, 0.0, 0.0),
-                                          child: Column(
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 5.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Column(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Stack(
@@ -471,6 +470,9 @@ class _AcceptedOfferRequesterWidgetState
                                                       color: Color(0xFF585858),
                                                       shape: BoxShape.circle,
                                                     ),
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0.0, -1.0),
                                                   ),
                                                   if (columnTrackOrderRecord
                                                           .accepted ??
@@ -486,20 +488,6 @@ class _AcceptedOfferRequesterWidgetState
                                                     ).animateOnPageLoad(
                                                         animationsMap[
                                                             'containerOnPageLoadAnimation1']!),
-                                                  if (columnTrackOrderRecord
-                                                          .accepted ??
-                                                      true)
-                                                    Container(
-                                                      width: 12.0,
-                                                      height: 12.0,
-                                                      decoration: const BoxDecoration(
-                                                        color:
-                                                            Color(0x3200AA07),
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                    ).animateOnPageLoad(
-                                                        animationsMap[
-                                                            'containerOnPageLoadAnimation2']!),
                                                 ],
                                               ),
                                               ClipRRect(
@@ -522,738 +510,753 @@ class _AcceptedOfferRequesterWidgetState
                                                             color: Color(
                                                                 0xFF00AA07),
                                                           ),
+                                                          child: Visibility(
+                                                            visible:
+                                                                columnTrackOrderRecord
+                                                                        .accepted ??
+                                                                    true,
+                                                            child: Container(
+                                                              width: 12.0,
+                                                              height: 12.0,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Color(
+                                                                    0x3200AA07),
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                              ),
+                                                            ).animateOnPageLoad(
+                                                                animationsMap[
+                                                                    'containerOnPageLoadAnimation3']!),
+                                                          ),
                                                         ).animateOnPageLoad(
                                                             animationsMap[
-                                                                'containerOnPageLoadAnimation3']!),
+                                                                'containerOnPageLoadAnimation2']!),
                                                     ],
                                                   ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Column(
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF585858),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .headingYourWay ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0xFF00AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation4']!),
+                                                  if (columnTrackOrderRecord
+                                                          .headingYourWay ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0x3200AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation5']!),
+                                                ],
+                                              ),
+                                              ClipRRect(
+                                                child: Container(
+                                                  width: 2.0,
+                                                  height: 30.0,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0xFFBDBDBD),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      if (columnTrackOrderRecord
+                                                              .headingYourWay ??
+                                                          true)
+                                                        Container(
+                                                          width: 2.0,
+                                                          height: 30.0,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color: Color(
+                                                                0xFF00AA07),
+                                                          ),
+                                                        ).animateOnPageLoad(
+                                                            animationsMap[
+                                                                'containerOnPageLoadAnimation6']!),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF585858),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .arrived ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0xFF00AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation7']!),
+                                                  if (columnTrackOrderRecord
+                                                          .arrived ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0x3200AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation8']!),
+                                                ],
+                                              ),
+                                              ClipRRect(
+                                                child: Container(
+                                                  width: 2.0,
+                                                  height: 30.0,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0xFFBDBDBD),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      if (columnTrackOrderRecord
+                                                              .arrived ??
+                                                          true)
+                                                        Container(
+                                                          width: 2.0,
+                                                          height: 30.0,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color: Color(
+                                                                0xFF00AA07),
+                                                          ),
+                                                        ).animateOnPageLoad(
+                                                            animationsMap[
+                                                                'containerOnPageLoadAnimation9']!),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF585858),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .workUnderWay ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0xFF00AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation10']!),
+                                                  if (columnTrackOrderRecord
+                                                          .workUnderWay ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0x3200AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation11']!),
+                                                ],
+                                              ),
+                                              ClipRRect(
+                                                child: Container(
+                                                  width: 2.0,
+                                                  height: 30.0,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0xFFBDBDBD),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      if (columnTrackOrderRecord
+                                                              .workUnderWay ??
+                                                          true)
+                                                        Container(
+                                                          width: 2.0,
+                                                          height: 30.0,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color: Color(
+                                                                0xFF00AA07),
+                                                          ),
+                                                        ).animateOnPageLoad(
+                                                            animationsMap[
+                                                                'containerOnPageLoadAnimation12']!),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF585858),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .workCompleted ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0xFF00AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation13']!),
+                                                  if (columnTrackOrderRecord
+                                                          .workCompleted ??
+                                                      true)
+                                                    Container(
+                                                      width: 12.0,
+                                                      height: 12.0,
+                                                      decoration: const BoxDecoration(
+                                                        color:
+                                                            Color(0x3200AA07),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'containerOnPageLoadAnimation14']!),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            20.0, 0.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
                                               mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Align(
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.0, -1.0),
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons
+                                                        .checkCircle,
+                                                    color: columnTrackOrderRecord.accepted
+                                                        ? FlutterFlowTheme.of(
+                                                                context)
+                                                            .success
+                                                        : FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          -1.0, 0.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      'Request Accepted',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                color: columnTrackOrderRecord.accepted
+                                                                    ? FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .success
+                                                                    : FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                if (columnTrackOrderRecord
+                                                        .acceptedDate !=
+                                                    null)
+                                                  Flexible(
+                                                    child: Align(
                                                       alignment:
                                                           const AlignmentDirectional(
-                                                              0.0, -1.0),
-                                                      child: FaIcon(
-                                                        FontAwesomeIcons
-                                                            .checkCircle,
-                                                        color:
+                                                              1.0, 0.0),
+                                                      child: Text(
+                                                        valueOrDefault<String>(
+                                                          dateTimeFormat(
+                                                              'relative',
+                                                              columnTrackOrderRecord
+                                                                  .acceptedDate),
+                                                          '0',
+                                                        ),
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Urbanist',
+                                                              color: const Color(
+                                                                  0xFF585858),
+                                                              fontSize: 12.0,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 13.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0.0, -1.0),
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.car,
+                                                      color: columnTrackOrderRecord.headingYourWay
+                                                          ? FlutterFlowTheme.of(
+                                                                  context)
+                                                              .success
+                                                          : FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        '${columnUsersRecord.displayName} is heading to you',
+                                                        style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryText,
-                                                        size: 24.0,
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: columnTrackOrderRecord.headingYourWay
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                ),
                                                       ),
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .headingYourWayDate !=
+                                                      null)
+                                                    Flexible(
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                1.0, 0.0),
                                                         child: Text(
-                                                          'Request Accepted',
+                                                          valueOrDefault<
+                                                              String>(
+                                                            dateTimeFormat(
+                                                                'relative',
+                                                                columnTrackOrderRecord
+                                                                    .headingYourWayDate),
+                                                            '0',
+                                                          ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Urbanist',
+                                                                color: const Color(
+                                                                    0xFF585858),
+                                                                fontSize: 12.0,
                                                               ),
                                                         ),
                                                       ),
                                                     ),
-                                                    if (columnTrackOrderRecord
-                                                            .acceptedDate !=
-                                                        null)
-                                                      Flexible(
-                                                        child: Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  1.0, 0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              dateTimeFormat(
-                                                                  'relative',
-                                                                  columnTrackOrderRecord
-                                                                      .acceptedDate),
-                                                              '0',
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Urbanist',
-                                                                  color: const Color(
-                                                                      0xFF585858),
-                                                                  fontSize:
-                                                                      12.0,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: 12.0,
-                                                  height: 12.0,
-                                                  decoration: const BoxDecoration(
-                                                    color: Color(0xFF585858),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                ),
-                                                if (columnTrackOrderRecord
-                                                        .headingYourWay ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation4']!),
-                                                if (columnTrackOrderRecord
-                                                        .headingYourWay ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0x3200AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation5']!),
-                                              ],
-                                            ),
-                                            ClipRRect(
-                                              child: Container(
-                                                width: 2.0,
-                                                height: 30.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFFBDBDBD),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    if (columnTrackOrderRecord
-                                                            .headingYourWay ??
-                                                        true)
-                                                      Container(
-                                                        width: 2.0,
-                                                        height: 30.0,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              Color(0xFF00AA07),
-                                                        ),
-                                                      ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation6']!),
-                                                  ],
-                                                ),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              0.0, -1.0),
-                                                      child: FaIcon(
-                                                        FontAwesomeIcons.car,
-                                                        color:
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 13.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  FaIcon(
+                                                    FontAwesomeIcons
+                                                        .flagCheckered,
+                                                    color:
+                                                        columnTrackOrderRecord.arrived
+                                                            ? FlutterFlowTheme
+                                                                    .of(context)
+                                                                .success
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Arrived',
+                                                        style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryText,
-                                                        size: 24.0,
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: columnTrackOrderRecord.arrived
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                ),
                                                       ),
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .arrivedDate !=
+                                                      null)
+                                                    Flexible(
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                1.0, 0.0),
                                                         child: Text(
-                                                          '${columnUsersRecord.displayName} is heading to you',
+                                                          valueOrDefault<
+                                                              String>(
+                                                            dateTimeFormat(
+                                                                'relative',
+                                                                columnTrackOrderRecord
+                                                                    .arrivedDate),
+                                                            '0',
+                                                          ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Urbanist',
+                                                                color: const Color(
+                                                                    0xFF585858),
+                                                                fontSize: 12.0,
                                                               ),
                                                         ),
                                                       ),
                                                     ),
-                                                    if (columnTrackOrderRecord
-                                                            .headingYourWayDate !=
-                                                        null)
-                                                      Flexible(
-                                                        child: Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  1.0, 0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              dateTimeFormat(
-                                                                  'relative',
-                                                                  columnTrackOrderRecord
-                                                                      .headingYourWayDate),
-                                                              '0',
-                                                            ),
-                                                            style: FlutterFlowTheme
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 13.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  FaIcon(
+                                                    FontAwesomeIcons.playCircle,
+                                                    color:
+                                                        columnTrackOrderRecord.workUnderWay
+                                                            ? FlutterFlowTheme
                                                                     .of(context)
+                                                                .success
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Work Started',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Urbanist',
-                                                                  color: const Color(
-                                                                      0xFF585858),
-                                                                  fontSize:
-                                                                      12.0,
+                                                                  color: columnTrackOrderRecord.workUnderWay
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
                                                                 ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .workUnderWayDate !=
+                                                      null)
+                                                    Flexible(
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                1.0, 0.0),
+                                                        child: Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            dateTimeFormat(
+                                                                'relative',
+                                                                columnTrackOrderRecord
+                                                                    .workUnderWayDate),
+                                                            '0',
                                                           ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                color: const Color(
+                                                                    0xFF585858),
+                                                                fontSize: 12.0,
+                                                              ),
                                                         ),
                                                       ),
-                                                  ],
-                                                ),
-                                              ],
+                                                    ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: 12.0,
-                                                  height: 12.0,
-                                                  decoration: const BoxDecoration(
-                                                    color: Color(0xFF585858),
-                                                    shape: BoxShape.circle,
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 13.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  FaIcon(
+                                                    FontAwesomeIcons.grin,
+                                                    color:
+                                                        columnTrackOrderRecord.workCompleted
+                                                            ? FlutterFlowTheme
+                                                                    .of(context)
+                                                                .success
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                    size: 24.0,
                                                   ),
-                                                ),
-                                                if (columnTrackOrderRecord
-                                                        .arrived ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00AA07),
-                                                      shape: BoxShape.circle,
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Work Complete',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Urbanist',
+                                                                  color: columnTrackOrderRecord.workCompleted
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                ),
+                                                      ),
                                                     ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation7']!),
-                                                if (columnTrackOrderRecord
-                                                        .arrived ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0x3200AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation8']!),
-                                              ],
-                                            ),
-                                            ClipRRect(
-                                              child: Container(
-                                                width: 2.0,
-                                                height: 30.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFFBDBDBD),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    if (columnTrackOrderRecord
-                                                            .arrived ??
-                                                        true)
-                                                      Container(
-                                                        width: 2.0,
-                                                        height: 30.0,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              Color(0xFF00AA07),
+                                                  ),
+                                                  if (columnTrackOrderRecord
+                                                          .workCompletedDate !=
+                                                      null)
+                                                    Flexible(
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                1.0, 0.0),
+                                                        child: Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            dateTimeFormat(
+                                                                'relative',
+                                                                columnTrackOrderRecord
+                                                                    .workCompletedDate),
+                                                            '0',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Urbanist',
+                                                                color: const Color(
+                                                                    0xFF585858),
+                                                                fontSize: 12.0,
+                                                              ),
                                                         ),
-                                                      ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation9']!),
-                                                  ],
-                                                ),
+                                                      ),
+                                                    ),
+                                                ],
                                               ),
                                             ),
                                           ],
                                         ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    FaIcon(
-                                                      FontAwesomeIcons
-                                                          .flagCheckered,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          'Arrived',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Urbanist',
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    if (columnTrackOrderRecord
-                                                            .arrivedDate !=
-                                                        null)
-                                                      Flexible(
-                                                        child: Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  1.0, 0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              dateTimeFormat(
-                                                                  'relative',
-                                                                  columnTrackOrderRecord
-                                                                      .arrivedDate),
-                                                              '0',
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Urbanist',
-                                                                  color: const Color(
-                                                                      0xFF585858),
-                                                                  fontSize:
-                                                                      12.0,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: 12.0,
-                                                  height: 12.0,
-                                                  decoration: const BoxDecoration(
-                                                    color: Color(0xFF585858),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                ),
-                                                if (columnTrackOrderRecord
-                                                        .workUnderWay ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation10']!),
-                                                if (columnTrackOrderRecord
-                                                        .workUnderWay ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0x3200AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation11']!),
-                                              ],
-                                            ),
-                                            ClipRRect(
-                                              child: Container(
-                                                width: 2.0,
-                                                height: 30.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFFBDBDBD),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    if (columnTrackOrderRecord
-                                                            .workUnderWay ??
-                                                        true)
-                                                      Container(
-                                                        width: 2.0,
-                                                        height: 30.0,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              Color(0xFF00AA07),
-                                                        ),
-                                                      ).animateOnPageLoad(
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation12']!),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    FaIcon(
-                                                      FontAwesomeIcons
-                                                          .playCircle,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          'Work Started',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Urbanist',
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    if (columnTrackOrderRecord
-                                                            .workUnderWayDate !=
-                                                        null)
-                                                      Flexible(
-                                                        child: Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  1.0, 0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              dateTimeFormat(
-                                                                  'relative',
-                                                                  columnTrackOrderRecord
-                                                                      .workUnderWayDate),
-                                                              '0',
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Urbanist',
-                                                                  color: const Color(
-                                                                      0xFF585858),
-                                                                  fontSize:
-                                                                      12.0,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: 12.0,
-                                                  height: 12.0,
-                                                  decoration: const BoxDecoration(
-                                                    color: Color(0xFF585858),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                ),
-                                                if (columnTrackOrderRecord
-                                                        .workCompleted ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation13']!),
-                                                if (columnTrackOrderRecord
-                                                        .workCompleted ??
-                                                    true)
-                                                  Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0x3200AA07),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'containerOnPageLoadAnimation14']!),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    FaIcon(
-                                                      FontAwesomeIcons.grin,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          'Work Complete',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Urbanist',
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    if (columnTrackOrderRecord
-                                                            .workCompletedDate !=
-                                                        null)
-                                                      Flexible(
-                                                        child: Align(
-                                                          alignment:
-                                                              const AlignmentDirectional(
-                                                                  1.0, 0.0),
-                                                          child: Text(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              dateTimeFormat(
-                                                                  'relative',
-                                                                  columnTrackOrderRecord
-                                                                      .workCompletedDate),
-                                                              '0',
-                                                            ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Urbanist',
-                                                                  color: const Color(
-                                                                      0xFF585858),
-                                                                  fontSize:
-                                                                      12.0,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ],
                                 ),

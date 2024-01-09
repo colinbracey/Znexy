@@ -193,8 +193,8 @@ class _SigninPageWidgetState extends State<SigninPageWidget>
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              'https://bloximages.chicago2.vip.townnews.com/niagarathisweek.com/content/tncms/assets/v3/editorial/8/83/88337c56-a413-54d5-a078-e58c0093270c/63dcdc92aa606.image.jpg',
+                                            child: Image.asset(
+                                              'assets/images/driver-marker-icon.png',
                                               fit: BoxFit.cover,
                                             ),
                                           ),

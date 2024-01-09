@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart';
 import 'dart:math';
 import 'package:google_maps_widget/google_maps_widget.dart' as GM;
 
@@ -88,14 +87,14 @@ class _GMapWidget2State extends State<GMapWidget2> {
                       onTapInfoWindow: (_) {
                         print("Tapped on source info window");
                       },
-                      assetPath: "assets/images/restaurant-marker-icon.png",
+                      //assetPath: "assets/images/restaurant-marker-icon.png",
                     ),
                     destinationMarkerIconInfo: GM.MarkerIconInfo(
-                      assetPath: "assets/images/house-marker-icon.png",
-                    ),
+                        //assetPath: "assets/images/house-marker-icon.png",
+                        ),
                     driverMarkerIconInfo: GM.MarkerIconInfo(
                       infoWindowTitle: "Alex",
-                      assetPath: "assets/images/driver-marker-icon.png",
+                      //assetPath: "assets/images/driver-marker-icon.png",
                       onTapMarker: (currentLocation) {
                         print("Driver is currently at $currentLocation");
                       },
