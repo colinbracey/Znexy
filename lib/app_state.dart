@@ -63,26 +63,16 @@ class FFAppState extends ChangeNotifier {
   set routeDuration(String value) {
     _routeDuration = value;
   }
-}
 
-LatLng? _latLngFromString(String? val) {
-  if (val == null) {
-    return null;
+  int _shoppingCartLoop = 0;
+  int get shoppingCartLoop => _shoppingCartLoop;
+  set shoppingCartLoop(int value) {
+    _shoppingCartLoop = value;
   }
-  final split = val.split(',');
-  final lat = double.parse(split.first);
-  final lng = double.parse(split.last);
-  return LatLng(lat, lng);
-}
 
-void _safeInit(Function() initializeField) {
-  try {
-    initializeField();
-  } catch (_) {}
-}
-
-Future _safeInitAsync(Function() initializeField) async {
-  try {
-    await initializeField();
-  } catch (_) {}
+  int _shoppingCartMaxLoop = 0;
+  int get shoppingCartMaxLoop => _shoppingCartMaxLoop;
+  set shoppingCartMaxLoop(int value) {
+    _shoppingCartMaxLoop = value;
+  }
 }

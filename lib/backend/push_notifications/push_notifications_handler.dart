@@ -121,7 +121,6 @@ final parametersBuilderMap =
               getParameter<DocumentReference>(data, 'thisRequestDocRef'),
         },
       ),
-  'HelpRequests': ParameterData.none(),
   'Profile': ParameterData.none(),
   'Notifications': ParameterData.none(),
   'RequestOffers': (data) async => ParameterData(
@@ -130,7 +129,11 @@ final parametersBuilderMap =
               getParameter<DocumentReference>(data, 'thisRequestDocRef'),
         },
       ),
-  'UsersReviews': ParameterData.none(),
+  'UsersReviews': (data) async => ParameterData(
+        allParams: {
+          'userIdRef': getParameter<DocumentReference>(data, 'userIdRef'),
+        },
+      ),
   'RequestOfferDetail': (data) async => ParameterData(
         allParams: {
           'offerDocRef': getParameter<DocumentReference>(data, 'offerDocRef'),
@@ -158,6 +161,25 @@ final parametersBuilderMap =
         },
       ),
   'CongratulationsOfferAccepted': ParameterData.none(),
+  'AcceptedOfferOfferer': (data) async => ParameterData(
+        allParams: {
+          'thisOffertDocRef':
+              getParameter<DocumentReference>(data, 'thisOffertDocRef'),
+        },
+      ),
+  'HelpRequests': ParameterData.none(),
+  'AcceptedOfferOffererCopy': (data) async => ParameterData(
+        allParams: {
+          'thisOffertDocRef':
+              getParameter<DocumentReference>(data, 'thisOffertDocRef'),
+        },
+      ),
+  'RequestDetailCopy': (data) async => ParameterData(
+        allParams: {
+          'thisRequestDocRef':
+              getParameter<DocumentReference>(data, 'thisRequestDocRef'),
+        },
+      ),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 Future<bool> updateTrackingStatus(
   String trackOrderID,
   String status,
+  bool requester,
 ) async {
   // pass trackorder id, retrieve record from database, update arrived and arriveddate
 
@@ -47,8 +48,10 @@ Future<bool> updateTrackingStatus(
             'ArrivedDate': null,
             'WorkUnderWay': false,
             'WorkUnderWayDate': null,
-            'WorkCompleted': false,
-            'WorkCompletedDate': null
+            'WorkCompletedRequester': false,
+            'WorkCompletedDateRequester': null,
+            'WorkCompletedOfferer': false,
+            'WorkCompletedDateOfferer': null
           });
 
           break;
@@ -64,8 +67,10 @@ Future<bool> updateTrackingStatus(
             'ArrivedDate': null,
             'WorkUnderWay': false,
             'WorkUnderWayDate': null,
-            'WorkCompleted': false,
-            'WorkCompletedDate': null
+            'WorkCompletedRequester': false,
+            'WorkCompletedDateRequester': null,
+            'WorkCompletedOfferer': false,
+            'WorkCompletedDateOfferer': null
           });
 
           break;
@@ -83,10 +88,10 @@ Future<bool> updateTrackingStatus(
             'HeadingYourWayDate': headingYourWayDate,
             'Arrived': true,
             'ArrivedDate': DateTime.now(),
-            'WorkUnderWay': false,
-            'WorkUnderWayDate': null,
-            'WorkCompleted': false,
-            'WorkCompletedDate': null
+            'WorkCompletedRequester': false,
+            'WorkCompletedDateRequester': null,
+            'WorkCompletedOfferer': false,
+            'WorkCompletedDateOfferer': null
           });
 
           break;
@@ -112,8 +117,10 @@ Future<bool> updateTrackingStatus(
             'ArrivedDate': arrivedDate,
             'WorkUnderWay': true,
             'WorkUnderWayDate': DateTime.now(),
-            'WorkCompleted': false,
-            'WorkCompletedDate': null
+            'WorkCompletedRequester': false,
+            'WorkCompletedDateRequester': null,
+            'WorkCompletedOfferer': false,
+            'WorkCompletedDateOfferer': null
           });
 
           break;
@@ -134,19 +141,35 @@ Future<bool> updateTrackingStatus(
             workUnderWayDate = DateTime.now();
           }
 
-          await FirebaseFirestore.instance
-              .collection('TrackOrder')
-              .doc(trackOrderID)
-              .update({
-            'HeadingYourWay': headingYourWay,
-            'HeadingYourWayDate': headingYourWayDate,
-            'Arrived': arrived,
-            'ArrivedDate': arrivedDate,
-            'WorkUnderWay': workUnderWay,
-            'WorkUnderWayDate': workUnderWayDate,
-            'WorkCompleted': true,
-            'WorkCompletedDate': DateTime.now()
-          });
+          if (requester) {
+            await FirebaseFirestore.instance
+                .collection('TrackOrder')
+                .doc(trackOrderID)
+                .update({
+              'HeadingYourWay': headingYourWay,
+              'HeadingYourWayDate': headingYourWayDate,
+              'Arrived': arrived,
+              'ArrivedDate': arrivedDate,
+              'WorkUnderWay': workUnderWay,
+              'WorkUnderWayDate': workUnderWayDate,
+              'WorkCompletedRequester': true,
+              'WorkCompletedDateRequester': DateTime.now()
+            });
+          } else {
+            await FirebaseFirestore.instance
+                .collection('TrackOrder')
+                .doc(trackOrderID)
+                .update({
+              'HeadingYourWay': headingYourWay,
+              'HeadingYourWayDate': headingYourWayDate,
+              'Arrived': arrived,
+              'ArrivedDate': arrivedDate,
+              'WorkUnderWay': workUnderWay,
+              'WorkUnderWayDate': workUnderWayDate,
+              'WorkCompletedOfferer': true,
+              'WorkCompletedDateOfferer': DateTime.now()
+            });
+          }
 
           break;
 

@@ -11,7 +11,7 @@ class CongratulationsOfferAcceptedWidget extends StatefulWidget {
   const CongratulationsOfferAcceptedWidget({super.key});
 
   @override
-  _CongratulationsOfferAcceptedWidgetState createState() =>
+  State<CongratulationsOfferAcceptedWidget> createState() =>
       _CongratulationsOfferAcceptedWidgetState();
 }
 

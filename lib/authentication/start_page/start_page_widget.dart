@@ -14,7 +14,7 @@ class StartPageWidget extends StatefulWidget {
   const StartPageWidget({super.key});
 
   @override
-  _StartPageWidgetState createState() => _StartPageWidgetState();
+  State<StartPageWidget> createState() => _StartPageWidgetState();
 }
 
 class _StartPageWidgetState extends State<StartPageWidget>

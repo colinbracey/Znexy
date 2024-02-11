@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/user_rating/user_rating_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -21,7 +20,7 @@ class RequestOfferDetailWidget extends StatefulWidget {
   final DocumentReference? offerDocRef;
 
   @override
-  _RequestOfferDetailWidgetState createState() =>
+  State<RequestOfferDetailWidget> createState() =>
       _RequestOfferDetailWidgetState();
 }
 
@@ -182,10 +181,11 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                         valueOrDefault<String>(
                                           formatNumber(
                                             parentColumnRequestRecord
-                                                .applicantPrice,
-                                            formatType: FormatType.decimal,
-                                            decimalType: DecimalType.automatic,
+                                                .totalPrice,
+                                            formatType: FormatType.custom,
                                             currency: '\$',
+                                            format: '###.##',
+                                            locale: '',
                                           ),
                                           '0',
                                         ),
@@ -589,7 +589,7 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                             title:
                                                                                 const Text('Accept Bid'),
                                                                             content:
-                                                                                Text('Confiorm that you accept the bid of \$${valueOrDefault<String>(
+                                                                                Text('Confirm that you accept the bid of ${valueOrDefault<String>(
                                                                               formatNumber(
                                                                                 requestOfferDetailOfferRecord.value,
                                                                                 formatType: FormatType.decimal,
@@ -656,76 +656,13 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                               .reference,
                                                                       value: requestOfferDetailOfferRecord
                                                                           .value,
+                                                                      offerUserId:
+                                                                          requestOfferDetailOfferRecord
+                                                                              .userId,
                                                                     ));
                                                               } else {
                                                                 return;
                                                               }
-
-                                                              await NotificationRecord
-                                                                  .collection
-                                                                  .doc()
-                                                                  .set(
-                                                                      createNotificationRecordData(
-                                                                    senderId:
-                                                                        currentUserReference,
-                                                                    receivedId:
-                                                                        requestOfferDetailOfferRecord
-                                                                            .userId,
-                                                                    type: 2,
-                                                                    message:
-                                                                        'Congratulations, Your offer has been accepted',
-                                                                    createdAt:
-                                                                        getCurrentTimestamp,
-                                                                    read: false,
-                                                                    offerId: widget
-                                                                        .offerDocRef,
-                                                                    requestId:
-                                                                        parentColumnRequestRecord
-                                                                            .reference,
-                                                                  ));
-
-                                                              await TrackOrderRecord
-                                                                  .collection
-                                                                  .doc()
-                                                                  .set(
-                                                                      createTrackOrderRecordData(
-                                                                    accepted:
-                                                                        true,
-                                                                    headingYourWay:
-                                                                        false,
-                                                                    arrived:
-                                                                        false,
-                                                                    workUnderWay:
-                                                                        false,
-                                                                    workCompleted:
-                                                                        false,
-                                                                    review:
-                                                                        false,
-                                                                    offerId: widget
-                                                                        .offerDocRef,
-                                                                  ));
-                                                              triggerPushNotification(
-                                                                notificationTitle:
-                                                                    'Congratulations, your offer has been accepted',
-                                                                notificationText:
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                  'Your offer for request "${parentColumnRequestRecord.shortDescription}" has been accepted.',
-                                                                  '0',
-                                                                ),
-                                                                notificationImageUrl:
-                                                                    parentColumnRequestRecord
-                                                                        .coverImage,
-                                                                notificationSound:
-                                                                    'default',
-                                                                userRefs: [
-                                                                  requestOfferDetailOfferRecord
-                                                                      .userId!
-                                                                ],
-                                                                initialPageName:
-                                                                    'Notifications',
-                                                                parameterData: {},
-                                                              );
 
                                                               context.goNamed(
                                                                   'ShoppingCart');

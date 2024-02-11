@@ -23,7 +23,7 @@ class RequestOffersWidget extends StatefulWidget {
   final DocumentReference? thisRequestDocRef;
 
   @override
-  _RequestOffersWidgetState createState() => _RequestOffersWidgetState();
+  State<RequestOffersWidget> createState() => _RequestOffersWidgetState();
 }
 
 class _RequestOffersWidgetState extends State<RequestOffersWidget> {
@@ -164,11 +164,11 @@ class _RequestOffersWidgetState extends State<RequestOffersWidget> {
                                   child: Text(
                                     valueOrDefault<String>(
                                       formatNumber(
-                                        requestOffersRequestRecord
-                                            .applicantPrice,
-                                        formatType: FormatType.decimal,
-                                        decimalType: DecimalType.automatic,
+                                        requestOffersRequestRecord.totalPrice,
+                                        formatType: FormatType.custom,
                                         currency: '\$',
+                                        format: '###.##',
+                                        locale: '',
                                       ),
                                       '0',
                                     ),
@@ -191,7 +191,14 @@ class _RequestOffersWidgetState extends State<RequestOffersWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 12.0, 0.0),
                               child: StreamBuilder<List<OfferRecord>>(
-                                stream: queryOfferRecord(),
+                                stream: queryOfferRecord(
+                                  queryBuilder: (offerRecord) =>
+                                      offerRecord.where(
+                                    'RequestId',
+                                    isEqualTo:
+                                        requestOffersRequestRecord.reference,
+                                  ),
+                                ),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
@@ -598,8 +605,16 @@ class _RequestOffersWidgetState extends State<RequestOffersWidget> {
                                                                         child:
                                                                             FFButtonWidget(
                                                                           onPressed:
-                                                                              () {
-                                                                            print('Button pressed ...');
+                                                                              () async {
+                                                                            context.pushNamed(
+                                                                              'UserProfile',
+                                                                              queryParameters: {
+                                                                                'userDocRef': serializeParam(
+                                                                                  cardUsersRecord.reference,
+                                                                                  ParamType.DocumentReference,
+                                                                                ),
+                                                                              }.withoutNulls,
+                                                                            );
                                                                           },
                                                                           text:
                                                                               'Profile',
@@ -637,9 +652,18 @@ class _RequestOffersWidgetState extends State<RequestOffersWidget> {
                                                                       ),
                                                                       FFButtonWidget(
                                                                         onPressed:
-                                                                            () {
-                                                                          print(
-                                                                              'Button pressed ...');
+                                                                            () async {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'RequestOfferDetail',
+                                                                            queryParameters:
+                                                                                {
+                                                                              'offerDocRef': serializeParam(
+                                                                                offersItem.reference,
+                                                                                ParamType.DocumentReference,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
                                                                         },
                                                                         text:
                                                                             'Offer',

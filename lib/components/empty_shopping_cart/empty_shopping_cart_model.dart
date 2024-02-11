@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'empty_notifications_widget.dart' show EmptyNotificationsWidget;
+import 'empty_shopping_cart_widget.dart' show EmptyShoppingCartWidget;
 import 'package:flutter/material.dart';
 
-class EmptyNotificationsModel
-    extends FlutterFlowModel<EmptyNotificationsWidget> {
+class EmptyShoppingCartModel extends FlutterFlowModel<EmptyShoppingCartWidget> {
   /// Initialization and disposal methods.
 
   @override

@@ -45,16 +45,6 @@ class RequestRecord extends FirestoreRecord {
   double get totalPrice => _totalPrice ?? 0.0;
   bool hasTotalPrice() => _totalPrice != null;
 
-  // "OurFee" field.
-  double? _ourFee;
-  double get ourFee => _ourFee ?? 0.0;
-  bool hasOurFee() => _ourFee != null;
-
-  // "ApplicantPrice" field.
-  double? _applicantPrice;
-  double get applicantPrice => _applicantPrice ?? 0.0;
-  bool hasApplicantPrice() => _applicantPrice != null;
-
   // "UserId" field.
   DocumentReference? _userId;
   DocumentReference? get userId => _userId;
@@ -85,6 +75,16 @@ class RequestRecord extends FirestoreRecord {
   double get acceptedPrice => _acceptedPrice ?? 0.0;
   bool hasAcceptedPrice() => _acceptedPrice != null;
 
+  // "Complete" field.
+  bool? _complete;
+  bool get complete => _complete ?? false;
+  bool hasComplete() => _complete != null;
+
+  // "CreatedAt" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
+
   void _initializeFields() {
     _shortDescription = snapshotData['ShortDescription'] as String?;
     _longDescription = snapshotData['LongDescription'] as String?;
@@ -92,14 +92,14 @@ class RequestRecord extends FirestoreRecord {
     _images = getDataList(snapshotData['Images']);
     _location = snapshotData['Location'] as LatLng?;
     _totalPrice = castToType<double>(snapshotData['TotalPrice']);
-    _ourFee = castToType<double>(snapshotData['OurFee']);
-    _applicantPrice = castToType<double>(snapshotData['ApplicantPrice']);
     _userId = snapshotData['UserId'] as DocumentReference?;
     _accepted = snapshotData['Accepted'] as bool?;
     _acceptedUser = snapshotData['AcceptedUser'] as DocumentReference?;
     _openPrice = snapshotData['OpenPrice'] as bool?;
     _acceptedOfferId = snapshotData['AcceptedOfferId'] as DocumentReference?;
     _acceptedPrice = castToType<double>(snapshotData['AcceptedPrice']);
+    _complete = snapshotData['Complete'] as bool?;
+    _createdAt = snapshotData['CreatedAt'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -142,14 +142,14 @@ Map<String, dynamic> createRequestRecordData({
   String? coverImage,
   LatLng? location,
   double? totalPrice,
-  double? ourFee,
-  double? applicantPrice,
   DocumentReference? userId,
   bool? accepted,
   DocumentReference? acceptedUser,
   bool? openPrice,
   DocumentReference? acceptedOfferId,
   double? acceptedPrice,
+  bool? complete,
+  DateTime? createdAt,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -158,14 +158,14 @@ Map<String, dynamic> createRequestRecordData({
       'CoverImage': coverImage,
       'Location': location,
       'TotalPrice': totalPrice,
-      'OurFee': ourFee,
-      'ApplicantPrice': applicantPrice,
       'UserId': userId,
       'Accepted': accepted,
       'AcceptedUser': acceptedUser,
       'OpenPrice': openPrice,
       'AcceptedOfferId': acceptedOfferId,
       'AcceptedPrice': acceptedPrice,
+      'Complete': complete,
+      'CreatedAt': createdAt,
     }.withoutNulls,
   );
 
@@ -184,14 +184,14 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         listEquality.equals(e1?.images, e2?.images) &&
         e1?.location == e2?.location &&
         e1?.totalPrice == e2?.totalPrice &&
-        e1?.ourFee == e2?.ourFee &&
-        e1?.applicantPrice == e2?.applicantPrice &&
         e1?.userId == e2?.userId &&
         e1?.accepted == e2?.accepted &&
         e1?.acceptedUser == e2?.acceptedUser &&
         e1?.openPrice == e2?.openPrice &&
         e1?.acceptedOfferId == e2?.acceptedOfferId &&
-        e1?.acceptedPrice == e2?.acceptedPrice;
+        e1?.acceptedPrice == e2?.acceptedPrice &&
+        e1?.complete == e2?.complete &&
+        e1?.createdAt == e2?.createdAt;
   }
 
   @override
@@ -202,14 +202,14 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e?.images,
         e?.location,
         e?.totalPrice,
-        e?.ourFee,
-        e?.applicantPrice,
         e?.userId,
         e?.accepted,
         e?.acceptedUser,
         e?.openPrice,
         e?.acceptedOfferId,
-        e?.acceptedPrice
+        e?.acceptedPrice,
+        e?.complete,
+        e?.createdAt
       ]);
 
   @override

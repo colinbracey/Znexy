@@ -16,6 +16,11 @@ enum OfferStatus {
   Complete,
 }
 
+enum TransactionType {
+  CCPayment,
+  WorkCredit,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -31,6 +36,8 @@ T? deserializeEnum<T>(String? value) {
       return RequestStatus.values.deserialize(value) as T?;
     case (OfferStatus):
       return OfferStatus.values.deserialize(value) as T?;
+    case (TransactionType):
+      return TransactionType.values.deserialize(value) as T?;
     default:
       return null;
   }

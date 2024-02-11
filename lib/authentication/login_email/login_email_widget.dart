@@ -14,7 +14,7 @@ class LoginEmailWidget extends StatefulWidget {
   const LoginEmailWidget({super.key});
 
   @override
-  _LoginEmailWidgetState createState() => _LoginEmailWidgetState();
+  State<LoginEmailWidget> createState() => _LoginEmailWidgetState();
 }
 
 class _LoginEmailWidgetState extends State<LoginEmailWidget>

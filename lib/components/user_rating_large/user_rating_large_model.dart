@@ -3,6 +3,11 @@ import 'user_rating_large_widget.dart' show UserRatingLargeWidget;
 import 'package:flutter/material.dart';
 
 class UserRatingLargeModel extends FlutterFlowModel<UserRatingLargeWidget> {
+  ///  State fields for stateful widgets in this component.
+
+  // State field(s) for LeaveReviewRating widget.
+  double? leaveReviewRatingValue;
+
   /// Initialization and disposal methods.
 
   @override

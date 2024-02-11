@@ -10,7 +10,7 @@ class NoBidsYetWidget extends StatefulWidget {
   const NoBidsYetWidget({super.key});
 
   @override
-  _NoBidsYetWidgetState createState() => _NoBidsYetWidgetState();
+  State<NoBidsYetWidget> createState() => _NoBidsYetWidgetState();
 }
 
 class _NoBidsYetWidgetState extends State<NoBidsYetWidget> {

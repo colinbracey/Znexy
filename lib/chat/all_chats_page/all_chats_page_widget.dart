@@ -11,7 +11,7 @@ class AllChatsPageWidget extends StatefulWidget {
   const AllChatsPageWidget({super.key});
 
   @override
-  _AllChatsPageWidgetState createState() => _AllChatsPageWidgetState();
+  State<AllChatsPageWidget> createState() => _AllChatsPageWidgetState();
 }
 
 class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
@@ -107,62 +107,66 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
                 itemBuilder: (context, listViewIndex) {
                   final listViewChatsRecord =
                       listViewChatsRecordList[listViewIndex];
-                  return StreamBuilder<FFChatInfo>(
-                    stream: FFChatManager.instance
-                        .getChatInfo(chatRecord: listViewChatsRecord),
-                    builder: (context, snapshot) {
-                      final chatInfo =
-                          snapshot.data ?? FFChatInfo(listViewChatsRecord);
-                      return FFChatPreview(
-                        onTap: () => context.pushNamed(
-                          'ChatPage',
-                          queryParameters: {
-                            'chatUser': serializeParam(
-                              chatInfo.otherUsers.length == 1
+                  return Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                    child: StreamBuilder<FFChatInfo>(
+                      stream: FFChatManager.instance
+                          .getChatInfo(chatRecord: listViewChatsRecord),
+                      builder: (context, snapshot) {
+                        final chatInfo =
+                            snapshot.data ?? FFChatInfo(listViewChatsRecord);
+                        return FFChatPreview(
+                          onTap: () => context.pushNamed(
+                            'ChatPage',
+                            queryParameters: {
+                              'chatUser': serializeParam(
+                                chatInfo.otherUsers.length == 1
+                                    ? chatInfo.otherUsersList.first
+                                    : null,
+                                ParamType.Document,
+                              ),
+                              'chatRef': serializeParam(
+                                chatInfo.chatRecord.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              'chatUser': chatInfo.otherUsers.length == 1
                                   ? chatInfo.otherUsersList.first
                                   : null,
-                              ParamType.Document,
-                            ),
-                            'chatRef': serializeParam(
-                              chatInfo.chatRecord.reference,
-                              ParamType.DocumentReference,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'chatUser': chatInfo.otherUsers.length == 1
-                                ? chatInfo.otherUsersList.first
-                                : null,
-                          },
-                        ),
-                        lastChatText: chatInfo.chatPreviewMessage(),
-                        lastChatTime: listViewChatsRecord.lastMessageTime,
-                        seen: listViewChatsRecord.lastMessageSeenBy.contains(currentUserReference),
-                        title: chatInfo.chatPreviewTitle(),
-                        userProfilePic: chatInfo.chatPreviewPic(),
-                        color: const Color(0xFFEEF0F5),
-                        unreadColor: const Color(0xFFCC0E3A),
-                        titleTextStyle: GoogleFonts.getFont(
-                          'DM Sans',
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
-                        ),
-                        dateTextStyle: GoogleFonts.getFont(
-                          'DM Sans',
-                          color: const Color(0x73000000),
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.0,
-                        ),
-                        previewTextStyle: GoogleFonts.getFont(
-                          'DM Sans',
-                          color: const Color(0x73000000),
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.0,
-                        ),
-                        contentPadding: const EdgeInsets.all(3.0),
-                        borderRadius: BorderRadius.circular(0.0),
-                      );
-                    },
+                            },
+                          ),
+                          lastChatText: chatInfo.chatPreviewMessage(),
+                          lastChatTime: listViewChatsRecord.lastMessageTime,
+                          seen: listViewChatsRecord.lastMessageSeenBy.contains(currentUserReference),
+                          title: chatInfo.chatPreviewTitle(),
+                          userProfilePic: chatInfo.chatPreviewPic(),
+                          color: const Color(0xFFEEF0F5),
+                          unreadColor: const Color(0xFFCC0E3A),
+                          titleTextStyle: GoogleFonts.getFont(
+                            'DM Sans',
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                          ),
+                          dateTextStyle: GoogleFonts.getFont(
+                            'DM Sans',
+                            color: const Color(0x73000000),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.0,
+                          ),
+                          previewTextStyle: GoogleFonts.getFont(
+                            'DM Sans',
+                            color: const Color(0x73000000),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.0,
+                          ),
+                          contentPadding: const EdgeInsets.all(3.0),
+                          borderRadius: BorderRadius.circular(0.0),
+                        );
+                      },
+                    ),
                   );
                 },
               );

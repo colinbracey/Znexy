@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import 'dart:math';
 import 'package:google_maps_widget/google_maps_widget.dart' as GM;
 
@@ -25,7 +27,7 @@ class GMapWidget2 extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final DocumentReference trackOrderRef;
+  final String trackOrderRef;
   final TrackOrderRecord trackOrderDoc;
 
   @override
@@ -90,10 +92,16 @@ class _GMapWidget2State extends State<GMapWidget2> {
                       //assetPath: "assets/images/restaurant-marker-icon.png",
                     ),
                     destinationMarkerIconInfo: GM.MarkerIconInfo(
-                        //assetPath: "assets/images/house-marker-icon.png",
-                        ),
+                      //assetPath: "assets/images/house-marker-icon.png",
+                      infoWindowTitle: "Requester",
+                      onTapMarker: (currentLocation) {
+                        print("Requester is currently at $currentLocation");
+                      },
+                      assetMarkerSize: Size.square(125),
+                    ),
                     driverMarkerIconInfo: GM.MarkerIconInfo(
                       infoWindowTitle: "Alex",
+                      //assetPath: widget.offerUserImage,
                       //assetPath: "assets/images/driver-marker-icon.png",
                       onTapMarker: (currentLocation) {
                         print("Driver is currently at $currentLocation");
@@ -104,7 +112,7 @@ class _GMapWidget2State extends State<GMapWidget2> {
                     updatePolylinesOnDriverLocUpdate: true,
                     // an array of LatLng that represent a path from source to destination
                     onPolylineUpdate: (p) {
-                      print("Polyline updated ${p.points}");
+                      //print("Polyline updated ${p.points}");
                       // if (driverPoints.length == 1) {
                       //   driverPoints = p.points;
                       //   driverPoints.add(GM.LatLng(0, 0));
@@ -129,47 +137,25 @@ class _GMapWidget2State extends State<GMapWidget2> {
                     //         element.longitude != 0 && element.latitude != 0),
 
                     totalTimeCallback: (time) => {
-                          //widget.trackOrderDoc.update({"timeLeft": time})
+                          print("Time left $time"),
+                          FirebaseFirestore.instance
+                              .collection('TrackOrder')
+                              .doc(widget.trackOrderRef)
+                              .update({
+                            'TimeLeft': time,
+                          }),
                         },
                     totalDistanceCallback: (distance) => {
-                          //widget.trackOrderDoc.update({"distanceLeft": distance})
+                          print("Distance $distance"),
+                          FirebaseFirestore.instance
+                              .collection('TrackOrder')
+                              .doc(widget.trackOrderRef)
+                              .update({
+                            'DistanceLeft': distance,
+                          }),
                         }),
               ),
               // demonstrates how to interact with the controller
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _mapsWidgetController.currentState!.setSourceLatLng(
-                            GM.LatLng(
-                              40.484000837597925 * (Random().nextDouble()),
-                              -3.369978368282318,
-                            ),
-                          );
-                        },
-                        child: Text('Update source'),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final googleMapsCon = await _mapsWidgetController
-                              .currentState!
-                              .getGoogleMapsController();
-                          googleMapsCon.showMarkerInfoWindow(
-                            GM.MarkerIconInfo.sourceMarkerId,
-                          );
-                        },
-                        child: Text('Show source info'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

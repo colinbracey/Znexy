@@ -15,7 +15,6 @@ export '/pages/add_help_request/add_help_request_widget.dart'
     show AddHelpRequestWidget;
 export '/pages/request_detail/request_detail_widget.dart'
     show RequestDetailWidget;
-export '/pages/help_requests/help_requests_widget.dart' show HelpRequestsWidget;
 export '/profile/profile_widget.dart' show ProfileWidget;
 export '/notifications/notifications_widget.dart' show NotificationsWidget;
 export '/pages/request_offers/request_offers_widget.dart'
@@ -33,3 +32,10 @@ export '/pages/accepted_offer_requester/accepted_offer_requester_widget.dart'
     show AcceptedOfferRequesterWidget;
 export '/congratulations_offer_accepted/congratulations_offer_accepted_widget.dart'
     show CongratulationsOfferAcceptedWidget;
+export '/pages/accepted_offer_offerer/accepted_offer_offerer_widget.dart'
+    show AcceptedOfferOffererWidget;
+export '/pages/help_requests/help_requests_widget.dart' show HelpRequestsWidget;
+export '/pages/accepted_offer_offerer_copy/accepted_offer_offerer_copy_widget.dart'
+    show AcceptedOfferOffererCopyWidget;
+export '/pages/request_detail_copy/request_detail_copy_widget.dart'
+    show RequestDetailCopyWidget;

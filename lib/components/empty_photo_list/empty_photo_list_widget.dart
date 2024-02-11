@@ -9,7 +9,7 @@ class EmptyPhotoListWidget extends StatefulWidget {
   const EmptyPhotoListWidget({super.key});
 
   @override
-  _EmptyPhotoListWidgetState createState() => _EmptyPhotoListWidgetState();
+  State<EmptyPhotoListWidget> createState() => _EmptyPhotoListWidgetState();
 }
 
 class _EmptyPhotoListWidgetState extends State<EmptyPhotoListWidget> {
