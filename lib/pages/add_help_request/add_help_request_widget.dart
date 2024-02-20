@@ -2,6 +2,8 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/empty_photo_list/empty_photo_list_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_audio_player.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
@@ -13,12 +15,18 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:cross_file/cross_file.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:record/record.dart';
 import 'add_help_request_model.dart';
 export 'add_help_request_model.dart';
 
@@ -29,11 +37,29 @@ class AddHelpRequestWidget extends StatefulWidget {
   State<AddHelpRequestWidget> createState() => _AddHelpRequestWidgetState();
 }
 
-class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
+class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget>
+    with TickerProviderStateMixin {
   late AddHelpRequestModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   LatLng? currentUserLocationValue;
+
+  final animationsMap = {
+    'rowOnActionTriggerAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        VisibilityEffect(duration: 1.ms),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -50,6 +76,13 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
 
     _model.priceFieldController ??= TextEditingController();
     _model.priceFieldFocusNode ??= FocusNode();
+
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -435,6 +468,281 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                           ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Press the start button to start recording your voice. The recording will automatically stop after 60 seconds.',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 24.0, 0.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        FFButtonWidget(
+                                          onPressed: _model.isRecording
+                                              ? null
+                                              : () async {
+                                                  await requestPermission(
+                                                      microphonePermission);
+                                                  if (await getPermissionStatus(
+                                                      microphonePermission)) {
+                                                    setState(() {
+                                                      _model.isRecording = true;
+                                                      _model.isShowPlayer =
+                                                          false;
+                                                    });
+                                                    _model.audioRecorder ??=
+                                                        AudioRecorder();
+                                                    if (await _model
+                                                        .audioRecorder!
+                                                        .hasPermission()) {
+                                                      final String path;
+                                                      final AudioEncoder
+                                                          encoder;
+                                                      if (kIsWeb) {
+                                                        path = '';
+                                                        encoder =
+                                                            AudioEncoder.opus;
+                                                      } else {
+                                                        final dir =
+                                                            await getApplicationDocumentsDirectory();
+                                                        path =
+                                                            '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
+                                                        encoder =
+                                                            AudioEncoder.aacLc;
+                                                      }
+                                                      await _model
+                                                          .audioRecorder!
+                                                          .start(
+                                                        RecordConfig(
+                                                            encoder: encoder),
+                                                        path: path,
+                                                      );
+                                                    } else {
+                                                      showSnackbar(
+                                                        context,
+                                                        'You have not provided permission to record audio.',
+                                                      );
+                                                    }
+
+                                                    if (animationsMap[
+                                                            'rowOnActionTriggerAnimation'] !=
+                                                        null) {
+                                                      await animationsMap[
+                                                              'rowOnActionTriggerAnimation']!
+                                                          .controller
+                                                          .repeat(
+                                                              reverse: true);
+                                                    }
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Permission denied!',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                          ),
+                                                        ),
+                                                        duration: const Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                          text: 'Start',
+                                          options: FFButtonOptions(
+                                            width: 100.0,
+                                            height: 50.0,
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color: Colors.white,
+                                                    ),
+                                            elevation: 3.0,
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            disabledColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            disabledTextColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                          ),
+                                        ),
+                                        FFButtonWidget(
+                                          onPressed: !_model.isRecording
+                                              ? null
+                                              : () async {
+                                                  _model.recording =
+                                                      await _model.audioRecorder
+                                                          ?.stop();
+                                                  if (_model.recording !=
+                                                      null) {
+                                                    _model.recordedFileBytes =
+                                                        FFUploadedFile(
+                                                      name:
+                                                          'recordedFileBytes.mp3',
+                                                      bytes: await XFile(
+                                                              _model.recording!)
+                                                          .readAsBytes(),
+                                                    );
+                                                  }
+
+                                                  setState(() {
+                                                    _model.isRecording = false;
+                                                    _model.isShowPlayer = true;
+                                                  });
+                                                  if (animationsMap[
+                                                          'rowOnActionTriggerAnimation'] !=
+                                                      null) {
+                                                    animationsMap[
+                                                            'rowOnActionTriggerAnimation']!
+                                                        .controller
+                                                        .stop();
+                                                  }
+
+                                                  setState(() {});
+                                                },
+                                          text: 'Stop',
+                                          options: FFButtonOptions(
+                                            width: 100.0,
+                                            height: 50.0,
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: const Color(0xFFFF5963),
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color: Colors.white,
+                                                    ),
+                                            elevation: 3.0,
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            disabledColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            disabledTextColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (_model.isShowPlayer)
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 30.0, 10.0, 0.0),
+                                      child: FlutterFlowAudioPlayer(
+                                        audio: Audio.network(
+                                          _model.recording!,
+                                          metas: Metas(
+                                            id: '2vqf7_-673a8f20',
+                                            title: 'My Audio Recording',
+                                          ),
+                                        ),
+                                        titleTextStyle:
+                                            FlutterFlowTheme.of(context)
+                                                .titleLarge,
+                                        playbackDurationTextStyle:
+                                            FlutterFlowTheme.of(context)
+                                                .labelMedium,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        playbackButtonColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        activeTrackColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        elevation: 8.0,
+                                        playInBackground: PlayInBackground
+                                            .disabledRestoreOnForeground,
+                                      ),
+                                    ),
+                                  if (_model.isRecording)
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: Container(
+                                              width: 20.0,
+                                              height: 20.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                const AlignmentDirectional(0.0, 0.0),
+                                            child: Text(
+                                              'REC',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ).animateOnActionTrigger(
+                                        animationsMap[
+                                            'rowOnActionTriggerAnimation']!,
+                                      ),
+                                    ),
                                   Flexible(
                                     child: Align(
                                       alignment: const AlignmentDirectional(0.0, 1.0),
@@ -1228,7 +1536,7 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                   ),
                                   Container(
                                     width: double.infinity,
-                                    height: 574.0,
+                                    height: 468.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
@@ -1289,7 +1597,7 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                             ),
                                           ),
                                         ),
-                                        Expanded(
+                                        Flexible(
                                           child: Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
@@ -1303,10 +1611,8 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                 onCameraIdle: (latLng) => _model
                                                     .googleMapsCenter = latLng,
                                                 initialLocation: _model
-                                                    .googleMapsCenter ??= isWeb ==
-                                                        true
-                                                    ? FFAppState().kelowna!
-                                                    : currentUserLocationValue!,
+                                                        .googleMapsCenter ??=
+                                                    currentUserLocationValue!,
                                                 markers: [
                                                   FlutterFlowMarker(
                                                     googleMapMarker
@@ -1676,7 +1982,38 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                             ),
                                             FFButtonWidget(
                                               onPressed: () async {
-                                                var shouldSetState = false;
+                                                if (_model.placePickerValue ==
+                                                    null) {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'No Location set'),
+                                                        content: const Text(
+                                                            'No location has been provided. People will need to see the location of where the job is before they can commit. Please enter an address'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                  await _model
+                                                      .pageViewController
+                                                      ?.animateToPage(
+                                                    5,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.ease,
+                                                  );
+                                                  return;
+                                                }
                                                 var confirmDialogResponse =
                                                     await showDialog<bool>(
                                                           context: context,
@@ -1710,10 +2047,86 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                         ) ??
                                                         false;
                                                 if (confirmDialogResponse) {
-                                                  var requestRecordReference =
-                                                      RequestRecord.collection
-                                                          .doc();
-                                                  await requestRecordReference
+                                                  if ((_model
+                                                              .recordedFileBytes
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false)) {
+                                                    {
+                                                      setState(() => _model
+                                                              .isDataUploading3 =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+                                                      var selectedFiles =
+                                                          <SelectedFile>[];
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles = _model
+                                                                .recordedFileBytes
+                                                                .bytes!
+                                                                .isNotEmpty
+                                                            ? [
+                                                                _model
+                                                                    .recordedFileBytes
+                                                              ]
+                                                            : <FFUploadedFile>[];
+                                                        selectedFiles =
+                                                            selectedFilesFromUploadedFiles(
+                                                          selectedUploadedFiles,
+                                                        );
+                                                        downloadUrls =
+                                                            (await Future.wait(
+                                                          selectedFiles.map(
+                                                            (f) async =>
+                                                                await uploadData(
+                                                                    f.storagePath,
+                                                                    f.bytes),
+                                                          ),
+                                                        ))
+                                                                .where((u) =>
+                                                                    u != null)
+                                                                .map((u) => u!)
+                                                                .toList();
+                                                      } finally {
+                                                        _model.isDataUploading3 =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedFiles
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedFiles
+                                                                  .length) {
+                                                        setState(() {
+                                                          _model.uploadedLocalFile3 =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl3 =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        setState(() {});
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    setState(() {
+                                                      _model.isAudioUploaded =
+                                                          true;
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      _model.isAudioUploaded =
+                                                          false;
+                                                    });
+                                                  }
+
+                                                  await RequestRecord.collection
+                                                      .doc()
                                                       .set({
                                                     ...createRequestRecordData(
                                                       shortDescription: _model
@@ -1745,6 +2158,10 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                       complete: false,
                                                       createdAt:
                                                           getCurrentTimestamp,
+                                                      audioFile: _model
+                                                          .uploadedFileUrl3,
+                                                      isAudioFile: _model
+                                                          .isAudioUploaded,
                                                     ),
                                                     ...mapToFirestore(
                                                       {
@@ -1753,61 +2170,12 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                       },
                                                     ),
                                                   });
-                                                  _model.newRequestId =
-                                                      RequestRecord
-                                                          .getDocumentFromData({
-                                                    ...createRequestRecordData(
-                                                      shortDescription: _model
-                                                          .shortDescriptionController
-                                                          .text,
-                                                      longDescription: _model
-                                                          .longDescriptionController
-                                                          .text,
-                                                      coverImage: _model
-                                                          .uploadedFileUrl1,
-                                                      location: _model
-                                                          .placePickerValue
-                                                          .latLng,
-                                                      totalPrice:
-                                                          valueOrDefault<
-                                                              double>(
-                                                        functions
-                                                            .convertStringToDouble(
-                                                                _model
-                                                                    .priceFieldController
-                                                                    .text),
-                                                        0.0,
-                                                      ),
-                                                      userId:
-                                                          currentUserReference,
-                                                      accepted: false,
-                                                      openPrice:
-                                                          _model.openPrice,
-                                                      complete: false,
-                                                      createdAt:
-                                                          getCurrentTimestamp,
-                                                    ),
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'Images': _model
-                                                            .uploadedFileUrls2,
-                                                      },
-                                                    ),
-                                                  }, requestRecordReference);
-                                                  shouldSetState = true;
                                                 } else {
-                                                  if (shouldSetState) {
-                                                    setState(() {});
-                                                  }
                                                   return;
                                                 }
 
                                                 context
                                                     .pushNamed('HelpRequests');
-
-                                                if (shouldSetState) {
-                                                  setState(() {});
-                                                }
                                               },
                                               text: 'Submit',
                                               options: FFButtonOptions(

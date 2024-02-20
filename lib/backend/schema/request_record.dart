@@ -85,6 +85,16 @@ class RequestRecord extends FirestoreRecord {
   DateTime? get createdAt => _createdAt;
   bool hasCreatedAt() => _createdAt != null;
 
+  // "AudioFile" field.
+  String? _audioFile;
+  String get audioFile => _audioFile ?? '';
+  bool hasAudioFile() => _audioFile != null;
+
+  // "IsAudioFile" field.
+  bool? _isAudioFile;
+  bool get isAudioFile => _isAudioFile ?? false;
+  bool hasIsAudioFile() => _isAudioFile != null;
+
   void _initializeFields() {
     _shortDescription = snapshotData['ShortDescription'] as String?;
     _longDescription = snapshotData['LongDescription'] as String?;
@@ -100,6 +110,8 @@ class RequestRecord extends FirestoreRecord {
     _acceptedPrice = castToType<double>(snapshotData['AcceptedPrice']);
     _complete = snapshotData['Complete'] as bool?;
     _createdAt = snapshotData['CreatedAt'] as DateTime?;
+    _audioFile = snapshotData['AudioFile'] as String?;
+    _isAudioFile = snapshotData['IsAudioFile'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -150,6 +162,8 @@ Map<String, dynamic> createRequestRecordData({
   double? acceptedPrice,
   bool? complete,
   DateTime? createdAt,
+  String? audioFile,
+  bool? isAudioFile,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -166,6 +180,8 @@ Map<String, dynamic> createRequestRecordData({
       'AcceptedPrice': acceptedPrice,
       'Complete': complete,
       'CreatedAt': createdAt,
+      'AudioFile': audioFile,
+      'IsAudioFile': isAudioFile,
     }.withoutNulls,
   );
 
@@ -191,7 +207,9 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e1?.acceptedOfferId == e2?.acceptedOfferId &&
         e1?.acceptedPrice == e2?.acceptedPrice &&
         e1?.complete == e2?.complete &&
-        e1?.createdAt == e2?.createdAt;
+        e1?.createdAt == e2?.createdAt &&
+        e1?.audioFile == e2?.audioFile &&
+        e1?.isAudioFile == e2?.isAudioFile;
   }
 
   @override
@@ -209,7 +227,9 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e?.acceptedOfferId,
         e?.acceptedPrice,
         e?.complete,
-        e?.createdAt
+        e?.createdAt,
+        e?.audioFile,
+        e?.isAudioFile
       ]);
 
   @override

@@ -40,6 +40,7 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
   late AcceptedOfferOffererModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  LatLng? currentUserLocationValue;
 
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
@@ -222,6 +223,9 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
     super.initState();
     _model = createModel(context, () => AcceptedOfferOffererModel());
 
+    getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -244,6 +248,22 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
     }
 
     context.watch<FFAppState>();
+    if (currentUserLocationValue == null) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: const Center(
+          child: SizedBox(
+            width: 50.0,
+            height: 50.0,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Color(0xFFF609F0),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     return StreamBuilder<OfferRecord>(
       stream: OfferRecord.getDocument(widget.thisOffertDocRef!),
@@ -360,12 +380,12 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                             return Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                if (functions.displayMap(
+                                if (functions.displayInitialMap(
                                     columnTrackOrderRecord!,
                                     acceptedOfferOffererOfferRecord
                                         .congratulationsShown,
-                                    columnTrackOrderRecord.source,
-                                    columnTrackOrderRecord.destination))
+                                    currentUserLocationValue,
+                                    columnTrackOrderRecord.source))
                                   Container(
                                     width: double.infinity,
                                     height: MediaQuery.sizeOf(context).height *
@@ -374,20 +394,54 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
                                     ),
-                                    child: custom_widgets.GMapWidget2(
+                                    child: SizedBox(
                                       width: double.infinity,
                                       height: double.infinity,
-                                      trackOrderRef:
-                                          columnTrackOrderRecord.reference.id,
-                                      trackOrderDoc: columnTrackOrderRecord,
+                                      child: custom_widgets.GMap(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        trackOrderRef: columnTrackOrderRecord.reference.id,
+                                        trackOrderDoc: columnTrackOrderRecord,
+                                      ),
                                     ),
                                   ),
-                                if (functions.displayMap(
+                                if (functions.displayTrackingMap(
                                     columnTrackOrderRecord,
                                     acceptedOfferOffererOfferRecord
                                         .congratulationsShown,
-                                    columnTrackOrderRecord.source,
-                                    columnTrackOrderRecord.destination))
+                                    currentUserLocationValue,
+                                    columnTrackOrderRecord.source))
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.35,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      child: custom_widgets.GMapWidget2(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        trackOrderRef: columnTrackOrderRecord.reference.id,
+                                        trackOrderDoc: columnTrackOrderRecord,
+                                      ),
+                                    ),
+                                  ),
+                                if (functions.displayInitialMap(
+                                        columnTrackOrderRecord,
+                                        acceptedOfferOffererOfferRecord
+                                            .congratulationsShown,
+                                        columnTrackOrderRecord.source,
+                                        columnTrackOrderRecord.destination) ||
+                                    functions.displayTrackingMap(
+                                        columnTrackOrderRecord,
+                                        acceptedOfferOffererOfferRecord
+                                            .congratulationsShown,
+                                        currentUserLocationValue,
+                                        columnTrackOrderRecord.source))
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         10.0, 5.0, 10.0, 0.0),
@@ -510,7 +564,7 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                                     },
                                     child: Material(
                                       color: Colors.transparent,
-                                      elevation: 12.0,
+                                      elevation: 8.0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
@@ -519,12 +573,19 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .accent4,
+                                              .primaryBackground,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 4.0,
+                                              color: Color(0x33000000),
+                                              offset: Offset(0.0, 2.0),
+                                            )
+                                          ],
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
                                             color: const Color(0xFF585858),
-                                            width: 0.5,
+                                            width: 0.0,
                                           ),
                                         ),
                                         child: Row(
@@ -614,10 +675,11 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                                                           setState(() {}),
                                                       child: UserRatingWidget(
                                                         userRating:
-                                                            valueOrDefault<int>(
+                                                            valueOrDefault<
+                                                                double>(
                                                           columnUsersRecord
                                                               .averageRating,
-                                                          0,
+                                                          0.0,
                                                         ),
                                                       ),
                                                     ),
@@ -1593,6 +1655,116 @@ class _AcceptedOfferOffererWidgetState extends State<AcceptedOfferOffererWidget>
                                       ],
                                     ),
                                   ),
+                                Text(
+                                  functions
+                                      .displayInitialMap(
+                                          columnTrackOrderRecord,
+                                          acceptedOfferOffererOfferRecord
+                                              .congratulationsShown,
+                                          currentUserLocationValue,
+                                          columnTrackOrderRecord.source)
+                                      .toString(),
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 10.0, 10.0, 0.0),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 8.0,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(8.0),
+                                        bottomRight: Radius.circular(8.0),
+                                        topLeft: Radius.circular(8.0),
+                                        topRight: Radius.circular(8.0),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 50.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(8.0),
+                                          bottomRight: Radius.circular(8.0),
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 0.0, 10.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              'Have you left yet?',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge,
+                                            ),
+                                            FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: 'Yes',
+                                              options: FFButtonOptions(
+                                                height: 30.0,
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        24.0, 0.0, 24.0, 0.0),
+                                                iconPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color: const Color(0xFFF609F0),
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          color: Colors.white,
+                                                        ),
+                                                elevation: 3.0,
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  functions
+                                      .displayTrackingMap(
+                                          columnTrackOrderRecord,
+                                          acceptedOfferOffererOfferRecord
+                                              .congratulationsShown,
+                                          columnTrackOrderRecord.source,
+                                          currentUserLocationValue)
+                                      .toString(),
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                ),
                                 if ((acceptedOfferOffererOfferRecord
                                             .congratulationsShown ==
                                         true) &&

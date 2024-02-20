@@ -601,10 +601,11 @@ class _AcceptedOfferOffererCopyWidgetState
                                                           setState(() {}),
                                                       child: UserRatingWidget(
                                                         userRating:
-                                                            valueOrDefault<int>(
+                                                            valueOrDefault<
+                                                                double>(
                                                           columnUsersRecord
                                                               .averageRating,
-                                                          0,
+                                                          0.0,
                                                         ),
                                                       ),
                                                     ),

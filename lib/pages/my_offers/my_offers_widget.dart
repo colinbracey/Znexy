@@ -47,6 +47,13 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
           begin: const Offset(0.0, 50.0),
           end: const Offset(0.0, 0.0),
         ),
+        TiltEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: const Offset(0.681, 0),
+          end: const Offset(0, 0),
+        ),
       ],
     ),
   };

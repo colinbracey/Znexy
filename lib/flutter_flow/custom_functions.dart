@@ -109,6 +109,36 @@ String offerStatus(int statusId) {
   }
 }
 
+bool displayTrackingMap(
+  TrackOrderRecord trackOrder,
+  bool congratulationsShown,
+  LatLng? source,
+  LatLng? destination,
+) {
+  if (source == null || destination == null) {
+    return false;
+  }
+
+  if (congratulationsShown == false) {
+    return false;
+  }
+
+  if (trackOrder.arrived ||
+      trackOrder.workUnderWay ||
+      trackOrder.workCompletedOfferer ||
+      trackOrder.workCompletedRequester) {
+    return false;
+  }
+
+  if (trackOrder.headingYourWay) {
+    return true;
+  }
+
+  // Return true if none of the conditions are met
+  return false;
+  ;
+}
+
 double totalShoppingCartValue(
   List<ShoppingCartRecord>? shoppingCartEntries,
   double percentage,
@@ -204,7 +234,7 @@ Color workCompletedColor(
   }
 }
 
-bool displayMap(
+bool displayInitialMap(
   TrackOrderRecord trackOrder,
   bool congratulationsShown,
   LatLng? source,
@@ -214,8 +244,13 @@ bool displayMap(
     return false;
   }
 
+  if (congratulationsShown == false) {
+    return false;
+  }
+
   // Return false immediately if any condition is met
-  if (congratulationsShown == false ||
+  if (trackOrder.headingYourWay ||
+      trackOrder.arrived ||
       trackOrder.workUnderWay ||
       trackOrder.workCompletedOfferer ||
       trackOrder.workCompletedRequester) {

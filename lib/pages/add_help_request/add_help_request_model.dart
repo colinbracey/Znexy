@@ -1,9 +1,9 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'add_help_request_widget.dart' show AddHelpRequestWidget;
 import 'package:flutter/material.dart';
+import 'package:record/record.dart';
 
 class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   ///  Local state fields for this page.
@@ -11,6 +11,12 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   LatLng? kelowna;
 
   bool openPrice = false;
+
+  bool isRecording = false;
+
+  bool isShowPlayer = false;
+
+  bool isAudioUploaded = false;
 
   ///  State fields for stateful widgets in this page.
 
@@ -31,6 +37,10 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   FocusNode? longDescriptionFocusNode;
   TextEditingController? longDescriptionController;
   String? Function(BuildContext, String?)? longDescriptionControllerValidator;
+  AudioRecorder? audioRecorder;
+  String? recording;
+  FFUploadedFile recordedFileBytes =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -52,8 +62,10 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   FocusNode? priceFieldFocusNode;
   TextEditingController? priceFieldController;
   String? Function(BuildContext, String?)? priceFieldControllerValidator;
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  RequestRecord? newRequestId;
+  bool isDataUploading3 = false;
+  FFUploadedFile uploadedLocalFile3 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl3 = '';
 
   /// Initialization and disposal methods.
 

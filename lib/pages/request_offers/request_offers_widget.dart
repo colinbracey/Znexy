@@ -258,7 +258,7 @@ class _RequestOffersWidgetState extends State<RequestOffersWidget> {
                                                   onChanged: (val) => setState(
                                                       () => _model
                                                               .choiceChipsValue =
-                                                          val?.first),
+                                                          val?.firstOrNull),
                                                   selectedChipStyle: ChipStyle(
                                                     backgroundColor:
                                                         const Color(0xFFF609F0),

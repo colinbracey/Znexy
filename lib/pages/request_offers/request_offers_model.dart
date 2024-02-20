@@ -8,8 +8,11 @@ class RequestOffersModel extends FlutterFlowModel<RequestOffersWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for ChoiceChips widget.
-  String? choiceChipsValue;
   FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
 
   /// Initialization and disposal methods.
 

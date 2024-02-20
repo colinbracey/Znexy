@@ -48,6 +48,13 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
           begin: const Offset(0.0, 50.0),
           end: const Offset(0.0, 0.0),
         ),
+        TiltEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: const Offset(0.681, 0),
+          end: const Offset(0, 0),
+        ),
       ],
     ),
     'floatingActionButtonOnPageLoadAnimation': AnimationInfo(
@@ -57,14 +64,14 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 1440.ms,
-          duration: 1030.ms,
+          duration: 710.ms,
           begin: const Offset(100.0, 0.0),
           end: const Offset(0.0, 0.0),
         ),
         FadeEffect(
           curve: Curves.easeInOut,
           delay: 1440.ms,
-          duration: 1170.ms,
+          duration: 710.ms,
           begin: 0.0,
           end: 1.0,
         ),
@@ -154,22 +161,25 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () async {
-                context.pushNamed('AddHelpRequest');
-              },
-              backgroundColor: const Color(0xFFF609F0),
-              icon: const Icon(
-                Icons.hail,
-              ),
-              elevation: 8.0,
-              label: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.of(context).info,
-                size: 24.0,
-              ),
-            ).animateOnPageLoad(
-                animationsMap['floatingActionButtonOnPageLoadAnimation']!),
+            floatingActionButton: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+              child: FloatingActionButton.extended(
+                onPressed: () async {
+                  context.pushNamed('AddHelpRequest');
+                },
+                backgroundColor: const Color(0xFFF609F0),
+                icon: const Icon(
+                  Icons.hail,
+                ),
+                elevation: 8.0,
+                label: Icon(
+                  Icons.add,
+                  color: FlutterFlowTheme.of(context).info,
+                  size: 24.0,
+                ),
+              ).animateOnPageLoad(
+                  animationsMap['floatingActionButtonOnPageLoadAnimation']!),
+            ),
             body: SafeArea(
               top: true,
               child: Column(

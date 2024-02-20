@@ -184,6 +184,7 @@ class _RequesterSetCompletedWidgetState
                                 child: LeaveReviewWidget(
                                   requestersName: widget.requesterUserName,
                                   requesterUserId: widget.requesterUserId!,
+                                  requestDocRef: widget.offerDocRef!.requestId!,
                                 ),
                               );
                             },

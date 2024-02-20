@@ -84,10 +84,10 @@ class _HelpsMapWidgetState extends State<HelpsMapWidget> {
             List<RequestRecord> googleMapRequestRecordList = snapshot.data!;
             return FlutterFlowGoogleMap(
               controller: _model.googleMapsController,
-              onCameraIdle: (latLng) => _model.googleMapsCenter = latLng,
-              initialLocation: _model.googleMapsCenter ??= isWeb == true
-                  ? FFAppState().kelowna!
-                  : currentUserLocationValue!,
+              onCameraIdle: (latLng) =>
+                  setState(() => _model.googleMapsCenter = latLng),
+              initialLocation: _model.googleMapsCenter ??=
+                  currentUserLocationValue!,
               markers: googleMapRequestRecordList
                   .map(
                     (googleMapRequestRecord) => FlutterFlowMarker(

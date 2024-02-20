@@ -10,6 +10,7 @@ import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'index.dart';
 
 import 'backend/stripe/payment_manager.dart';
@@ -141,9 +142,16 @@ class _NavBarPageState extends State<NavBarPage> {
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
+    final MediaQueryData queryData = MediaQuery.of(context);
+
     return Scaffold(
-      body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: BottomNavigationBar(
+      body: MediaQuery(
+          data: queryData
+              .removeViewInsets(removeBottom: true)
+              .removeViewPadding(removeBottom: true),
+          child: _currentPage ?? tabs[_currentPageName]!),
+      extendBody: true,
+      bottomNavigationBar: FloatingNavbar(
         currentIndex: currentIndex,
         onTap: (i) => setState(() {
           _currentPage = null;
@@ -152,45 +160,107 @@ class _NavBarPageState extends State<NavBarPage> {
         backgroundColor: Colors.white,
         selectedItemColor: const Color(0xFFF609F0),
         unselectedItemColor: const Color(0xFF142328),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.front_hand_sharp,
-              size: 24.0,
+        selectedBackgroundColor: const Color(0x00000000),
+        borderRadius: 8.0,
+        itemBorderRadius: 8.0,
+        margin: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+        width: double.infinity,
+        elevation: 0.0,
+        items: [
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.front_hand_sharp,
+                  color:
+                      currentIndex == 0 ? const Color(0xFFF609F0) : const Color(0xFF142328),
+                  size: 24.0,
+                ),
+                Text(
+                  'My Offers',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 0
+                        ? const Color(0xFFF609F0)
+                        : const Color(0xFF142328),
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
             ),
-            label: 'My Offers',
-            tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.hail,
-              size: 24.0,
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.hail,
+                  color:
+                      currentIndex == 1 ? const Color(0xFFF609F0) : const Color(0xFF142328),
+                  size: 24.0,
+                ),
+                Text(
+                  'Requests',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 1
+                        ? const Color(0xFFF609F0)
+                        : const Color(0xFF142328),
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
             ),
-            label: 'Requests',
-            tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_2,
-              size: 24.0,
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.person_2,
+                  color:
+                      currentIndex == 2 ? const Color(0xFFF609F0) : const Color(0xFF142328),
+                  size: 24.0,
+                ),
+                Text(
+                  'Profile',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 2
+                        ? const Color(0xFFF609F0)
+                        : const Color(0xFF142328),
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
             ),
-            label: 'Profile',
-            tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat_bubble_rounded,
-              size: 24.0,
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  currentIndex == 3
+                      ? Icons.chat_bubble_rounded
+                      : Icons.chat_bubble_rounded,
+                  color:
+                      currentIndex == 3 ? const Color(0xFFF609F0) : const Color(0xFF142328),
+                  size: currentIndex == 3 ? 24.0 : 24.0,
+                ),
+                Text(
+                  'Chat',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 3
+                        ? const Color(0xFFF609F0)
+                        : const Color(0xFF142328),
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
             ),
-            activeIcon: Icon(
-              Icons.chat_bubble_rounded,
-              size: 24.0,
-            ),
-            label: 'Chat',
-            tooltip: '',
           )
         ],
       ),

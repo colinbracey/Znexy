@@ -113,7 +113,7 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
                             child: UserRatingWidget(
                               key: Key(
                                   'Key78j_${reviewListIndex}_of_${reviewList.length}'),
-                              userRating: reviewListItem.rating,
+                              userRating: reviewListItem.rating.toDouble(),
                             ),
                           ),
                           Text(

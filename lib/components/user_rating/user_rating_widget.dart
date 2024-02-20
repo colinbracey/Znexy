@@ -8,10 +8,10 @@ export 'user_rating_model.dart';
 class UserRatingWidget extends StatefulWidget {
   const UserRatingWidget({
     super.key,
-    int? userRating,
-  }) : userRating = userRating ?? 0;
+    double? userRating,
+  }) : userRating = userRating ?? 0.0;
 
-  final int userRating;
+  final double userRating;
 
   @override
   State<UserRatingWidget> createState() => _UserRatingWidgetState();
@@ -51,7 +51,7 @@ class _UserRatingWidgetState extends State<UserRatingWidget> {
         color: Color(0xFFF609F0),
       ),
       direction: Axis.horizontal,
-      rating: widget.userRating.toDouble(),
+      rating: widget.userRating,
       unratedColor: const Color(0xFF142328),
       itemCount: 5,
       itemSize: 15.0,

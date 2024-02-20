@@ -50,15 +50,15 @@ class UsersRecord extends FirestoreRecord {
   int get numberOfReviews => _numberOfReviews ?? 0;
   bool hasNumberOfReviews() => _numberOfReviews != null;
 
-  // "averageRating" field.
-  int? _averageRating;
-  int get averageRating => _averageRating ?? 0;
-  bool hasAverageRating() => _averageRating != null;
-
   // "Bio" field.
   String? _bio;
   String get bio => _bio ?? '';
   bool hasBio() => _bio != null;
+
+  // "averageRating" field.
+  double? _averageRating;
+  double get averageRating => _averageRating ?? 0.0;
+  bool hasAverageRating() => _averageRating != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -68,8 +68,8 @@ class UsersRecord extends FirestoreRecord {
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _numberOfReviews = castToType<int>(snapshotData['numberOfReviews']);
-    _averageRating = castToType<int>(snapshotData['averageRating']);
     _bio = snapshotData['Bio'] as String?;
+    _averageRating = castToType<double>(snapshotData['averageRating']);
   }
 
   static CollectionReference get collection =>
@@ -113,8 +113,8 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   int? numberOfReviews,
-  int? averageRating,
   String? bio,
+  double? averageRating,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -125,8 +125,8 @@ Map<String, dynamic> createUsersRecordData({
       'created_time': createdTime,
       'phone_number': phoneNumber,
       'numberOfReviews': numberOfReviews,
-      'averageRating': averageRating,
       'Bio': bio,
+      'averageRating': averageRating,
     }.withoutNulls,
   );
 
@@ -145,8 +145,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.numberOfReviews == e2?.numberOfReviews &&
-        e1?.averageRating == e2?.averageRating &&
-        e1?.bio == e2?.bio;
+        e1?.bio == e2?.bio &&
+        e1?.averageRating == e2?.averageRating;
   }
 
   @override
@@ -158,8 +158,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.createdTime,
         e?.phoneNumber,
         e?.numberOfReviews,
-        e?.averageRating,
-        e?.bio
+        e?.bio,
+        e?.averageRating
       ]);
 
   @override
