@@ -9,12 +9,12 @@ class UserRatingWidget extends StatefulWidget {
   const UserRatingWidget({
     super.key,
     int? userRating,
-  })  : userRating = userRating ?? 0;
+  }) : userRating = userRating ?? 0;
 
   final int userRating;
 
   @override
-  _UserRatingWidgetState createState() => _UserRatingWidgetState();
+  State<UserRatingWidget> createState() => _UserRatingWidgetState();
 }
 
 class _UserRatingWidgetState extends State<UserRatingWidget> {

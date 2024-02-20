@@ -135,14 +135,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'HelpRequests',
-          path: '/helpRequests',
-          requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'HelpRequests')
-              : const HelpRequestsWidget(),
-        ),
-        FFRoute(
           name: 'Profile',
           path: '/profile',
           requireAuth: true,
@@ -169,7 +161,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'UsersReviews',
           path: '/usersReviews',
           requireAuth: true,
-          builder: (context, params) => const UsersReviewsWidget(),
+          builder: (context, params) => UsersReviewsWidget(
+            userIdRef: params.getParam(
+                'userIdRef', ParamType.DocumentReference, false, ['users']),
+          ),
         ),
         FFRoute(
           name: 'RequestOfferDetail',
@@ -238,6 +233,41 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/congratulationsOfferAccepted',
           requireAuth: true,
           builder: (context, params) => const CongratulationsOfferAcceptedWidget(),
+        ),
+        FFRoute(
+          name: 'AcceptedOfferOfferer',
+          path: '/acceptedOfferOfferer',
+          requireAuth: true,
+          builder: (context, params) => AcceptedOfferOffererWidget(
+            thisOffertDocRef: params.getParam('thisOffertDocRef',
+                ParamType.DocumentReference, false, ['Offer']),
+          ),
+        ),
+        FFRoute(
+          name: 'HelpRequests',
+          path: '/helpRequests',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'HelpRequests')
+              : const HelpRequestsWidget(),
+        ),
+        FFRoute(
+          name: 'AcceptedOfferOffererCopy',
+          path: '/acceptedOfferOffererCopy',
+          requireAuth: true,
+          builder: (context, params) => AcceptedOfferOffererCopyWidget(
+            thisOffertDocRef: params.getParam('thisOffertDocRef',
+                ParamType.DocumentReference, false, ['Offer']),
+          ),
+        ),
+        FFRoute(
+          name: 'RequestDetailCopy',
+          path: '/requestDetailCopy',
+          requireAuth: true,
+          builder: (context, params) => RequestDetailCopyWidget(
+            thisRequestDocRef: params.getParam('thisRequestDocRef',
+                ParamType.DocumentReference, false, ['Request']),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

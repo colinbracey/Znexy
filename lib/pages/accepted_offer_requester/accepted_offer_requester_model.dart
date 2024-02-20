@@ -8,6 +8,10 @@ class AcceptedOfferRequesterModel
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // Stores action output result for [Custom Action - isGeolocationEnabled] action in AcceptedOfferRequester widget.
+  bool? isGeolocationOn;
+  // Stores action output result for [Custom Action - switchOnGeolocation] action in AcceptedOfferRequester widget.
+  bool? geolocationSwitchedOn;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;

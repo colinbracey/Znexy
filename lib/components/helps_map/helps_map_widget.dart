@@ -11,7 +11,7 @@ class HelpsMapWidget extends StatefulWidget {
   const HelpsMapWidget({super.key});
 
   @override
-  _HelpsMapWidgetState createState() => _HelpsMapWidgetState();
+  State<HelpsMapWidget> createState() => _HelpsMapWidgetState();
 }
 
 class _HelpsMapWidgetState extends State<HelpsMapWidget> {

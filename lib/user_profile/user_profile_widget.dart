@@ -1,7 +1,9 @@
 import '/backend/backend.dart';
+import '/components/user_rating_large/user_rating_large_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,7 @@ class UserProfileWidget extends StatefulWidget {
   final DocumentReference? userDocRef;
 
   @override
-  _UserProfileWidgetState createState() => _UserProfileWidgetState();
+  State<UserProfileWidget> createState() => _UserProfileWidgetState();
 }
 
 class _UserProfileWidgetState extends State<UserProfileWidget> {
@@ -123,26 +125,22 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                         children: [
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 0.0),
-                              child: Container(
-                                width: 100.0,
-                                height: 100.0,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFFF609F0),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    child: Image.network(
-                                      userProfileUsersRecord.photoUrl,
-                                      width: 100.0,
-                                      height: 100.0,
-                                      fit: BoxFit.cover,
-                                    ),
+                            child: Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFF609F0),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  child: Image.network(
+                                    userProfileUsersRecord.photoUrl,
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -163,6 +161,104 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                   color: FlutterFlowTheme.of(context).info,
                                 ),
                       ),
+                    ),
+                    StreamBuilder<List<ReviewRecord>>(
+                      stream: queryReviewRecord(
+                        queryBuilder: (reviewRecord) => reviewRecord.where(
+                          'UserId',
+                          isEqualTo: widget.userDocRef,
+                        ),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFFF609F0),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        List<ReviewRecord> containerReviewRecordList =
+                            snapshot.data!;
+                        return Container(
+                          decoration: const BoxDecoration(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  wrapWithModel(
+                                    model: _model.userRatingLargeModel,
+                                    updateCallback: () => setState(() {}),
+                                    child: UserRatingLargeWidget(
+                                      userRating: valueOrDefault<double>(
+                                        functions.calculateAverageRating(
+                                            containerReviewRecordList
+                                                .map((e) => valueOrDefault<int>(
+                                                      e.rating,
+                                                      0,
+                                                    ))
+                                                .toList()),
+                                        0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (containerReviewRecordList.isNotEmpty)
+                                    Text(
+                                      'Rating ${valueOrDefault<String>(
+                                        functions
+                                            .calculateAverageRating(
+                                                containerReviewRecordList
+                                                    .map((e) =>
+                                                        valueOrDefault<int>(
+                                                          e.rating,
+                                                          0,
+                                                        ))
+                                                    .toList())
+                                            .toString(),
+                                        '0',
+                                      )} from ${valueOrDefault<String>(
+                                        containerReviewRecordList.length
+                                            .toString(),
+                                        '0',
+                                      )} reviews',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: const Color(0xFFFDFDFD),
+                                          ),
+                                    ),
+                                  if (containerReviewRecordList.isEmpty)
+                                    Text(
+                                      'No Reviews yet',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: const Color(0xFFFDFDFD),
+                                          ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                     Expanded(
                       child: Padding(

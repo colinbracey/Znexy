@@ -70,6 +70,11 @@ class OfferRecord extends FirestoreRecord {
   int get status => _status ?? 0;
   bool hasStatus() => _status != null;
 
+  // "CongratulationsShown" field.
+  bool? _congratulationsShown;
+  bool get congratulationsShown => _congratulationsShown ?? false;
+  bool hasCongratulationsShown() => _congratulationsShown != null;
+
   void _initializeFields() {
     _requestId = snapshotData['RequestId'] as DocumentReference?;
     _userId = snapshotData['UserId'] as DocumentReference?;
@@ -85,6 +90,7 @@ class OfferRecord extends FirestoreRecord {
       BidHistoryStruct.fromMap,
     );
     _status = castToType<int>(snapshotData['Status']);
+    _congratulationsShown = snapshotData['CongratulationsShown'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -130,6 +136,7 @@ Map<String, dynamic> createOfferRecordData({
   LatLng? location,
   String? description,
   int? status,
+  bool? congratulationsShown,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -142,6 +149,7 @@ Map<String, dynamic> createOfferRecordData({
       'Location': location,
       'Description': description,
       'Status': status,
+      'CongratulationsShown': congratulationsShown,
     }.withoutNulls,
   );
 
@@ -164,7 +172,8 @@ class OfferRecordDocumentEquality implements Equality<OfferRecord> {
         listEquality.equals(e1?.locationMovements, e2?.locationMovements) &&
         e1?.description == e2?.description &&
         listEquality.equals(e1?.bidHistory, e2?.bidHistory) &&
-        e1?.status == e2?.status;
+        e1?.status == e2?.status &&
+        e1?.congratulationsShown == e2?.congratulationsShown;
   }
 
   @override
@@ -179,7 +188,8 @@ class OfferRecordDocumentEquality implements Equality<OfferRecord> {
         e?.locationMovements,
         e?.description,
         e?.bidHistory,
-        e?.status
+        e?.status,
+        e?.congratulationsShown
       ]);
 
   @override

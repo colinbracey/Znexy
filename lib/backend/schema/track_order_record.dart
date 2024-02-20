@@ -54,16 +54,6 @@ class TrackOrderRecord extends FirestoreRecord {
   DateTime? get workUnderWayDate => _workUnderWayDate;
   bool hasWorkUnderWayDate() => _workUnderWayDate != null;
 
-  // "WorkCompleted" field.
-  bool? _workCompleted;
-  bool get workCompleted => _workCompleted ?? false;
-  bool hasWorkCompleted() => _workCompleted != null;
-
-  // "WorkCompletedDate" field.
-  DateTime? _workCompletedDate;
-  DateTime? get workCompletedDate => _workCompletedDate;
-  bool hasWorkCompletedDate() => _workCompletedDate != null;
-
   // "Review" field.
   bool? _review;
   bool get review => _review ?? false;
@@ -94,6 +84,36 @@ class TrackOrderRecord extends FirestoreRecord {
   LatLng? get destination => _destination;
   bool hasDestination() => _destination != null;
 
+  // "TimeLeft" field.
+  String? _timeLeft;
+  String get timeLeft => _timeLeft ?? '';
+  bool hasTimeLeft() => _timeLeft != null;
+
+  // "DistanceLeft" field.
+  String? _distanceLeft;
+  String get distanceLeft => _distanceLeft ?? '';
+  bool hasDistanceLeft() => _distanceLeft != null;
+
+  // "WorkCompletedOfferer" field.
+  bool? _workCompletedOfferer;
+  bool get workCompletedOfferer => _workCompletedOfferer ?? false;
+  bool hasWorkCompletedOfferer() => _workCompletedOfferer != null;
+
+  // "WorkCompletedDateOfferer" field.
+  DateTime? _workCompletedDateOfferer;
+  DateTime? get workCompletedDateOfferer => _workCompletedDateOfferer;
+  bool hasWorkCompletedDateOfferer() => _workCompletedDateOfferer != null;
+
+  // "WorkCompletedRequester" field.
+  bool? _workCompletedRequester;
+  bool get workCompletedRequester => _workCompletedRequester ?? false;
+  bool hasWorkCompletedRequester() => _workCompletedRequester != null;
+
+  // "WorkCompletedDateRequester" field.
+  DateTime? _workCompletedDateRequester;
+  DateTime? get workCompletedDateRequester => _workCompletedDateRequester;
+  bool hasWorkCompletedDateRequester() => _workCompletedDateRequester != null;
+
   void _initializeFields() {
     _accepted = snapshotData['Accepted'] as bool?;
     _acceptedDate = snapshotData['AcceptedDate'] as DateTime?;
@@ -103,14 +123,20 @@ class TrackOrderRecord extends FirestoreRecord {
     _arrivedDate = snapshotData['ArrivedDate'] as DateTime?;
     _workUnderWay = snapshotData['WorkUnderWay'] as bool?;
     _workUnderWayDate = snapshotData['WorkUnderWayDate'] as DateTime?;
-    _workCompleted = snapshotData['WorkCompleted'] as bool?;
-    _workCompletedDate = snapshotData['WorkCompletedDate'] as DateTime?;
     _review = snapshotData['Review'] as bool?;
     _reviewDate = snapshotData['ReviewDate'] as DateTime?;
     _offerId = snapshotData['OfferId'] as DocumentReference?;
     _driverPositions = getDataList(snapshotData['DriverPositions']);
     _source = snapshotData['Source'] as LatLng?;
     _destination = snapshotData['Destination'] as LatLng?;
+    _timeLeft = snapshotData['TimeLeft'] as String?;
+    _distanceLeft = snapshotData['DistanceLeft'] as String?;
+    _workCompletedOfferer = snapshotData['WorkCompletedOfferer'] as bool?;
+    _workCompletedDateOfferer =
+        snapshotData['WorkCompletedDateOfferer'] as DateTime?;
+    _workCompletedRequester = snapshotData['WorkCompletedRequester'] as bool?;
+    _workCompletedDateRequester =
+        snapshotData['WorkCompletedDateRequester'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -156,13 +182,17 @@ Map<String, dynamic> createTrackOrderRecordData({
   DateTime? arrivedDate,
   bool? workUnderWay,
   DateTime? workUnderWayDate,
-  bool? workCompleted,
-  DateTime? workCompletedDate,
   bool? review,
   DateTime? reviewDate,
   DocumentReference? offerId,
   LatLng? source,
   LatLng? destination,
+  String? timeLeft,
+  String? distanceLeft,
+  bool? workCompletedOfferer,
+  DateTime? workCompletedDateOfferer,
+  bool? workCompletedRequester,
+  DateTime? workCompletedDateRequester,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -174,13 +204,17 @@ Map<String, dynamic> createTrackOrderRecordData({
       'ArrivedDate': arrivedDate,
       'WorkUnderWay': workUnderWay,
       'WorkUnderWayDate': workUnderWayDate,
-      'WorkCompleted': workCompleted,
-      'WorkCompletedDate': workCompletedDate,
       'Review': review,
       'ReviewDate': reviewDate,
       'OfferId': offerId,
       'Source': source,
       'Destination': destination,
+      'TimeLeft': timeLeft,
+      'DistanceLeft': distanceLeft,
+      'WorkCompletedOfferer': workCompletedOfferer,
+      'WorkCompletedDateOfferer': workCompletedDateOfferer,
+      'WorkCompletedRequester': workCompletedRequester,
+      'WorkCompletedDateRequester': workCompletedDateRequester,
     }.withoutNulls,
   );
 
@@ -201,14 +235,18 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e1?.arrivedDate == e2?.arrivedDate &&
         e1?.workUnderWay == e2?.workUnderWay &&
         e1?.workUnderWayDate == e2?.workUnderWayDate &&
-        e1?.workCompleted == e2?.workCompleted &&
-        e1?.workCompletedDate == e2?.workCompletedDate &&
         e1?.review == e2?.review &&
         e1?.reviewDate == e2?.reviewDate &&
         e1?.offerId == e2?.offerId &&
         listEquality.equals(e1?.driverPositions, e2?.driverPositions) &&
         e1?.source == e2?.source &&
-        e1?.destination == e2?.destination;
+        e1?.destination == e2?.destination &&
+        e1?.timeLeft == e2?.timeLeft &&
+        e1?.distanceLeft == e2?.distanceLeft &&
+        e1?.workCompletedOfferer == e2?.workCompletedOfferer &&
+        e1?.workCompletedDateOfferer == e2?.workCompletedDateOfferer &&
+        e1?.workCompletedRequester == e2?.workCompletedRequester &&
+        e1?.workCompletedDateRequester == e2?.workCompletedDateRequester;
   }
 
   @override
@@ -221,14 +259,18 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e?.arrivedDate,
         e?.workUnderWay,
         e?.workUnderWayDate,
-        e?.workCompleted,
-        e?.workCompletedDate,
         e?.review,
         e?.reviewDate,
         e?.offerId,
         e?.driverPositions,
         e?.source,
-        e?.destination
+        e?.destination,
+        e?.timeLeft,
+        e?.distanceLeft,
+        e?.workCompletedOfferer,
+        e?.workCompletedDateOfferer,
+        e?.workCompletedRequester,
+        e?.workCompletedDateRequester
       ]);
 
   @override

@@ -8,8 +8,14 @@ class SigninPageModel extends FlutterFlowModel<SigninPageWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  String? dropDownValue1;
+  FormFieldController<String>? dropDownValueController1;
+  // State field(s) for DropDown widget.
+  String? dropDownValue2;
+  FormFieldController<String>? dropDownValueController2;
+  // State field(s) for DropDown widget.
+  String? dropDownValue3;
+  FormFieldController<String>? dropDownValueController3;
 
   /// Initialization and disposal methods.
 

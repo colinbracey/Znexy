@@ -15,7 +15,7 @@ class RegisterEmailWidget extends StatefulWidget {
   const RegisterEmailWidget({super.key});
 
   @override
-  _RegisterEmailWidgetState createState() => _RegisterEmailWidgetState();
+  State<RegisterEmailWidget> createState() => _RegisterEmailWidgetState();
 }
 
 class _RegisterEmailWidgetState extends State<RegisterEmailWidget>

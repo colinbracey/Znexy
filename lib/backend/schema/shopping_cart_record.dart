@@ -35,11 +35,17 @@ class ShoppingCartRecord extends FirestoreRecord {
   double get value => _value ?? 0.0;
   bool hasValue() => _value != null;
 
+  // "OfferUserId" field.
+  DocumentReference? _offerUserId;
+  DocumentReference? get offerUserId => _offerUserId;
+  bool hasOfferUserId() => _offerUserId != null;
+
   void _initializeFields() {
     _userId = snapshotData['UserId'] as DocumentReference?;
     _offerId = snapshotData['OfferId'] as DocumentReference?;
     _requestId = snapshotData['RequestId'] as DocumentReference?;
     _value = castToType<double>(snapshotData['Value']);
+    _offerUserId = snapshotData['OfferUserId'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -81,6 +87,7 @@ Map<String, dynamic> createShoppingCartRecordData({
   DocumentReference? offerId,
   DocumentReference? requestId,
   double? value,
+  DocumentReference? offerUserId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -88,6 +95,7 @@ Map<String, dynamic> createShoppingCartRecordData({
       'OfferId': offerId,
       'RequestId': requestId,
       'Value': value,
+      'OfferUserId': offerUserId,
     }.withoutNulls,
   );
 
@@ -103,12 +111,13 @@ class ShoppingCartRecordDocumentEquality
     return e1?.userId == e2?.userId &&
         e1?.offerId == e2?.offerId &&
         e1?.requestId == e2?.requestId &&
-        e1?.value == e2?.value;
+        e1?.value == e2?.value &&
+        e1?.offerUserId == e2?.offerUserId;
   }
 
   @override
   int hash(ShoppingCartRecord? e) => const ListEquality()
-      .hash([e?.userId, e?.offerId, e?.requestId, e?.value]);
+      .hash([e?.userId, e?.offerId, e?.requestId, e?.value, e?.offerUserId]);
 
   @override
   bool isValidKey(Object? o) => o is ShoppingCartRecord;

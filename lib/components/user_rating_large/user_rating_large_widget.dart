@@ -8,13 +8,13 @@ export 'user_rating_large_model.dart';
 class UserRatingLargeWidget extends StatefulWidget {
   const UserRatingLargeWidget({
     super.key,
-    int? userRating,
-  })  : userRating = userRating ?? 0;
+    double? userRating,
+  }) : userRating = userRating ?? 0.0;
 
-  final int userRating;
+  final double userRating;
 
   @override
-  _UserRatingLargeWidgetState createState() => _UserRatingLargeWidgetState();
+  State<UserRatingLargeWidget> createState() => _UserRatingLargeWidgetState();
 }
 
 class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
@@ -45,16 +45,19 @@ class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return RatingBarIndicator(
+    return RatingBar.builder(
+      onRatingUpdate: (newValue) =>
+          setState(() => _model.leaveReviewRatingValue = newValue),
       itemBuilder: (context, index) => const Icon(
         Icons.star_rounded,
         color: Color(0xFFF609F0),
       ),
       direction: Axis.horizontal,
-      rating: widget.userRating.toDouble(),
-      unratedColor: const Color(0xFF142328),
+      initialRating: _model.leaveReviewRatingValue ??= 2.0,
+      unratedColor: Colors.white,
       itemCount: 5,
       itemSize: 25.0,
+      glowColor: const Color(0xFFF609F0),
     );
   }
 }

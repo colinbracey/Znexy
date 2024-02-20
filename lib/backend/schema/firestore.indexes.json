@@ -15,6 +15,20 @@
       ]
     },
     {
+      "collectionGroup": "Review",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "UserId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CreatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "chats",
       "queryScope": "COLLECTION",
       "fields": [

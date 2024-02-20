@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:badges/badges.dart' as badges;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -19,7 +20,7 @@ class HelpRequestsWidget extends StatefulWidget {
   const HelpRequestsWidget({super.key});
 
   @override
-  _HelpRequestsWidgetState createState() => _HelpRequestsWidgetState();
+  State<HelpRequestsWidget> createState() => _HelpRequestsWidgetState();
 }
 
 class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
@@ -36,9 +37,16 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
         FadeEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
-          duration: 1050.ms,
+          duration: 600.ms,
           begin: 0.0,
           end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: const Offset(0.0, 50.0),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -116,7 +124,7 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
     return StreamBuilder<List<RequestRecord>>(
       stream: queryRequestRecord(
         queryBuilder: (requestRecord) => requestRecord.where(
-          'Accepted',
+          'Complete',
           isEqualTo: false,
         ),
       ),
@@ -598,11 +606,10 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                       return ListView.builder(
                                         padding: const EdgeInsets.fromLTRB(
                                           0,
-                                          0,
+                                          10.0,
                                           0,
                                           20.0,
                                         ),
-                                        shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount: helpRequests.length,
                                         itemBuilder:
@@ -622,27 +629,48 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                                     helpRequestsItem.userId?.id,
                                                     currentUserUid) ??
                                                 true,
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 180.0,
-                                              decoration: const BoxDecoration(),
-                                              child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 10.0, 10.0, 0.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 15.0),
+                                              child: InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  if (helpRequestsItem.userId ==
+                                                      currentUserReference) {
                                                     if (helpRequestsItem
-                                                            .userId ==
-                                                        currentUserReference) {
+                                                            .accepted ==
+                                                        true) {
+                                                      context.pushNamed(
+                                                        'AcceptedOfferRequester',
+                                                        queryParameters: {
+                                                          'thisOffertDocRef':
+                                                              serializeParam(
+                                                            helpRequestsItem
+                                                                .acceptedOfferId,
+                                                            ParamType
+                                                                .DocumentReference,
+                                                          ),
+                                                        }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              const TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .leftToRight,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    250),
+                                                          ),
+                                                        },
+                                                      );
+                                                    } else {
                                                       context.pushNamed(
                                                         'RequestOffers',
                                                         queryParameters: {
@@ -654,6 +682,49 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                                                 .DocumentReference,
                                                           ),
                                                         }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              const TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .leftToRight,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    250),
+                                                          ),
+                                                        },
+                                                      );
+                                                    }
+                                                  } else {
+                                                    if (helpRequestsItem
+                                                            .accepted ==
+                                                        true) {
+                                                      context.pushNamed(
+                                                        'AcceptedOfferOfferer',
+                                                        queryParameters: {
+                                                          'thisOffertDocRef':
+                                                              serializeParam(
+                                                            helpRequestsItem
+                                                                .acceptedOfferId,
+                                                            ParamType
+                                                                .DocumentReference,
+                                                          ),
+                                                        }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              const TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .leftToRight,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    250),
+                                                          ),
+                                                        },
                                                       );
                                                     } else {
                                                       context.pushNamed(
@@ -667,188 +738,225 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                                                 .DocumentReference,
                                                           ),
                                                         }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              const TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .leftToRight,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    250),
+                                                          ),
+                                                        },
                                                       );
                                                     }
-                                                  },
-                                                  child: Card(
-                                                    clipBehavior: Clip
-                                                        .antiAliasWithSaveLayer,
-                                                    color: helpRequestsItem
-                                                                .reference ==
-                                                            FFAppState()
-                                                                .highlightedRequestRef
-                                                        ? const Color(0xFFF609F0)
-                                                        : Colors.white,
-                                                    elevation: 4.0,
-                                                    shape:
-                                                        RoundedRectangleBorder(
+                                                  }
+                                                },
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  elevation: 5.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          blurRadius: 4.0,
+                                                          color:
+                                                              Color(0x520E151B),
+                                                          offset:
+                                                              Offset(3.0, 3.0),
+                                                          spreadRadius: 3.0,
+                                                        )
+                                                      ],
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                              12.0),
                                                     ),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Flexible(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5.0,
-                                                                        10.0,
-                                                                        5.0,
-                                                                        0.0),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              child:
-                                                                  Image.network(
-                                                                helpRequestsItem
-                                                                    .coverImage,
-                                                                width: double
-                                                                    .infinity,
-                                                                height: 100.0,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
+                                                    child: SizedBox(
+                                                      height: 250.0,
+                                                      child: Stack(
+                                                        children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                            child:
+                                                                Image.network(
+                                                              helpRequestsItem
+                                                                  .coverImage,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 250.0,
+                                                              fit: BoxFit.cover,
                                                             ),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      10.0,
-                                                                      10.0,
-                                                                      0.0),
-                                                          child: Row(
+                                                          Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .spaceBetween,
+                                                                    .end,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              Flexible(
-                                                                child: Text(
-                                                                  helpRequestsItem
-                                                                      .shortDescription,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Uber',
-                                                                        color: helpRequestsItem.reference ==
-                                                                                FFAppState().highlightedRequestRef
-                                                                            ? Colors.white
-                                                                            : FlutterFlowTheme.of(context).primaryText,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        useGoogleFonts:
-                                                                            false,
+                                                              ClipRRect(
+                                                                child:
+                                                                    BackdropFilter(
+                                                                  filter:
+                                                                      ImageFilter
+                                                                          .blur(
+                                                                    sigmaX: 2.0,
+                                                                    sigmaY: 2.0,
+                                                                  ),
+                                                                  child:
+                                                                      Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      color: Color(
+                                                                          0xDFFFFFFF),
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .only(
+                                                                        bottomLeft:
+                                                                            Radius.circular(12.0),
+                                                                        bottomRight:
+                                                                            Radius.circular(12.0),
+                                                                        topLeft:
+                                                                            Radius.circular(0.0),
+                                                                        topRight:
+                                                                            Radius.circular(0.0),
                                                                       ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              12.0),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Flexible(
+                                                                                child: Text(
+                                                                                  helpRequestsItem.shortDescription,
+                                                                                  style: FlutterFlowTheme.of(context).titleMedium.override(
+                                                                                        fontFamily: 'Open Sans',
+                                                                                        color: const Color(0xFF0F1113),
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                              if (helpRequestsItem.openPrice == false)
+                                                                                Text(
+                                                                                  valueOrDefault<String>(
+                                                                                    formatNumber(
+                                                                                      helpRequestsItem.totalPrice,
+                                                                                      formatType: FormatType.custom,
+                                                                                      currency: '\$',
+                                                                                      format: '###.00',
+                                                                                      locale: '',
+                                                                                    ),
+                                                                                    '0',
+                                                                                  ),
+                                                                                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                        fontFamily: 'Comfortaa',
+                                                                                        color: const Color(0xFF0F1113),
+                                                                                      ),
+                                                                                ),
+                                                                            ],
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                5.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Text(
+                                                                              helpRequestsItem.longDescription,
+                                                                              maxLines: 3,
+                                                                              style: FlutterFlowTheme.of(context).labelMedium,
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                5.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      valueOrDefault<String>(
+                                                                                        functions.distanceBetweenTwoPoints(isWeb == true ? FFAppState().kelowna : currentUserLocationValue, helpRequestsItem.location, ''),
+                                                                                        'Distance',
+                                                                                      ),
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Uber',
+                                                                                            color: helpRequestsItem.reference == FFAppState().highlightedRequestRef ? Colors.white : FlutterFlowTheme.of(context).primaryText,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                            useGoogleFonts: false,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                if (helpRequestsItem.accepted == true)
+                                                                                  Text(
+                                                                                    'Offer Accepted',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Open Sans',
+                                                                                          color: const Color(0xFFF609F0),
+                                                                                        ),
+                                                                                  ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
-                                                              if (helpRequestsItem
-                                                                      .openPrice ==
-                                                                  false)
-                                                                Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    formatNumber(
-                                                                      helpRequestsItem
-                                                                          .applicantPrice,
-                                                                      formatType:
-                                                                          FormatType
-                                                                              .decimal,
-                                                                      decimalType:
-                                                                          DecimalType
-                                                                              .periodDecimal,
-                                                                      currency:
-                                                                          '\$',
-                                                                    ),
-                                                                    '0',
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Uber',
-                                                                        color: helpRequestsItem.reference ==
-                                                                                FFAppState().highlightedRequestRef
-                                                                            ? Colors.white
-                                                                            : FlutterFlowTheme.of(context).primaryText,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                        useGoogleFonts:
-                                                                            false,
-                                                                      ),
-                                                                ),
                                                             ],
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      5.0,
-                                                                      5.0,
-                                                                      0.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      functions.distanceBetweenTwoPoints(
-                                                                          isWeb == true
-                                                                              ? FFAppState().kelowna
-                                                                              : currentUserLocationValue,
-                                                                          helpRequestsItem.location,
-                                                                          ''),
-                                                                      'Distance',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Uber',
-                                                                          color: helpRequestsItem.reference == FFAppState().highlightedRequestRef
-                                                                              ? Colors.white
-                                                                              : FlutterFlowTheme.of(context).primaryText,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                          useGoogleFonts:
-                                                                              false,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'containerOnPageLoadAnimation']!),
+                                              ).animateOnPageLoad(animationsMap[
+                                                  'containerOnPageLoadAnimation']!),
+                                            ),
                                           );
                                         },
                                       );

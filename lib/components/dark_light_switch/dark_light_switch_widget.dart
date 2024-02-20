@@ -11,7 +11,7 @@ class DarkLightSwitchWidget extends StatefulWidget {
   const DarkLightSwitchWidget({super.key});
 
   @override
-  _DarkLightSwitchWidgetState createState() => _DarkLightSwitchWidgetState();
+  State<DarkLightSwitchWidget> createState() => _DarkLightSwitchWidgetState();
 }
 
 class _DarkLightSwitchWidgetState extends State<DarkLightSwitchWidget>

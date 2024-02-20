@@ -109,13 +109,20 @@ String offerStatus(int statusId) {
   }
 }
 
-double totalShoppingCartValue(List<ShoppingCartRecord>? shoppingCartEntries) {
+double totalShoppingCartValue(
+  List<ShoppingCartRecord>? shoppingCartEntries,
+  double percentage,
+) {
   // pass List<ShoppingCartRecord> and return the sum of column Value
   double totalValue = 0.0;
   if (shoppingCartEntries != null) {
     for (final entry in shoppingCartEntries) {
       totalValue += entry.value ?? 0.0;
     }
+  }
+
+  if (percentage > 0) {
+    totalValue = totalValue * (percentage / 100);
   }
   return totalValue;
 }
@@ -145,4 +152,101 @@ List<OfferRecord>? offersSorted(
   }
 
   return sortedOfferRecords;
+}
+
+int totalShoppingCartValuePlusTax(
+    List<ShoppingCartRecord> shoppingCartEntries) {
+  double totalValue = 0.0;
+  if (shoppingCartEntries != null) {
+    for (final entry in shoppingCartEntries) {
+      totalValue += entry.value ?? 0.0;
+    }
+  }
+
+  double pst = totalValue * (7 / 100);
+  double gst = totalValue * (5 / 100);
+  double znexy = totalValue * (10 / 100);
+
+  totalValue = totalValue + pst + gst + znexy;
+  int finalResult =
+      (totalValue * 100).toInt(); // Multiply by 100 and convert to int
+  return finalResult;
+}
+
+double convertStringToDouble(String stringValue) {
+  String cleanedValue = stringValue.replaceAll(RegExp(r'[^0-9.]'), '');
+
+  // Convert the cleaned value to double
+  return (double.tryParse(cleanedValue) ?? 0.0);
+}
+
+double calculateAverageRating(List<int> ratings) {
+  if (ratings.isEmpty) {
+    return 0.0;
+  }
+
+  int sum = ratings.reduce((a, b) => a + b);
+  double average = sum / ratings.length;
+  return double.parse(average.toStringAsFixed(1));
+}
+
+Color workCompletedColor(
+  bool? workCompletedOfferer,
+  bool? workCompletedReferrer,
+) {
+  workCompletedOfferer = workCompletedOfferer ?? false;
+  workCompletedReferrer = workCompletedReferrer ?? false;
+
+  if (workCompletedOfferer || workCompletedReferrer) {
+    return Color.fromRGBO(36, 150, 137, 1);
+  } else {
+    return Color.fromRGBO(20, 24, 27, 1);
+  }
+}
+
+bool displayMap(
+  TrackOrderRecord trackOrder,
+  bool congratulationsShown,
+  LatLng? source,
+  LatLng? destination,
+) {
+  if (source == null || destination == null) {
+    return false;
+  }
+
+  // Return false immediately if any condition is met
+  if (congratulationsShown == false ||
+      trackOrder.workUnderWay ||
+      trackOrder.workCompletedOfferer ||
+      trackOrder.workCompletedRequester) {
+    return false;
+  }
+
+  // Return true if none of the conditions are met
+  return true;
+}
+
+double totalCredits(List<double>? transactions) {
+  // calculate sum  of list of doubles
+  if (transactions == null || transactions.isEmpty) {
+    return 0.0;
+  }
+  return transactions.reduce((a, b) => a + b);
+}
+
+LatLng getLastDriverLocation(List<LatLng> positions) {
+  return positions.last;
+}
+
+String bidsReceivedText(int bids) {
+  // pass in 'bids' if 0 return 'no bids yet' otherwise return number of bids and "yet"
+  if (bids == 0) {
+    return 'No bids yet';
+  } else {
+    if (bids == 1) {
+      return '1 bid received';
+    } else {
+      return '$bids bids received';
+    }
+  }
 }

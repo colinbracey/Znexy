@@ -1,20 +1,21 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'empty_notifications_model.dart';
-export 'empty_notifications_model.dart';
+import 'no_notifications_yet_model.dart';
+export 'no_notifications_yet_model.dart';
 
-class EmptyNotificationsWidget extends StatefulWidget {
-  const EmptyNotificationsWidget({super.key});
+class NoNotificationsYetWidget extends StatefulWidget {
+  const NoNotificationsYetWidget({super.key});
 
   @override
-  _EmptyNotificationsWidgetState createState() =>
-      _EmptyNotificationsWidgetState();
+  State<NoNotificationsYetWidget> createState() =>
+      _NoNotificationsYetWidgetState();
 }
 
-class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget> {
-  late EmptyNotificationsModel _model;
+class _NoNotificationsYetWidgetState extends State<NoNotificationsYetWidget> {
+  late NoNotificationsYetModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -25,7 +26,7 @@ class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EmptyNotificationsModel());
+    _model = createModel(context, () => NoNotificationsYetModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -45,15 +46,17 @@ class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
-          child: Icon(
-            Icons.notifications,
-            color: FlutterFlowTheme.of(context).secondaryText,
-            size: 40.0,
+          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+          child: Lottie.asset(
+            'assets/lottie_animations/Animation_-_1706220002479.json',
+            width: 300.0,
+            height: 300.0,
+            fit: BoxFit.cover,
+            animate: true,
           ),
         ),
         Text(
-          'No Notifications yet',
+          'No notifications yet',
           style: FlutterFlowTheme.of(context).bodyMedium,
         ),
       ],

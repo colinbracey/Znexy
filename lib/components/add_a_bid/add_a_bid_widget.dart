@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/offer_accepted/offer_accepted_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:aligned_tooltip/aligned_tooltip.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'add_a_bid_model.dart';
@@ -13,13 +15,15 @@ class AddABidWidget extends StatefulWidget {
     super.key,
     required this.thisRequestDocRef,
     required this.thisOfferDocRef,
-  });
+    String? requestersName,
+  }) : requestersName = requestersName ?? 'The requester';
 
   final DocumentReference? thisRequestDocRef;
   final String? thisOfferDocRef;
+  final String requestersName;
 
   @override
-  _AddABidWidgetState createState() => _AddABidWidgetState();
+  State<AddABidWidget> createState() => _AddABidWidgetState();
 }
 
 class _AddABidWidgetState extends State<AddABidWidget> {
@@ -169,23 +173,58 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
-                        child: Text(
-                          'Enter your bid in \$ below',
-                          style: FlutterFlowTheme.of(context).labelMedium,
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            18.0, 10.0, 0.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Enter your bid in \$ below',
+                              style: FlutterFlowTheme.of(context).labelMedium,
+                            ),
+                            AlignedTooltip(
+                              content: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'Make your offer as competative as possible to stand out from the crowd.',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  )),
+                              offset: 4.0,
+                              preferredDirection: AxisDirection.down,
+                              borderRadius: BorderRadius.circular(8.0),
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              elevation: 4.0,
+                              tailBaseWidth: 24.0,
+                              tailLength: 12.0,
+                              waitDuration: const Duration(milliseconds: 100),
+                              showDuration: const Duration(milliseconds: 1500),
+                              triggerMode: TooltipTriggerMode.tap,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 14.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 10.0, 20.0, 0.0),
+                            18.0, 10.0, 18.0, 0.0),
                         child: TextFormField(
                           controller: _model.offerAmountController,
                           focusNode: _model.offerAmountFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Make your offer competative',
                             labelStyle:
                                 FlutterFlowTheme.of(context).labelMedium,
                             hintStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -218,12 +257,12 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                5.0, 0.0, 5.0, 0.0),
+                                10.0, 8.0, 10.0, 0.0),
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Open Sans',
-                                    fontSize: 25.0,
+                                    fontSize: 18.0,
                                   ),
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true),
@@ -233,23 +272,56 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 10.0, 0.0, 0.0),
-                        child: Text(
-                          'Enter a detailed description of your offer',
-                          style: FlutterFlowTheme.of(context).labelMedium,
+                            18.0, 15.0, 0.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'Enter a detailed description of your offer',
+                              style: FlutterFlowTheme.of(context).labelMedium,
+                            ),
+                            AlignedTooltip(
+                              content: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'The more detail you provide, the more chances you have of your offer being accepted',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  )),
+                              offset: 4.0,
+                              preferredDirection: AxisDirection.down,
+                              borderRadius: BorderRadius.circular(8.0),
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              elevation: 4.0,
+                              tailBaseWidth: 24.0,
+                              tailLength: 12.0,
+                              waitDuration: const Duration(milliseconds: 100),
+                              showDuration: const Duration(milliseconds: 1500),
+                              triggerMode: TooltipTriggerMode.tap,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 14.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 10.0, 20.0, 0.0),
+                            18.0, 10.0, 18.0, 0.0),
                         child: TextFormField(
                           controller: _model.offerDescriptionController,
                           focusNode: _model.offerDescriptionFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText:
-                                'Remember the more detail, the more chance you have ',
                             labelStyle: FlutterFlowTheme.of(context).bodySmall,
                             alignLabelWithHint: true,
                             hintStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -282,7 +354,7 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                5.0, 20.0, 5.0, 0.0),
+                                10.0, 20.0, 10.0, 0.0),
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -299,137 +371,155 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 24.0, 0.0, 20.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                currentUserLocationValue =
-                                    await getCurrentUserLocation(
-                                        defaultLocation: const LatLng(0.0, 0.0));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Pressed',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                          Builder(
+                            builder: (context) => Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 24.0, 0.0, 20.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  currentUserLocationValue =
+                                      await getCurrentUserLocation(
+                                          defaultLocation: const LatLng(0.0, 0.0));
+                                  if ((createNoteOfferRecord != null) == true) {
+                                    await createNoteOfferRecord!.reference
+                                        .update({
+                                      ...createOfferRecordData(
+                                        value: double.tryParse(
+                                            _model.offerAmountController.text),
+                                        description: _model
+                                            .offerDescriptionController.text,
+                                        location: currentUserLocationValue,
+                                        status: 2,
                                       ),
-                                    ),
-                                    duration: const Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                );
-                                if ((createNoteOfferRecord != null) == true) {
-                                  await createNoteOfferRecord!.reference
-                                      .update({
-                                    ...createOfferRecordData(
-                                      value: double.tryParse(
-                                          _model.offerAmountController.text),
-                                      description: _model
-                                          .offerDescriptionController.text,
-                                      location: currentUserLocationValue,
-                                      status: 2,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'BidHistory': FieldValue.arrayUnion([
-                                          getBidHistoryFirestoreData(
-                                            updateBidHistoryStruct(
-                                              BidHistoryStruct(
-                                                amount: double.tryParse(_model
-                                                    .offerAmountController
-                                                    .text),
-                                                createdAt: getCurrentTimestamp,
-                                                accepted: false,
-                                                description: _model
-                                                    .offerDescriptionController
-                                                    .text,
-                                                cancelled: false,
+                                      ...mapToFirestore(
+                                        {
+                                          'BidHistory': FieldValue.arrayUnion([
+                                            getBidHistoryFirestoreData(
+                                              updateBidHistoryStruct(
+                                                BidHistoryStruct(
+                                                  amount: double.tryParse(_model
+                                                      .offerAmountController
+                                                      .text),
+                                                  createdAt:
+                                                      getCurrentTimestamp,
+                                                  accepted: false,
+                                                  description: _model
+                                                      .offerDescriptionController
+                                                      .text,
+                                                  cancelled: false,
+                                                ),
+                                                clearUnsetFields: false,
                                               ),
-                                              clearUnsetFields: false,
-                                            ),
-                                            true,
-                                          )
-                                        ]),
-                                      },
-                                    ),
-                                  });
-                                } else {
-                                  await OfferRecord.collection.doc().set({
-                                    ...createOfferRecordData(
-                                      requestId: widget.thisRequestDocRef,
-                                      userId: currentUserReference,
-                                      value: double.tryParse(
-                                          _model.offerAmountController.text),
-                                      createdAt: getCurrentTimestamp,
-                                      accepted: false,
-                                      description: _model
-                                          .offerDescriptionController.text,
-                                      status: 1,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'BidHistory': [
-                                          getBidHistoryFirestoreData(
-                                            updateBidHistoryStruct(
-                                              BidHistoryStruct(
-                                                amount: double.tryParse(_model
-                                                    .offerAmountController
-                                                    .text),
-                                                createdAt: getCurrentTimestamp,
-                                                accepted: false,
-                                                description: _model
-                                                    .offerDescriptionController
-                                                    .text,
-                                                cancelled: false,
+                                              true,
+                                            )
+                                          ]),
+                                        },
+                                      ),
+                                    });
+                                  } else {
+                                    await OfferRecord.collection.doc().set({
+                                      ...createOfferRecordData(
+                                        requestId: widget.thisRequestDocRef,
+                                        userId: currentUserReference,
+                                        value: double.tryParse(
+                                            _model.offerAmountController.text),
+                                        createdAt: getCurrentTimestamp,
+                                        accepted: false,
+                                        description: _model
+                                            .offerDescriptionController.text,
+                                        status: 1,
+                                      ),
+                                      ...mapToFirestore(
+                                        {
+                                          'BidHistory': [
+                                            getBidHistoryFirestoreData(
+                                              updateBidHistoryStruct(
+                                                BidHistoryStruct(
+                                                  amount: double.tryParse(_model
+                                                      .offerAmountController
+                                                      .text),
+                                                  createdAt:
+                                                      getCurrentTimestamp,
+                                                  accepted: false,
+                                                  description: _model
+                                                      .offerDescriptionController
+                                                      .text,
+                                                  cancelled: false,
+                                                ),
+                                                clearUnsetFields: false,
+                                                create: true,
                                               ),
-                                              clearUnsetFields: false,
-                                              create: true,
-                                            ),
-                                            true,
-                                          )
-                                        ],
-                                      },
-                                    ),
-                                  });
-                                }
+                                              true,
+                                            )
+                                          ],
+                                        },
+                                      ),
+                                    });
+                                  }
 
-                                await NotificationRecord.collection
-                                    .doc()
-                                    .set(createNotificationRecordData(
-                                      senderId: currentUserReference,
-                                      receivedId: columnRequestRecord.userId,
-                                      type: 1,
-                                      message:
-                                          '$currentUserDisplayName made a bid',
-                                      createdAt: getCurrentTimestamp,
-                                      read: false,
-                                      offerId: createNoteOfferRecord?.reference,
-                                      requestId: widget.thisRequestDocRef,
-                                    ));
-                                Navigator.pop(context);
-                              },
-                              text: 'Confirm Bid',
-                              options: FFButtonOptions(
-                                width: 270.0,
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: const Color(0xFFF609F0),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: Colors.white,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                                  await NotificationRecord.collection
+                                      .doc()
+                                      .set(createNotificationRecordData(
+                                        senderId: currentUserReference,
+                                        receivedId: columnRequestRecord.userId,
+                                        type: 1,
+                                        message: valueOrDefault<String>(
+                                          '$currentUserDisplayName made a bid of ${valueOrDefault<String>(
+                                            _model.offerAmountController.text,
+                                            '0',
+                                          )}',
+                                          '0',
+                                        ),
+                                        createdAt: getCurrentTimestamp,
+                                        read: false,
+                                        offerId:
+                                            createNoteOfferRecord?.reference,
+                                        requestId: widget.thisRequestDocRef,
+                                      ));
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: SizedBox(
+                                          height: 285.0,
+                                          width: 420.0,
+                                          child: OfferAcceptedWidget(
+                                            requestersName:
+                                                widget.requestersName,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+                                },
+                                text: 'Confirm Bid',
+                                options: FFButtonOptions(
+                                  width: 270.0,
+                                  height: 50.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: const Color(0xFFF609F0),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
                                 ),
                               ),
                             ),

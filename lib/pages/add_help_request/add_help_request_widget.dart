@@ -26,7 +26,7 @@ class AddHelpRequestWidget extends StatefulWidget {
   const AddHelpRequestWidget({super.key});
 
   @override
-  _AddHelpRequestWidgetState createState() => _AddHelpRequestWidgetState();
+  State<AddHelpRequestWidget> createState() => _AddHelpRequestWidgetState();
 }
 
 class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
@@ -1728,29 +1728,23 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                           .placePickerValue
                                                           .latLng,
                                                       totalPrice:
-                                                          double.tryParse(_model
-                                                              .priceFieldController
-                                                              .text),
-                                                      userId:
-                                                          currentUserReference,
-                                                      accepted: false,
-                                                      ourFee: functions
-                                                          .calculatePercentageAndFormatAsCurrency(
-                                                              _model
-                                                                  .priceFieldController
-                                                                  .text),
-                                                      applicantPrice:
                                                           valueOrDefault<
                                                               double>(
                                                         functions
-                                                            .calculateWhatUsersWillSeeAsPrice(
+                                                            .convertStringToDouble(
                                                                 _model
                                                                     .priceFieldController
                                                                     .text),
                                                         0.0,
                                                       ),
+                                                      userId:
+                                                          currentUserReference,
+                                                      accepted: false,
                                                       openPrice:
                                                           _model.openPrice,
+                                                      complete: false,
+                                                      createdAt:
+                                                          getCurrentTimestamp,
                                                     ),
                                                     ...mapToFirestore(
                                                       {
@@ -1775,29 +1769,23 @@ class _AddHelpRequestWidgetState extends State<AddHelpRequestWidget> {
                                                           .placePickerValue
                                                           .latLng,
                                                       totalPrice:
-                                                          double.tryParse(_model
-                                                              .priceFieldController
-                                                              .text),
-                                                      userId:
-                                                          currentUserReference,
-                                                      accepted: false,
-                                                      ourFee: functions
-                                                          .calculatePercentageAndFormatAsCurrency(
-                                                              _model
-                                                                  .priceFieldController
-                                                                  .text),
-                                                      applicantPrice:
                                                           valueOrDefault<
                                                               double>(
                                                         functions
-                                                            .calculateWhatUsersWillSeeAsPrice(
+                                                            .convertStringToDouble(
                                                                 _model
                                                                     .priceFieldController
                                                                     .text),
                                                         0.0,
                                                       ),
+                                                      userId:
+                                                          currentUserReference,
+                                                      accepted: false,
                                                       openPrice:
                                                           _model.openPrice,
+                                                      complete: false,
+                                                      createdAt:
+                                                          getCurrentTimestamp,
                                                     ),
                                                     ...mapToFirestore(
                                                       {

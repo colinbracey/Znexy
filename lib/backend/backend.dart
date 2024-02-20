@@ -15,6 +15,8 @@ import 'schema/chat_messages_record.dart';
 import 'schema/shopping_cart_record.dart';
 import 'schema/ride_record.dart';
 import 'schema/track_order_record.dart';
+import 'schema/transaction_record.dart';
+import 'schema/review_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +34,8 @@ export 'schema/chat_messages_record.dart';
 export 'schema/shopping_cart_record.dart';
 export 'schema/ride_record.dart';
 export 'schema/track_order_record.dart';
+export 'schema/transaction_record.dart';
+export 'schema/review_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -398,6 +402,80 @@ Future<List<TrackOrderRecord>> queryTrackOrderRecordOnce({
     queryCollectionOnce(
       TrackOrderRecord.collection,
       TrackOrderRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query TransactionRecords (as a Stream and as a Future).
+Future<int> queryTransactionRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      TransactionRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<TransactionRecord>> queryTransactionRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      TransactionRecord.collection,
+      TransactionRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<TransactionRecord>> queryTransactionRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      TransactionRecord.collection,
+      TransactionRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ReviewRecords (as a Stream and as a Future).
+Future<int> queryReviewRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ReviewRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ReviewRecord>> queryReviewRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ReviewRecord.collection,
+      ReviewRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ReviewRecord>> queryReviewRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ReviewRecord.collection,
+      ReviewRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

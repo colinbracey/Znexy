@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:badges/badges.dart' as badges;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -18,7 +19,7 @@ class MyOffersWidget extends StatefulWidget {
   const MyOffersWidget({super.key});
 
   @override
-  _MyOffersWidgetState createState() => _MyOffersWidgetState();
+  State<MyOffersWidget> createState() => _MyOffersWidgetState();
 }
 
 class _MyOffersWidgetState extends State<MyOffersWidget>
@@ -35,9 +36,16 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
         FadeEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
-          duration: 1050.ms,
+          duration: 600.ms,
           begin: 0.0,
           end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: const Offset(0.0, 50.0),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -52,6 +60,13 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
         .then((loc) => setState(() => currentUserLocationValue = loc));
     _model.searchFieldController ??= TextEditingController();
     _model.searchFieldFocusNode ??= FocusNode();
+
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -498,418 +513,363 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                   }
                                   List<OfferRecord> listViewOfferRecordList =
                                       snapshot.data!;
-                                  return ListView.builder(
+                                  return ListView.separated(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
-                                      0,
+                                      15.0,
                                       0,
                                       20.0,
                                     ),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: listViewOfferRecordList.length,
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(height: 15.0),
                                     itemBuilder: (context, listViewIndex) {
                                       final listViewOfferRecord =
                                           listViewOfferRecordList[
                                               listViewIndex];
-                                      return InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          if (listViewOfferRecord.accepted) {
-                                            context.pushNamed(
-                                              'AcceptedOfferRequester',
-                                              queryParameters: {
-                                                'thisOffertDocRef':
-                                                    serializeParam(
-                                                  listViewOfferRecord.reference,
-                                                  ParamType.DocumentReference,
+                                      return StreamBuilder<RequestRecord>(
+                                        stream: RequestRecord.getDocument(
+                                            listViewOfferRecord.requestId!),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return const Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    Color(0xFFF609F0),
+                                                  ),
                                                 ),
-                                              }.withoutNulls,
-                                            );
-                                          } else {
-                                            context.pushNamed(
-                                              'RequestOfferDetail',
-                                              queryParameters: {
-                                                'offerDocRef': serializeParam(
-                                                  listViewOfferRecord.reference,
-                                                  ParamType.DocumentReference,
-                                                ),
-                                              }.withoutNulls,
+                                              ),
                                             );
                                           }
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: const BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 10.0, 10.0, 0.0),
-                                            child: StreamBuilder<RequestRecord>(
-                                              stream: RequestRecord.getDocument(
-                                                  listViewOfferRecord
-                                                      .requestId!),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return const Center(
-                                                    child: SizedBox(
-                                                      width: 50.0,
-                                                      height: 50.0,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                          Color(0xFFF609F0),
-                                                        ),
+                                          final columnRequestRecord =
+                                              snapshot.data!;
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              if (functions.searchRequestList(
+                                                      columnRequestRecord
+                                                          .shortDescription,
+                                                      columnRequestRecord
+                                                          .longDescription,
+                                                      _model
+                                                          .searchFieldController
+                                                          .text,
+                                                      _model
+                                                          .myRequestSwitchValue!,
+                                                      listViewOfferRecord
+                                                          .userId?.id,
+                                                      currentUserUid) ??
+                                                  true)
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(16.0, 0.0, 16.0,
+                                                          15.0),
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      if (listViewOfferRecord
+                                                          .accepted) {
+                                                        context.pushNamed(
+                                                          'AcceptedOfferOffererCopy',
+                                                          queryParameters: {
+                                                            'thisOffertDocRef':
+                                                                serializeParam(
+                                                              listViewOfferRecord
+                                                                  .reference,
+                                                              ParamType
+                                                                  .DocumentReference,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            kTransitionInfoKey:
+                                                                const TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .leftToRight,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                            ),
+                                                          },
+                                                        );
+                                                      } else {
+                                                        context.pushNamed(
+                                                          'RequestDetail',
+                                                          queryParameters: {
+                                                            'thisRequestDocRef':
+                                                                serializeParam(
+                                                              listViewOfferRecord
+                                                                  .requestId,
+                                                              ParamType
+                                                                  .DocumentReference,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            kTransitionInfoKey:
+                                                                const TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .leftToRight,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                            ),
+                                                          },
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      elevation: 5.0,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
                                                       ),
-                                                    ),
-                                                  );
-                                                }
-                                                final cardRequestRecord =
-                                                    snapshot.data!;
-                                                return Card(
-                                                  clipBehavior: Clip
-                                                      .antiAliasWithSaveLayer,
-                                                  color: Colors.white,
-                                                  elevation: 4.0,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    10.0,
-                                                                    5.0,
-                                                                    0.0),
-                                                        child: ClipRRect(
+                                                      child: Container(
+                                                        width: double.infinity,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          boxShadow: const [
+                                                            BoxShadow(
+                                                              blurRadius: 4.0,
+                                                              color: Color(
+                                                                  0x520E151B),
+                                                              offset: Offset(
+                                                                  3.0, 3.0),
+                                                              spreadRadius: 3.0,
+                                                            )
+                                                          ],
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                                      8.0),
-                                                          child: Image.network(
-                                                            cardRequestRecord
-                                                                .coverImage,
-                                                            width:
-                                                                double.infinity,
-                                                            height: 100.0,
-                                                            fit: BoxFit.cover,
+                                                                      12.0),
+                                                        ),
+                                                        child: SizedBox(
+                                                          height: 250.0,
+                                                          child: Stack(
+                                                            children: [
+                                                              Align(
+                                                                alignment:
+                                                                    const AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    columnRequestRecord
+                                                                        .coverImage,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height:
+                                                                        250.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .end,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  ClipRRect(
+                                                                    child:
+                                                                        BackdropFilter(
+                                                                      filter: ImageFilter
+                                                                          .blur(
+                                                                        sigmaX:
+                                                                            2.0,
+                                                                        sigmaY:
+                                                                            2.0,
+                                                                      ),
+                                                                      child:
+                                                                          Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        decoration:
+                                                                            const BoxDecoration(
+                                                                          color:
+                                                                              Color(0xDFFFFFFF),
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            bottomLeft:
+                                                                                Radius.circular(12.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(12.0),
+                                                                            topLeft:
+                                                                                Radius.circular(0.0),
+                                                                            topRight:
+                                                                                Radius.circular(0.0),
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(12.0),
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Flexible(
+                                                                                    child: Text(
+                                                                                      columnRequestRecord.shortDescription,
+                                                                                      style: FlutterFlowTheme.of(context).titleMedium.override(
+                                                                                            fontFamily: 'Open Sans',
+                                                                                            color: const Color(0xFF0F1113),
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  if (columnRequestRecord.openPrice == false)
+                                                                                    Text(
+                                                                                      valueOrDefault<String>(
+                                                                                        formatNumber(
+                                                                                          columnRequestRecord.totalPrice,
+                                                                                          formatType: FormatType.custom,
+                                                                                          currency: '',
+                                                                                          format: '###.00',
+                                                                                          locale: '',
+                                                                                        ),
+                                                                                        '0',
+                                                                                      ),
+                                                                                      style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                            fontFamily: 'Comfortaa',
+                                                                                            color: const Color(0xFF0F1113),
+                                                                                          ),
+                                                                                    ),
+                                                                                ],
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  columnRequestRecord.longDescription,
+                                                                                  maxLines: 3,
+                                                                                  style: FlutterFlowTheme.of(context).labelMedium,
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          valueOrDefault<String>(
+                                                                                            functions.distanceBetweenTwoPoints(isWeb == true ? FFAppState().kelowna : currentUserLocationValue, columnRequestRecord.location, ''),
+                                                                                            'Distance',
+                                                                                          ),
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Uber',
+                                                                                                fontWeight: FontWeight.normal,
+                                                                                                useGoogleFonts: false,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                    if (columnRequestRecord.accepted == true)
+                                                                                      Text(
+                                                                                        'Offer Accepted',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Open Sans',
+                                                                                              color: const Color(0xFFF609F0),
+                                                                                            ),
+                                                                                      ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    'My Offer',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    valueOrDefault<String>(
+                                                                                      formatNumber(
+                                                                                        listViewOfferRecord.value,
+                                                                                        formatType: FormatType.custom,
+                                                                                        currency: '\$',
+                                                                                        format: '###.00',
+                                                                                        locale: '',
+                                                                                      ),
+                                                                                      '0',
+                                                                                    ),
+                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                          fontFamily: 'Comfortaa',
+                                                                                          color: const Color(0xFF0F1113),
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    10.0,
-                                                                    10.0,
-                                                                    0.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Flexible(
-                                                              child: Text(
-                                                                cardRequestRecord
-                                                                    .shortDescription,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Uber',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      useGoogleFonts:
-                                                                          false,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    functions.distanceBetweenTwoPoints(
-                                                                        isWeb ==
-                                                                                true
-                                                                            ? FFAppState()
-                                                                                .kelowna
-                                                                            : currentUserLocationValue,
-                                                                        cardRequestRecord
-                                                                            .location,
-                                                                        'KMs'),
-                                                                    'Distance',
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Uber',
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            false,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                valueOrDefault<
-                                                                    String>(
-                                                                  functions.offerStatus(
-                                                                      listViewOfferRecord
-                                                                          .status),
-                                                                  'statusText',
-                                                                ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      color: listViewOfferRecord
-                                                                              .accepted
-                                                                          ? const Color(
-                                                                              0xFFF609F0)
-                                                                          : FlutterFlowTheme.of(context)
-                                                                              .primaryText,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    0.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Text(
-                                                                  'Asking Price',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Uber',
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            false,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                cardRequestRecord
-                                                                        .openPrice
-                                                                    ? 'Open to Bids'
-                                                                    : valueOrDefault<
-                                                                        String>(
-                                                                        formatNumber(
-                                                                          cardRequestRecord
-                                                                              .applicantPrice,
-                                                                          formatType:
-                                                                              FormatType.decimal,
-                                                                          decimalType:
-                                                                              DecimalType.automatic,
-                                                                          currency:
-                                                                              '\$',
-                                                                        ),
-                                                                        '0',
-                                                                      ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const Opacity(
-                                                        opacity: 0.4,
-                                                        child: Divider(
-                                                          thickness: 1.0,
-                                                          color:
-                                                              Color(0xFFF609F0),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    10.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Text(
-                                                                  'My Offer',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Uber',
-                                                                        color: const Color(
-                                                                            0xFF142328),
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            false,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                valueOrDefault<
-                                                                    String>(
-                                                                  formatNumber(
-                                                                    listViewOfferRecord
-                                                                        .value,
-                                                                    formatType:
-                                                                        FormatType
-                                                                            .decimal,
-                                                                    decimalType:
-                                                                        DecimalType
-                                                                            .automatic,
-                                                                    currency:
-                                                                        '\$',
-                                                                  ),
-                                                                  '0',
-                                                                ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      fontSize:
-                                                                          24.0,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ).animateOnPageLoad(animationsMap[
-                                          'containerOnPageLoadAnimation']!);
+                                                    ),
+                                                  ).animateOnPageLoad(animationsMap[
+                                                      'containerOnPageLoadAnimation']!),
+                                                ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     },
                                   );
                                 },
