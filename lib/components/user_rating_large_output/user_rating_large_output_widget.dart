@@ -2,11 +2,11 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-import 'user_rating_large_copy_model.dart';
-export 'user_rating_large_copy_model.dart';
+import 'user_rating_large_output_model.dart';
+export 'user_rating_large_output_model.dart';
 
-class UserRatingLargeCopyWidget extends StatefulWidget {
-  const UserRatingLargeCopyWidget({
+class UserRatingLargeOutputWidget extends StatefulWidget {
+  const UserRatingLargeOutputWidget({
     super.key,
     double? userRating,
   }) : userRating = userRating ?? 0.0;
@@ -14,12 +14,13 @@ class UserRatingLargeCopyWidget extends StatefulWidget {
   final double userRating;
 
   @override
-  State<UserRatingLargeCopyWidget> createState() =>
-      _UserRatingLargeCopyWidgetState();
+  State<UserRatingLargeOutputWidget> createState() =>
+      _UserRatingLargeOutputWidgetState();
 }
 
-class _UserRatingLargeCopyWidgetState extends State<UserRatingLargeCopyWidget> {
-  late UserRatingLargeCopyModel _model;
+class _UserRatingLargeOutputWidgetState
+    extends State<UserRatingLargeOutputWidget> {
+  late UserRatingLargeOutputModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -30,7 +31,7 @@ class _UserRatingLargeCopyWidgetState extends State<UserRatingLargeCopyWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UserRatingLargeCopyModel());
+    _model = createModel(context, () => UserRatingLargeOutputModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -52,10 +53,7 @@ class _UserRatingLargeCopyWidgetState extends State<UserRatingLargeCopyWidget> {
         color: Color(0xFFF609F0),
       ),
       direction: Axis.horizontal,
-      rating: valueOrDefault<double>(
-        widget.userRating,
-        0.0,
-      ),
+      rating: widget.userRating,
       unratedColor: Colors.white,
       itemCount: 5,
       itemSize: 25.0,

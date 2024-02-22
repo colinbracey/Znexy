@@ -55,6 +55,21 @@ class TransactionRecord extends FirestoreRecord {
   String get type => _type ?? '';
   bool hasType() => _type != null;
 
+  // "Withdrawn" field.
+  bool? _withdrawn;
+  bool get withdrawn => _withdrawn ?? false;
+  bool hasWithdrawn() => _withdrawn != null;
+
+  // "WithdrawDate" field.
+  DateTime? _withdrawDate;
+  DateTime? get withdrawDate => _withdrawDate;
+  bool hasWithdrawDate() => _withdrawDate != null;
+
+  // "WithdrawCreditCardId" field.
+  String? _withdrawCreditCardId;
+  String get withdrawCreditCardId => _withdrawCreditCardId ?? '';
+  bool hasWithdrawCreditCardId() => _withdrawCreditCardId != null;
+
   void _initializeFields() {
     _totalValue = castToType<double>(snapshotData['TotalValue']);
     _createdAt = snapshotData['CreatedAt'] as DateTime?;
@@ -64,6 +79,9 @@ class TransactionRecord extends FirestoreRecord {
     _offerIds = getDataList(snapshotData['OfferIds']);
     _userId = snapshotData['UserId'] as DocumentReference?;
     _type = snapshotData['Type'] as String?;
+    _withdrawn = snapshotData['Withdrawn'] as bool?;
+    _withdrawDate = snapshotData['WithdrawDate'] as DateTime?;
+    _withdrawCreditCardId = snapshotData['WithdrawCreditCardId'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -108,6 +126,9 @@ Map<String, dynamic> createTransactionRecordData({
   String? creditCardId,
   DocumentReference? userId,
   String? type,
+  bool? withdrawn,
+  DateTime? withdrawDate,
+  String? withdrawCreditCardId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -118,6 +139,9 @@ Map<String, dynamic> createTransactionRecordData({
       'CreditCardId': creditCardId,
       'UserId': userId,
       'Type': type,
+      'Withdrawn': withdrawn,
+      'WithdrawDate': withdrawDate,
+      'WithdrawCreditCardId': withdrawCreditCardId,
     }.withoutNulls,
   );
 
@@ -137,7 +161,10 @@ class TransactionRecordDocumentEquality implements Equality<TransactionRecord> {
         e1?.creditCardId == e2?.creditCardId &&
         listEquality.equals(e1?.offerIds, e2?.offerIds) &&
         e1?.userId == e2?.userId &&
-        e1?.type == e2?.type;
+        e1?.type == e2?.type &&
+        e1?.withdrawn == e2?.withdrawn &&
+        e1?.withdrawDate == e2?.withdrawDate &&
+        e1?.withdrawCreditCardId == e2?.withdrawCreditCardId;
   }
 
   @override
@@ -149,7 +176,10 @@ class TransactionRecordDocumentEquality implements Equality<TransactionRecord> {
         e?.creditCardId,
         e?.offerIds,
         e?.userId,
-        e?.type
+        e?.type,
+        e?.withdrawn,
+        e?.withdrawDate,
+        e?.withdrawCreditCardId
       ]);
 
   @override

@@ -58,44 +58,39 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
-      child: StreamBuilder<List<ReviewRecord>>(
-        stream: queryReviewRecord(
-          queryBuilder: (reviewRecord) => reviewRecord.where(
-            'UserId',
-            isEqualTo: widget.requesterUserId,
-          ),
+      child: Container(
+        width: 420.0,
+        height: 310.0,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 7.0,
+              color: Color(0x2F1D2429),
+              offset: Offset(0.0, 3.0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(8.0),
         ),
-        builder: (context, snapshot) {
-          // Customize what your widget looks like when it's loading.
-          if (!snapshot.hasData) {
-            return const Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Color(0xFFF609F0),
+        child: StreamBuilder<UsersRecord>(
+          stream: UsersRecord.getDocument(widget.requesterUserId!),
+          builder: (context, snapshot) {
+            // Customize what your widget looks like when it's loading.
+            if (!snapshot.hasData) {
+              return const Center(
+                child: SizedBox(
+                  width: 50.0,
+                  height: 50.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFFF609F0),
+                    ),
                   ),
                 ),
-              ),
-            );
-          }
-          List<ReviewRecord> card7ReviewRecordList = snapshot.data!;
-          return Container(
-            width: 420.0,
-            height: 310.0,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-              boxShadow: const [
-                BoxShadow(
-                  blurRadius: 7.0,
-                  color: Color(0x2F1D2429),
-                  offset: Offset(0.0, 3.0),
-                )
-              ],
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Column(
+              );
+            }
+            final columnUsersRecord = snapshot.data!;
+            return Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
@@ -228,6 +223,27 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                           const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          if (_model.ratingBarValue == 0.0) {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('No rating set'),
+                                  content: const Text(
+                                      'Please select a rating between 1 and 5'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
+                          }
+
                           await ReviewRecord.collection
                               .doc()
                               .set(createReviewRecordData(
@@ -238,23 +254,22 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                                 createdAt: getCurrentTimestamp,
                               ));
 
-                          await widget.requesterUserId!
-                              .update(createUsersRecordData(
-                            numberOfReviews: valueOrDefault<int>(
-                              card7ReviewRecordList.length,
-                              0,
+                          await widget.requesterUserId!.update({
+                            ...createUsersRecordData(
+                              averageRating: valueOrDefault<double>(
+                                functions.calculateNewAverageRating(
+                                    columnUsersRecord.averageRating,
+                                    columnUsersRecord.numberOfReviews,
+                                    _model.ratingBarValue!),
+                                0.0,
+                              ),
                             ),
-                            averageRating: valueOrDefault<double>(
-                              functions
-                                  .calculateAverageRating(card7ReviewRecordList
-                                      .map((e) => valueOrDefault<int>(
-                                            e.rating,
-                                            0,
-                                          ))
-                                      .toList()),
-                              0.0,
+                            ...mapToFirestore(
+                              {
+                                'numberOfReviews': FieldValue.increment(1),
+                              },
                             ),
-                          ));
+                          });
                           Navigator.pop(context);
                         },
                         text: 'Submit',
@@ -282,9 +297,9 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                   ],
                 ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -285,3 +285,26 @@ String bidsReceivedText(int bids) {
     }
   }
 }
+
+double calculateNewAverageRating(
+  double oldAverage,
+  int numberOfRatings,
+  double newRating,
+) {
+  return ((oldAverage * numberOfRatings) + newRating) / (numberOfRatings + 1);
+}
+
+double calculateAvailableBalance(List<double>? values) {
+  double totalValue = 0.0;
+  // Check if the list itself is not null
+  if (values != null) {
+    for (var value in values) {
+      // Add value to totalValue, considering it could be null
+      if (value != null) {
+        totalValue += value;
+      }
+    }
+  }
+  // Round the total value to 2 decimal places
+  return double.parse(totalValue.toStringAsFixed(2));
+}

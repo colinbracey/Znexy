@@ -1,11 +1,12 @@
 import '/backend/backend.dart';
-import '/components/user_rating_large/user_rating_large_widget.dart';
+import '/components/user_rating_large_output/user_rating_large_output_widget.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'user_profile_model.dart';
 export 'user_profile_model.dart';
@@ -134,13 +135,40 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(2.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  child: Image.network(
-                                    userProfileUsersRecord.photoUrl,
-                                    width: 100.0,
-                                    height: 100.0,
-                                    fit: BoxFit.cover,
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child: FlutterFlowExpandedImageView(
+                                          image: Image.network(
+                                            userProfileUsersRecord.photoUrl,
+                                            fit: BoxFit.contain,
+                                          ),
+                                          allowRotation: false,
+                                          tag: userProfileUsersRecord.photoUrl,
+                                          useHeroAnimation: true,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: userProfileUsersRecord.photoUrl,
+                                    transitionOnUserGestures: true,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                      child: Image.network(
+                                        userProfileUsersRecord.photoUrl,
+                                        width: 100.0,
+                                        height: 100.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -162,103 +190,78 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                 ),
                       ),
                     ),
-                    StreamBuilder<List<ReviewRecord>>(
-                      stream: queryReviewRecord(
-                        queryBuilder: (reviewRecord) => reviewRecord.where(
-                          'UserId',
-                          isEqualTo: widget.userDocRef,
-                        ),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Color(0xFFF609F0),
-                                ),
-                              ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed(
+                          'UsersReviews',
+                          queryParameters: {
+                            'userIdRef': serializeParam(
+                              widget.userDocRef,
+                              ParamType.DocumentReference,
                             ),
-                          );
-                        }
-                        List<ReviewRecord> containerReviewRecordList =
-                            snapshot.data!;
-                        return Container(
-                          decoration: const BoxDecoration(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  wrapWithModel(
-                                    model: _model.userRatingLargeModel,
-                                    updateCallback: () => setState(() {}),
-                                    child: UserRatingLargeWidget(
-                                      userRating: valueOrDefault<double>(
-                                        functions.calculateAverageRating(
-                                            containerReviewRecordList
-                                                .map((e) => valueOrDefault<int>(
-                                                      e.rating,
-                                                      0,
-                                                    ))
-                                                .toList()),
-                                        0.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (containerReviewRecordList.isNotEmpty)
-                                    Text(
-                                      'Rating ${valueOrDefault<String>(
-                                        functions
-                                            .calculateAverageRating(
-                                                containerReviewRecordList
-                                                    .map((e) =>
-                                                        valueOrDefault<int>(
-                                                          e.rating,
-                                                          0,
-                                                        ))
-                                                    .toList())
-                                            .toString(),
-                                        '0',
-                                      )} from ${valueOrDefault<String>(
-                                        containerReviewRecordList.length
-                                            .toString(),
-                                        '0',
-                                      )} reviews',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: const Color(0xFFFDFDFD),
-                                          ),
-                                    ),
-                                  if (containerReviewRecordList.isEmpty)
-                                    Text(
-                                      'No Reviews yet',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: const Color(0xFFFDFDFD),
-                                          ),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          }.withoutNulls,
                         );
                       },
+                      child: Container(
+                        decoration: const BoxDecoration(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                wrapWithModel(
+                                  model: _model.userRatingLargeOutputModel,
+                                  updateCallback: () => setState(() {}),
+                                  child: UserRatingLargeOutputWidget(
+                                    userRating:
+                                        userProfileUsersRecord.averageRating,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (userProfileUsersRecord.numberOfReviews > 0)
+                                  Text(
+                                    'Rating ${valueOrDefault<String>(
+                                      userProfileUsersRecord.averageRating
+                                          .toString(),
+                                      '0',
+                                    )} from ${valueOrDefault<String>(
+                                      userProfileUsersRecord.numberOfReviews
+                                          .toString(),
+                                      '0',
+                                    )} review${userProfileUsersRecord.numberOfReviews != 1 ? 's' : ' '}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: const Color(0xFFFDFDFD),
+                                        ),
+                                  ),
+                                if (userProfileUsersRecord.numberOfReviews == 0)
+                                  Text(
+                                    'No Reviews yet',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: const Color(0xFFFDFDFD),
+                                        ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Padding(
@@ -267,6 +270,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                         child: Container(
                           width: double.infinity,
                           height: 400.0,
+                          constraints: const BoxConstraints(
+                            maxWidth: 800.0,
+                          ),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -341,6 +347,68 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                               ),
                                               Text(
                                                 'Add Number',
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Open Sans',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 8.0, 16.0, 8.0),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.clock,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 24.0,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 12.0, 0.0),
+                                                  child: Text(
+                                                    'Member Since',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Comfortaa',
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                valueOrDefault<String>(
+                                                  dateTimeFormat(
+                                                      'relative',
+                                                      userProfileUsersRecord
+                                                          .createdTime),
+                                                  '0',
+                                                ),
                                                 textAlign: TextAlign.center,
                                                 style: FlutterFlowTheme.of(
                                                         context)

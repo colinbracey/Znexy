@@ -1,12 +1,13 @@
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-import 'user_rating_large_model.dart';
-export 'user_rating_large_model.dart';
+import 'user_rating_large_output_dark_model.dart';
+export 'user_rating_large_output_dark_model.dart';
 
-class UserRatingLargeWidget extends StatefulWidget {
-  const UserRatingLargeWidget({
+class UserRatingLargeOutputDarkWidget extends StatefulWidget {
+  const UserRatingLargeOutputDarkWidget({
     super.key,
     double? userRating,
   }) : userRating = userRating ?? 0.0;
@@ -14,11 +15,13 @@ class UserRatingLargeWidget extends StatefulWidget {
   final double userRating;
 
   @override
-  State<UserRatingLargeWidget> createState() => _UserRatingLargeWidgetState();
+  State<UserRatingLargeOutputDarkWidget> createState() =>
+      _UserRatingLargeOutputDarkWidgetState();
 }
 
-class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
-  late UserRatingLargeModel _model;
+class _UserRatingLargeOutputDarkWidgetState
+    extends State<UserRatingLargeOutputDarkWidget> {
+  late UserRatingLargeOutputDarkModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -29,7 +32,7 @@ class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UserRatingLargeModel());
+    _model = createModel(context, () => UserRatingLargeOutputDarkModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -45,19 +48,16 @@ class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return RatingBar.builder(
-      onRatingUpdate: (newValue) =>
-          setState(() => _model.leaveReviewRatingValue = newValue),
+    return RatingBarIndicator(
       itemBuilder: (context, index) => const Icon(
         Icons.star_rounded,
         color: Color(0xFFF609F0),
       ),
       direction: Axis.horizontal,
-      initialRating: _model.leaveReviewRatingValue ??= widget.userRating,
-      unratedColor: Colors.white,
+      rating: widget.userRating,
+      unratedColor: FlutterFlowTheme.of(context).secondaryText,
       itemCount: 5,
       itemSize: 25.0,
-      glowColor: const Color(0xFFF609F0),
     );
   }
 }

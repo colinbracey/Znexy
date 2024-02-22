@@ -1,4 +1,5 @@
 import '/components/dark_light_switch/dark_light_switch_widget.dart';
+import '/components/user_rating_large_output/user_rating_large_output_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'profile_widget.dart' show ProfileWidget;
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
 
+  // Model for UserRatingLargeOutput component.
+  late UserRatingLargeOutputModel userRatingLargeOutputModel;
   // Model for DarkLightSwitch component.
   late DarkLightSwitchModel darkLightSwitchModel;
 
@@ -19,12 +22,15 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
 
   @override
   void initState(BuildContext context) {
+    userRatingLargeOutputModel =
+        createModel(context, () => UserRatingLargeOutputModel());
     darkLightSwitchModel = createModel(context, () => DarkLightSwitchModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
+    userRatingLargeOutputModel.dispose();
     darkLightSwitchModel.dispose();
   }
 

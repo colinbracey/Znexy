@@ -2,6 +2,8 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/dark_light_switch/dark_light_switch_widget.dart';
+import '/components/user_rating_large_output/user_rating_large_output_widget.dart';
+import '/components/withdraw/withdraw_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -217,133 +219,103 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         color: FlutterFlowTheme.of(context).accent4,
                       ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 32.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 12.0),
-                              child: Container(
-                                width: 44.0,
-                                height: 44.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  shape: BoxShape.circle,
-                                ),
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Icon(
-                                  Icons.work_outline,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(
+                      'UsersReviews',
+                      queryParameters: {
+                        'userIdRef': serializeParam(
+                          currentUserReference,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 12.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AuthUserStreamWidget(
+                                builder: (context) => wrapWithModel(
+                                  model: _model.userRatingLargeOutputModel,
+                                  updateCallback: () => setState(() {}),
+                                  child: UserRatingLargeOutputWidget(
+                                    userRating: valueOrDefault(
+                                        currentUserDocument?.averageRating,
+                                        0.0),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Requests Made',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context).titleSmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              4.0, 0.0, 4.0, 0.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(
-                                'UsersReviews',
-                                queryParameters: {
-                                  'userIdRef': serializeParam(
-                                    currentUserReference,
-                                    ParamType.DocumentReference,
-                                  ),
-                                }.withoutNulls,
-                              );
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 12.0),
-                                  child: Container(
-                                    width: 44.0,
-                                    height: 44.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: Icon(
-                                      Icons.notifications_outlined,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 24.0,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  'Rating',
-                                  textAlign: TextAlign.center,
-                                  style:
-                                      FlutterFlowTheme.of(context).titleSmall,
-                                ),
-                              ],
-                            ),
+                            ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 12.0),
-                              child: Container(
-                                width: 44.0,
-                                height: 44.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  shape: BoxShape.circle,
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (valueOrDefault(
+                                      currentUserDocument?.numberOfReviews, 0) >
+                                  0)
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    'Rating ${valueOrDefault<String>(
+                                      valueOrDefault(
+                                              currentUserDocument
+                                                  ?.averageRating,
+                                              0.0)
+                                          .toString(),
+                                      '0',
+                                    )} from ${valueOrDefault<String>(
+                                      valueOrDefault(
+                                              currentUserDocument
+                                                  ?.numberOfReviews,
+                                              0)
+                                          .toString(),
+                                      '0',
+                                    )} review${valueOrDefault(currentUserDocument?.numberOfReviews, 0) != 1 ? 's' : ' '}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: const Color(0xFFFDFDFD),
+                                        ),
+                                  ),
                                 ),
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Icon(
-                                  Icons.help_outline_outlined,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
+                              if (valueOrDefault(
+                                      currentUserDocument?.numberOfReviews,
+                                      0) ==
+                                  0)
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    'No Reviews yet',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: const Color(0xFFFDFDFD),
+                                        ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Text(
-                              'Requests Sent',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context).titleSmall,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -357,6 +329,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           .where(
                             'Type',
                             isEqualTo: 'WorkCredit',
+                          )
+                          .where(
+                            'Withdrawn',
+                            isEqualTo: false,
                           ),
                     ),
                     builder: (context, snapshot) {
@@ -379,6 +355,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       return Container(
                         width: double.infinity,
                         height: 400.0,
+                        constraints: const BoxConstraints(
+                          maxWidth: 800.0,
+                        ),
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -419,6 +398,232 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                           'Settings',
                                           style: FlutterFlowTheme.of(context)
                                               .headlineSmall,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              if (containerTransactionRecordList.isNotEmpty) {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child: WithdrawWidget(
+                                                          transactions:
+                                                              containerTransactionRecordList,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              } else {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Nothing to withdraw'),
+                                                      content: const Text(
+                                                          'You have a zero balance, so there is nothing to withdraw. Complete some requests to earn some credits'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: const Text('Ok'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width: 380.0,
+                                              height: 180.0,
+                                              decoration: BoxDecoration(
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 6.0,
+                                                    color: Color(0x4B1A1F24),
+                                                    offset: Offset(0.0, 2.0),
+                                                  )
+                                                ],
+                                                gradient: const LinearGradient(
+                                                  colors: [
+                                                    Color(0xFFF609F0),
+                                                    Color(0xFF142328)
+                                                  ],
+                                                  stops: [0.0, 1.0],
+                                                  begin: AlignmentDirectional(
+                                                      0.94, -1.0),
+                                                  end: AlignmentDirectional(
+                                                      -0.94, 1.0),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/images/White-Pink-Logo.png',
+                                                      width: 200.0,
+                                                      height: 40.0,
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                    Text(
+                                                      'Balance',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            color: Colors.white,
+                                                          ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            formatNumber(
+                                                              functions.calculateAvailableBalance(
+                                                                  containerTransactionRecordList
+                                                                      .map((e) =>
+                                                                          valueOrDefault<
+                                                                              double>(
+                                                                            e.totalValue,
+                                                                            0.0,
+                                                                          ))
+                                                                      .toList()),
+                                                              formatType:
+                                                                  FormatType
+                                                                      .custom,
+                                                              currency: '',
+                                                              format: '0.00',
+                                                              locale: '',
+                                                            ),
+                                                            '0',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Comfortaa',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 32.0,
+                                                              ),
+                                                        ),
+                                                        if (containerTransactionRecordList.isNotEmpty)
+                                                          Text(
+                                                            'Withdraw',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .displaySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Comfortaa',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  fontSize:
+                                                                      30.0,
+                                                                ),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0,
+                                                                  4.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            '**** 0149',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto Mono',
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                          ),
+                                                          Text(
+                                                            '05/25',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto Mono',
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Padding(

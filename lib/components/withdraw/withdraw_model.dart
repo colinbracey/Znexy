@@ -1,9 +1,14 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'user_rating_large_copy_widget.dart' show UserRatingLargeCopyWidget;
+import 'withdraw_widget.dart' show WithdrawWidget;
 import 'package:flutter/material.dart';
 
-class UserRatingLargeCopyModel
-    extends FlutterFlowModel<UserRatingLargeCopyWidget> {
+class WithdrawModel extends FlutterFlowModel<WithdrawWidget> {
+  ///  Local state fields for this component.
+
+  int transactionLoop = 0;
+
+  int maxTransactionLoop = 0;
+
   /// Initialization and disposal methods.
 
   @override
