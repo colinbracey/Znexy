@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/no_offers_yet/no_offers_yet_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -9,8 +10,8 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:badges/badges.dart' as badges;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_offers_model.dart';
 export 'my_offers_model.dart';
@@ -87,15 +88,6 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
       return Container(
@@ -211,8 +203,13 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                   style: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .titleSmallFamily,
                                         color: Colors.white,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmallFamily),
                                       ),
                                 ),
                                 showBadge:
@@ -279,8 +276,13 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                 style: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
-                                      fontFamily: 'Open Sans',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
                                       color: Colors.white,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
                                     ),
                               ),
                               showBadge: badgeShoppingCartRecordList.isNotEmpty,
@@ -381,13 +383,21 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium,
                                           hintText: 'Search...',
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    color: const Color(0xFFFDFDFD),
-                                                  ),
+                                          hintStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMediumFamily,
+                                                color: const Color(0xFFFDFDFD),
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelMediumFamily),
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -448,9 +458,17 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
                                               color: const Color(0xFFFDFDFD),
                                               fontSize: 18.0,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                         validator: _model
                                             .searchFieldControllerValidator
@@ -466,7 +484,8 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                           fontFamily: 'Uber',
                                           color: Colors.white,
                                           fontSize: 10.0,
-                                          useGoogleFonts: false,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey('Uber'),
                                         ),
                                   ),
                                   Padding(
@@ -520,6 +539,9 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                   }
                                   List<OfferRecord> listViewOfferRecordList =
                                       snapshot.data!;
+                                  if (listViewOfferRecordList.isEmpty) {
+                                    return const NoOffersYetWidget();
+                                  }
                                   return ListView.separated(
                                     padding: const EdgeInsets.fromLTRB(
                                       0,
@@ -527,7 +549,6 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                       0,
                                       20.0,
                                     ),
-                                    shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: listViewOfferRecordList.length,
                                     separatorBuilder: (_, __) =>
@@ -593,7 +614,7 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                       if (listViewOfferRecord
                                                           .accepted) {
                                                         context.pushNamed(
-                                                          'AcceptedOfferOffererCopy',
+                                                          'AcceptedOfferOfferer',
                                                           queryParameters: {
                                                             'thisOffertDocRef':
                                                                 serializeParam(
@@ -760,34 +781,19 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                                             children: [
                                                                               Row(
                                                                                 mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Flexible(
                                                                                     child: Text(
                                                                                       columnRequestRecord.shortDescription,
                                                                                       style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                            fontFamily: 'Open Sans',
+                                                                                            fontFamily: FlutterFlowTheme.of(context).titleMediumFamily,
                                                                                             color: const Color(0xFF0F1113),
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                            useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleMediumFamily),
                                                                                           ),
                                                                                     ),
                                                                                   ),
-                                                                                  if (columnRequestRecord.openPrice == false)
-                                                                                    Text(
-                                                                                      valueOrDefault<String>(
-                                                                                        formatNumber(
-                                                                                          columnRequestRecord.totalPrice,
-                                                                                          formatType: FormatType.custom,
-                                                                                          currency: '',
-                                                                                          format: '###.00',
-                                                                                          locale: '',
-                                                                                        ),
-                                                                                        '0',
-                                                                                      ),
-                                                                                      style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                            fontFamily: 'Comfortaa',
-                                                                                            color: const Color(0xFF0F1113),
-                                                                                          ),
-                                                                                    ),
                                                                                 ],
                                                                               ),
                                                                               Padding(
@@ -815,7 +821,7 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Uber',
                                                                                                 fontWeight: FontWeight.normal,
-                                                                                                useGoogleFonts: false,
+                                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey('Uber'),
                                                                                               ),
                                                                                         ),
                                                                                       ],
@@ -824,8 +830,9 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                                                       Text(
                                                                                         'Offer Accepted',
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Open Sans',
+                                                                                              fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                               color: const Color(0xFFF609F0),
+                                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                             ),
                                                                                       ),
                                                                                   ],
@@ -851,8 +858,9 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                                                       '0',
                                                                                     ),
                                                                                     style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                          fontFamily: 'Comfortaa',
+                                                                                          fontFamily: FlutterFlowTheme.of(context).headlineSmallFamily,
                                                                                           color: const Color(0xFF0F1113),
+                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).headlineSmallFamily),
                                                                                         ),
                                                                                   ),
                                                                                 ],

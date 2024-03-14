@@ -1,4 +1,4 @@
-import '/components/helps_map/helps_map_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'help_requests_widget.dart' show HelpRequestsWidget;
 import 'package:flutter/material.dart';
@@ -11,10 +11,14 @@ class HelpRequestsModel extends FlutterFlowModel<HelpRequestsWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for HelpsMap component.
-  late HelpsMapModel helpsMapModel1;
-  // Model for HelpsMap component.
-  late HelpsMapModel helpsMapModel2;
+  // State field(s) for GoogleMapWide widget.
+  LatLng? googleMapWidesCenter;
+  final googleMapWidesController = Completer<GoogleMapController>();
+  // State field(s) for GoogleMapMobile widget.
+  LatLng? googleMapMobilesCenter;
+  final googleMapMobilesController = Completer<GoogleMapController>();
+  // State field(s) for PlacePicker widget.
+  var placePickerValue = const FFPlace();
   // State field(s) for SearchField widget.
   FocusNode? searchFieldFocusNode;
   TextEditingController? searchFieldController;
@@ -25,16 +29,11 @@ class HelpRequestsModel extends FlutterFlowModel<HelpRequestsWidget> {
   /// Initialization and disposal methods.
 
   @override
-  void initState(BuildContext context) {
-    helpsMapModel1 = createModel(context, () => HelpsMapModel());
-    helpsMapModel2 = createModel(context, () => HelpsMapModel());
-  }
+  void initState(BuildContext context) {}
 
   @override
   void dispose() {
     unfocusNode.dispose();
-    helpsMapModel1.dispose();
-    helpsMapModel2.dispose();
     searchFieldFocusNode?.dispose();
     searchFieldController?.dispose();
   }

@@ -54,16 +54,6 @@ class TrackOrderRecord extends FirestoreRecord {
   DateTime? get workUnderWayDate => _workUnderWayDate;
   bool hasWorkUnderWayDate() => _workUnderWayDate != null;
 
-  // "Review" field.
-  bool? _review;
-  bool get review => _review ?? false;
-  bool hasReview() => _review != null;
-
-  // "ReviewDate" field.
-  DateTime? _reviewDate;
-  DateTime? get reviewDate => _reviewDate;
-  bool hasReviewDate() => _reviewDate != null;
-
   // "OfferId" field.
   DocumentReference? _offerId;
   DocumentReference? get offerId => _offerId;
@@ -114,6 +104,46 @@ class TrackOrderRecord extends FirestoreRecord {
   DateTime? get workCompletedDateRequester => _workCompletedDateRequester;
   bool hasWorkCompletedDateRequester() => _workCompletedDateRequester != null;
 
+  // "StartDate" field.
+  DateTime? _startDate;
+  DateTime? get startDate => _startDate;
+  bool hasStartDate() => _startDate != null;
+
+  // "StartDateAgreed" field.
+  bool? _startDateAgreed;
+  bool get startDateAgreed => _startDateAgreed ?? false;
+  bool hasStartDateAgreed() => _startDateAgreed != null;
+
+  // "RequesterReviewLeft" field.
+  bool? _requesterReviewLeft;
+  bool get requesterReviewLeft => _requesterReviewLeft ?? false;
+  bool hasRequesterReviewLeft() => _requesterReviewLeft != null;
+
+  // "RequesterReviewLeftDate" field.
+  DateTime? _requesterReviewLeftDate;
+  DateTime? get requesterReviewLeftDate => _requesterReviewLeftDate;
+  bool hasRequesterReviewLeftDate() => _requesterReviewLeftDate != null;
+
+  // "OffererReviewLeft" field.
+  bool? _offererReviewLeft;
+  bool get offererReviewLeft => _offererReviewLeft ?? false;
+  bool hasOffererReviewLeft() => _offererReviewLeft != null;
+
+  // "OffererReviewLeftDate" field.
+  DateTime? _offererReviewLeftDate;
+  DateTime? get offererReviewLeftDate => _offererReviewLeftDate;
+  bool hasOffererReviewLeftDate() => _offererReviewLeftDate != null;
+
+  // "RequesterReviewId" field.
+  DocumentReference? _requesterReviewId;
+  DocumentReference? get requesterReviewId => _requesterReviewId;
+  bool hasRequesterReviewId() => _requesterReviewId != null;
+
+  // "OffererReviewId" field.
+  DocumentReference? _offererReviewId;
+  DocumentReference? get offererReviewId => _offererReviewId;
+  bool hasOffererReviewId() => _offererReviewId != null;
+
   void _initializeFields() {
     _accepted = snapshotData['Accepted'] as bool?;
     _acceptedDate = snapshotData['AcceptedDate'] as DateTime?;
@@ -123,8 +153,6 @@ class TrackOrderRecord extends FirestoreRecord {
     _arrivedDate = snapshotData['ArrivedDate'] as DateTime?;
     _workUnderWay = snapshotData['WorkUnderWay'] as bool?;
     _workUnderWayDate = snapshotData['WorkUnderWayDate'] as DateTime?;
-    _review = snapshotData['Review'] as bool?;
-    _reviewDate = snapshotData['ReviewDate'] as DateTime?;
     _offerId = snapshotData['OfferId'] as DocumentReference?;
     _driverPositions = getDataList(snapshotData['DriverPositions']);
     _source = snapshotData['Source'] as LatLng?;
@@ -137,6 +165,16 @@ class TrackOrderRecord extends FirestoreRecord {
     _workCompletedRequester = snapshotData['WorkCompletedRequester'] as bool?;
     _workCompletedDateRequester =
         snapshotData['WorkCompletedDateRequester'] as DateTime?;
+    _startDate = snapshotData['StartDate'] as DateTime?;
+    _startDateAgreed = snapshotData['StartDateAgreed'] as bool?;
+    _requesterReviewLeft = snapshotData['RequesterReviewLeft'] as bool?;
+    _requesterReviewLeftDate =
+        snapshotData['RequesterReviewLeftDate'] as DateTime?;
+    _offererReviewLeft = snapshotData['OffererReviewLeft'] as bool?;
+    _offererReviewLeftDate = snapshotData['OffererReviewLeftDate'] as DateTime?;
+    _requesterReviewId =
+        snapshotData['RequesterReviewId'] as DocumentReference?;
+    _offererReviewId = snapshotData['OffererReviewId'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -182,8 +220,6 @@ Map<String, dynamic> createTrackOrderRecordData({
   DateTime? arrivedDate,
   bool? workUnderWay,
   DateTime? workUnderWayDate,
-  bool? review,
-  DateTime? reviewDate,
   DocumentReference? offerId,
   LatLng? source,
   LatLng? destination,
@@ -193,6 +229,14 @@ Map<String, dynamic> createTrackOrderRecordData({
   DateTime? workCompletedDateOfferer,
   bool? workCompletedRequester,
   DateTime? workCompletedDateRequester,
+  DateTime? startDate,
+  bool? startDateAgreed,
+  bool? requesterReviewLeft,
+  DateTime? requesterReviewLeftDate,
+  bool? offererReviewLeft,
+  DateTime? offererReviewLeftDate,
+  DocumentReference? requesterReviewId,
+  DocumentReference? offererReviewId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -204,8 +248,6 @@ Map<String, dynamic> createTrackOrderRecordData({
       'ArrivedDate': arrivedDate,
       'WorkUnderWay': workUnderWay,
       'WorkUnderWayDate': workUnderWayDate,
-      'Review': review,
-      'ReviewDate': reviewDate,
       'OfferId': offerId,
       'Source': source,
       'Destination': destination,
@@ -215,6 +257,14 @@ Map<String, dynamic> createTrackOrderRecordData({
       'WorkCompletedDateOfferer': workCompletedDateOfferer,
       'WorkCompletedRequester': workCompletedRequester,
       'WorkCompletedDateRequester': workCompletedDateRequester,
+      'StartDate': startDate,
+      'StartDateAgreed': startDateAgreed,
+      'RequesterReviewLeft': requesterReviewLeft,
+      'RequesterReviewLeftDate': requesterReviewLeftDate,
+      'OffererReviewLeft': offererReviewLeft,
+      'OffererReviewLeftDate': offererReviewLeftDate,
+      'RequesterReviewId': requesterReviewId,
+      'OffererReviewId': offererReviewId,
     }.withoutNulls,
   );
 
@@ -235,8 +285,6 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e1?.arrivedDate == e2?.arrivedDate &&
         e1?.workUnderWay == e2?.workUnderWay &&
         e1?.workUnderWayDate == e2?.workUnderWayDate &&
-        e1?.review == e2?.review &&
-        e1?.reviewDate == e2?.reviewDate &&
         e1?.offerId == e2?.offerId &&
         listEquality.equals(e1?.driverPositions, e2?.driverPositions) &&
         e1?.source == e2?.source &&
@@ -246,7 +294,15 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e1?.workCompletedOfferer == e2?.workCompletedOfferer &&
         e1?.workCompletedDateOfferer == e2?.workCompletedDateOfferer &&
         e1?.workCompletedRequester == e2?.workCompletedRequester &&
-        e1?.workCompletedDateRequester == e2?.workCompletedDateRequester;
+        e1?.workCompletedDateRequester == e2?.workCompletedDateRequester &&
+        e1?.startDate == e2?.startDate &&
+        e1?.startDateAgreed == e2?.startDateAgreed &&
+        e1?.requesterReviewLeft == e2?.requesterReviewLeft &&
+        e1?.requesterReviewLeftDate == e2?.requesterReviewLeftDate &&
+        e1?.offererReviewLeft == e2?.offererReviewLeft &&
+        e1?.offererReviewLeftDate == e2?.offererReviewLeftDate &&
+        e1?.requesterReviewId == e2?.requesterReviewId &&
+        e1?.offererReviewId == e2?.offererReviewId;
   }
 
   @override
@@ -259,8 +315,6 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e?.arrivedDate,
         e?.workUnderWay,
         e?.workUnderWayDate,
-        e?.review,
-        e?.reviewDate,
         e?.offerId,
         e?.driverPositions,
         e?.source,
@@ -270,7 +324,15 @@ class TrackOrderRecordDocumentEquality implements Equality<TrackOrderRecord> {
         e?.workCompletedOfferer,
         e?.workCompletedDateOfferer,
         e?.workCompletedRequester,
-        e?.workCompletedDateRequester
+        e?.workCompletedDateRequester,
+        e?.startDate,
+        e?.startDateAgreed,
+        e?.requesterReviewLeft,
+        e?.requesterReviewLeftDate,
+        e?.offererReviewLeft,
+        e?.offererReviewLeftDate,
+        e?.requesterReviewId,
+        e?.offererReviewId
       ]);
 
   @override

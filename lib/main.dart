@@ -97,12 +97,14 @@ class _MyAppState extends State<MyApp> {
         scrollbarTheme: const ScrollbarThemeData(
           interactive: true,
         ),
+        useMaterial3: false,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scrollbarTheme: const ScrollbarThemeData(
           interactive: true,
         ),
+        useMaterial3: false,
       ),
       themeMode: _themeMode,
       routerConfig: _router,

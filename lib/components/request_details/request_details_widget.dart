@@ -4,7 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'request_details_model.dart';
 export 'request_details_model.dart';
 
@@ -71,8 +71,6 @@ class _RequestDetailsWidgetState extends State<RequestDetailsWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
       child: Container(
@@ -139,8 +137,14 @@ class _RequestDetailsWidgetState extends State<RequestDetailsWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMediumFamily,
                                           color: const Color(0xFF0F1113),
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleMediumFamily),
                                         ),
                                   ),
                                   Text(
@@ -148,8 +152,14 @@ class _RequestDetailsWidgetState extends State<RequestDetailsWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .headlineSmall
                                         .override(
-                                          fontFamily: 'Comfortaa',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineSmallFamily,
                                           color: const Color(0xFF0F1113),
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineSmallFamily),
                                         ),
                                   ),
                                 ],

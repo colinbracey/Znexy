@@ -8,7 +8,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 const kThemeModeKey = '__theme_mode__';
 SharedPreferences? _prefs;
 
+enum DeviceSize {
+  mobile,
+  tablet,
+  desktop,
+}
+
 abstract class FlutterFlowTheme {
+  static DeviceSize deviceSize = DeviceSize.mobile;
+
   static Future initialize() async =>
       _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
@@ -25,6 +33,7 @@ abstract class FlutterFlowTheme {
       : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
   static FlutterFlowTheme of(BuildContext context) {
+    deviceSize = getDeviceSize(context);
     return Theme.of(context).brightness == Brightness.dark
         ? DarkModeTheme()
         : LightModeTheme();
@@ -114,7 +123,22 @@ abstract class FlutterFlowTheme {
   String get bodySmallFamily => typography.bodySmallFamily;
   TextStyle get bodySmall => typography.bodySmall;
 
-  Typography get typography => ThemeTypography(this);
+  Typography get typography => {
+        DeviceSize.mobile: MobileTypography(this),
+        DeviceSize.tablet: TabletTypography(this),
+        DeviceSize.desktop: DesktopTypography(this),
+      }[deviceSize]!;
+}
+
+DeviceSize getDeviceSize(BuildContext context) {
+  final width = MediaQuery.sizeOf(context).width;
+  if (width < 479) {
+    return DeviceSize.mobile;
+  } else if (width < 991) {
+    return DeviceSize.tablet;
+  } else {
+    return DeviceSize.desktop;
+  }
 }
 
 class LightModeTheme extends FlutterFlowTheme {
@@ -176,112 +200,336 @@ abstract class Typography {
   TextStyle get bodySmall;
 }
 
-class ThemeTypography extends Typography {
-  ThemeTypography(this.theme);
+class MobileTypography extends Typography {
+  MobileTypography(this.theme);
 
   final FlutterFlowTheme theme;
 
-  String get displayLargeFamily => 'Comfortaa';
-  TextStyle get displayLarge => GoogleFonts.getFont(
-        'Comfortaa',
+  String get displayLargeFamily => 'Uber';
+  TextStyle get displayLarge => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 64.0,
       );
-  String get displayMediumFamily => 'Comfortaa';
-  TextStyle get displayMedium => GoogleFonts.getFont(
-        'Comfortaa',
+  String get displayMediumFamily => 'Uber';
+  TextStyle get displayMedium => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 44.0,
       );
-  String get displaySmallFamily => 'Comfortaa';
-  TextStyle get displaySmall => GoogleFonts.getFont(
-        'Comfortaa',
+  String get displaySmallFamily => 'Uber';
+  TextStyle get displaySmall => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       );
-  String get headlineLargeFamily => 'Comfortaa';
-  TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Comfortaa',
+  String get headlineLargeFamily => 'Uber';
+  TextStyle get headlineLarge => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 32.0,
       );
-  String get headlineMediumFamily => 'Comfortaa';
-  TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Comfortaa',
+  String get headlineMediumFamily => 'Uber';
+  TextStyle get headlineMedium => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 24.0,
       );
-  String get headlineSmallFamily => 'Comfortaa';
-  TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Comfortaa',
+  String get headlineSmallFamily => 'Uber';
+  TextStyle get headlineSmall => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 24.0,
       );
-  String get titleLargeFamily => 'Comfortaa';
-  TextStyle get titleLarge => GoogleFonts.getFont(
-        'Comfortaa',
+  String get titleLargeFamily => 'Uber';
+  TextStyle get titleLarge => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
-  String get titleMediumFamily => 'Open Sans';
-  TextStyle get titleMedium => GoogleFonts.getFont(
-        'Open Sans',
+  String get titleMediumFamily => 'Uber';
+  TextStyle get titleMedium => TextStyle(
+        fontFamily: 'Uber',
         color: theme.info,
         fontWeight: FontWeight.normal,
         fontSize: 18.0,
       );
-  String get titleSmallFamily => 'Open Sans';
-  TextStyle get titleSmall => GoogleFonts.getFont(
-        'Open Sans',
+  String get titleSmallFamily => 'Uber';
+  TextStyle get titleSmall => TextStyle(
+        fontFamily: 'Uber',
         color: theme.info,
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
       );
-  String get labelLargeFamily => 'Open Sans';
-  TextStyle get labelLarge => GoogleFonts.getFont(
-        'Open Sans',
+  String get labelLargeFamily => 'Uber';
+  TextStyle get labelLarge => TextStyle(
+        fontFamily: 'Uber',
         color: theme.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 16.0,
       );
-  String get labelMediumFamily => 'Open Sans';
-  TextStyle get labelMedium => GoogleFonts.getFont(
-        'Open Sans',
+  String get labelMediumFamily => 'Uber';
+  TextStyle get labelMedium => TextStyle(
+        fontFamily: 'Uber',
         color: theme.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
-  String get labelSmallFamily => 'Open Sans';
-  TextStyle get labelSmall => GoogleFonts.getFont(
-        'Open Sans',
+  String get labelSmallFamily => 'Uber';
+  TextStyle get labelSmall => TextStyle(
+        fontFamily: 'Uber',
         color: theme.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 12.0,
       );
-  String get bodyLargeFamily => 'Open Sans';
-  TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Open Sans',
+  String get bodyLargeFamily => 'Uber';
+  TextStyle get bodyLarge => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 16.0,
       );
-  String get bodyMediumFamily => 'Open Sans';
-  TextStyle get bodyMedium => GoogleFonts.getFont(
-        'Open Sans',
+  String get bodyMediumFamily => 'Uber';
+  TextStyle get bodyMedium => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
-  String get bodySmallFamily => 'Open Sans';
-  TextStyle get bodySmall => GoogleFonts.getFont(
-        'Open Sans',
+  String get bodySmallFamily => 'Uber';
+  TextStyle get bodySmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
+}
+
+class TabletTypography extends Typography {
+  TabletTypography(this.theme);
+
+  final FlutterFlowTheme theme;
+
+  String get displayLargeFamily => 'Uber';
+  TextStyle get displayLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 64.0,
+      );
+  String get displayMediumFamily => 'Uber';
+  TextStyle get displayMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 44.0,
+      );
+  String get displaySmallFamily => 'Uber';
+  TextStyle get displaySmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
+      );
+  String get headlineLargeFamily => 'Uber';
+  TextStyle get headlineLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 32.0,
+      );
+  String get headlineMediumFamily => 'Uber';
+  TextStyle get headlineMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 24.0,
+      );
+  String get headlineSmallFamily => 'Uber';
+  TextStyle get headlineSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 24.0,
+      );
+  String get titleLargeFamily => 'Uber';
+  TextStyle get titleLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 22.0,
+      );
+  String get titleMediumFamily => 'Uber';
+  TextStyle get titleMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.info,
+        fontWeight: FontWeight.normal,
+        fontSize: 18.0,
+      );
+  String get titleSmallFamily => 'Uber';
+  TextStyle get titleSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.info,
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+      );
+  String get labelLargeFamily => 'Uber';
+  TextStyle get labelLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
+  String get labelMediumFamily => 'Uber';
+  TextStyle get labelMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
+  String get labelSmallFamily => 'Uber';
+  TextStyle get labelSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
+  String get bodyLargeFamily => 'Uber';
+  TextStyle get bodyLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
+  String get bodyMediumFamily => 'Uber';
+  TextStyle get bodyMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
+  String get bodySmallFamily => 'Uber';
+  TextStyle get bodySmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
+}
+
+class DesktopTypography extends Typography {
+  DesktopTypography(this.theme);
+
+  final FlutterFlowTheme theme;
+
+  String get displayLargeFamily => 'Uber';
+  TextStyle get displayLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 64.0,
+      );
+  String get displayMediumFamily => 'Uber';
+  TextStyle get displayMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 44.0,
+      );
+  String get displaySmallFamily => 'Uber';
+  TextStyle get displaySmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
+      );
+  String get headlineLargeFamily => 'Uber';
+  TextStyle get headlineLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 32.0,
+      );
+  String get headlineMediumFamily => 'Uber';
+  TextStyle get headlineMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 24.0,
+      );
+  String get headlineSmallFamily => 'Uber';
+  TextStyle get headlineSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 24.0,
+      );
+  String get titleLargeFamily => 'Uber';
+  TextStyle get titleLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 22.0,
+      );
+  String get titleMediumFamily => 'Uber';
+  TextStyle get titleMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.info,
+        fontWeight: FontWeight.normal,
+        fontSize: 18.0,
+      );
+  String get titleSmallFamily => 'Uber';
+  TextStyle get titleSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.info,
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+      );
+  String get labelLargeFamily => 'Uber';
+  TextStyle get labelLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
+  String get labelMediumFamily => 'Uber';
+  TextStyle get labelMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
+  String get labelSmallFamily => 'Uber';
+  TextStyle get labelSmall => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
+      );
+  String get bodyLargeFamily => 'Uber';
+  TextStyle get bodyLarge => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
+  String get bodyMediumFamily => 'Uber';
+  TextStyle get bodyMedium => TextStyle(
+        fontFamily: 'Uber',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14.0,
+      );
+  String get bodySmallFamily => 'Uber';
+  TextStyle get bodySmall => TextStyle(
+        fontFamily: 'Uber',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 12.0,

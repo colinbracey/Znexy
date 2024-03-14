@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'empty_shopping_cart_model.dart';
 export 'empty_shopping_cart_model.dart';
 
@@ -40,8 +39,6 @@ class _EmptyShoppingCartWidgetState extends State<EmptyShoppingCartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [

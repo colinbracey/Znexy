@@ -6,7 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:aligned_tooltip/aligned_tooltip.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'add_a_bid_model.dart';
 export 'add_a_bid_model.dart';
 
@@ -60,8 +60,6 @@ class _AddABidWidgetState extends State<AddABidWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<OfferRecord>>(
       stream: queryOfferRecord(
         queryBuilder: (offerRecord) => offerRecord
@@ -151,8 +149,13 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                                   16.0, 12.0, 0.0, 0.0),
                               child: Text(
                                 'Add A Bid for the Request',
-                                style:
-                                    FlutterFlowTheme.of(context).headlineMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .override(
+                                      fontFamily: 'Uber',
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey('Uber'),
+                                    ),
                               ),
                             ),
                             InkWell(
@@ -181,7 +184,13 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                           children: [
                             Text(
                               'Enter your bid in \$ below',
-                              style: FlutterFlowTheme.of(context).labelMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Uber',
+                                    useGoogleFonts:
+                                        GoogleFonts.asMap().containsKey('Uber'),
+                                  ),
                             ),
                             AlignedTooltip(
                               content: Padding(
@@ -261,8 +270,10 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Uber',
                                     fontSize: 18.0,
+                                    useGoogleFonts:
+                                        GoogleFonts.asMap().containsKey('Uber'),
                                   ),
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true),
@@ -278,7 +289,13 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                           children: [
                             Text(
                               'Enter a detailed description of your offer',
-                              style: FlutterFlowTheme.of(context).labelMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Uber',
+                                    useGoogleFonts:
+                                        GoogleFonts.asMap().containsKey('Uber'),
+                                  ),
                             ),
                             AlignedTooltip(
                               content: Padding(
@@ -358,8 +375,10 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Open Sans',
+                                    fontFamily: 'Uber',
                                     fontSize: 18.0,
+                                    useGoogleFonts:
+                                        GoogleFonts.asMap().containsKey('Uber'),
                                   ),
                           maxLines: 6,
                           validator: _model.offerDescriptionControllerValidator
@@ -428,6 +447,7 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                                         description: _model
                                             .offerDescriptionController.text,
                                         status: 1,
+                                        location: currentUserLocationValue,
                                       ),
                                       ...mapToFirestore(
                                         {
@@ -464,7 +484,7 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                                         receivedId: columnRequestRecord.userId,
                                         type: 1,
                                         message: valueOrDefault<String>(
-                                          '$currentUserDisplayName made a bid of ${valueOrDefault<String>(
+                                          '$currentUserDisplayName made a bid of \$${valueOrDefault<String>(
                                             _model.offerAmountController.text,
                                             '0',
                                           )}',
@@ -512,8 +532,13 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleMedium
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .titleMediumFamily,
                                         color: Colors.white,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMediumFamily),
                                       ),
                                   elevation: 3.0,
                                   borderSide: const BorderSide(

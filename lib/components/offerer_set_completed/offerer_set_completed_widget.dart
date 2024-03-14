@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'offerer_set_completed_model.dart';
 export 'offerer_set_completed_model.dart';
 
@@ -40,8 +40,6 @@ class _OffererSetCompletedWidgetState extends State<OffererSetCompletedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Material(
       color: Colors.transparent,
       elevation: 5.0,
@@ -80,8 +78,12 @@ class _OffererSetCompletedWidgetState extends State<OffererSetCompletedWidget> {
                       'Almost There!',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
-                                fontFamily: 'Comfortaa',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .headlineMediumFamily,
                                 fontWeight: FontWeight.bold,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily),
                               ),
                     ),
                   ),

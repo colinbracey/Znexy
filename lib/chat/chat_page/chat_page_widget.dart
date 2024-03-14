@@ -2,9 +2,7 @@ import '/flutter_flow/chat/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'chat_page_model.dart';
 export 'chat_page_model.dart';
 
@@ -65,17 +63,6 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -101,9 +88,11 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
             'Name',
           ),
           style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: 'Comfortaa',
+                fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
                 color: Colors.white,
                 fontSize: 22.0,
+                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                    FlutterFlowTheme.of(context).headlineMediumFamily),
               ),
         ),
         actions: const [],

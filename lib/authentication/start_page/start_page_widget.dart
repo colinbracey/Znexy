@@ -4,9 +4,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'start_page_model.dart';
 export 'start_page_model.dart';
 
@@ -91,17 +90,6 @@ class _StartPageWidgetState extends State<StartPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -158,6 +146,8 @@ class _StartPageWidgetState extends State<StartPageWidget>
                                     color: const Color(0xFFFDFDFD),
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.w800,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey('Comfortaa'),
                                   ),
                             ).animateOnPageLoad(
                                 animationsMap['textOnPageLoadAnimation1']!),
@@ -175,6 +165,8 @@ class _StartPageWidgetState extends State<StartPageWidget>
                                       fontSize: 13.0,
                                       letterSpacing: 0.5,
                                       fontWeight: FontWeight.w300,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey('Comfortaa'),
                                       lineHeight: 1.5,
                                     ),
                               ).animateOnPageLoad(
@@ -203,6 +195,8 @@ class _StartPageWidgetState extends State<StartPageWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         fontWeight: FontWeight.w800,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey('Comfortaa'),
                                       ),
                                   elevation: 2.0,
                                   borderSide: const BorderSide(

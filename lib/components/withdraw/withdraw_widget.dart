@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'withdraw_model.dart';
@@ -87,8 +88,12 @@ class _WithdrawWidgetState extends State<WithdrawWidget> {
                       'Withdraw funds',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
-                                fontFamily: 'Comfortaa',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .headlineMediumFamily,
                                 fontWeight: FontWeight.bold,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily),
                               ),
                     ),
                   ),
@@ -182,12 +187,17 @@ class _WithdrawWidgetState extends State<WithdrawWidget> {
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: const Color(0xFF142328),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                    fontSize: 12.0,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .titleSmallFamily,
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .titleSmallFamily),
+                              ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,
@@ -242,12 +252,17 @@ class _WithdrawWidgetState extends State<WithdrawWidget> {
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: const Color(0xFFF609F0),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                    fontSize: 12.0,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .titleSmallFamily,
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .titleSmallFamily),
+                              ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,

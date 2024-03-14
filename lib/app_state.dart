@@ -34,12 +34,6 @@ class FFAppState extends ChangeNotifier {
     _BidClosedWithNoValue = value;
   }
 
-  DocumentReference? _highlightedRequestRef;
-  DocumentReference? get highlightedRequestRef => _highlightedRequestRef;
-  set highlightedRequestRef(DocumentReference? value) {
-    _highlightedRequestRef = value;
-  }
-
   bool _isMapClicked = false;
   bool get isMapClicked => _isMapClicked;
   set isMapClicked(bool value) {

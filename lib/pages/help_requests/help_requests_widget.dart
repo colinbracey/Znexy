@@ -1,17 +1,22 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/helps_map/helps_map_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'help_requests_model.dart';
 export 'help_requests_model.dart';
@@ -84,6 +89,11 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
     super.initState();
     _model = createModel(context, () => HelpRequestsModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await requestPermission(locationPermission);
+    });
+
     getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0), cached: true)
         .then((loc) => setState(() => currentUserLocationValue = loc));
     _model.searchFieldController ??= TextEditingController();
@@ -101,15 +111,6 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
       return Container(
@@ -160,6 +161,7 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
               : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
+            resizeToAvoidBottomInset: false,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             floatingActionButton: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
@@ -273,8 +275,14 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                       style: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmallFamily,
                                             color: Colors.white,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmallFamily),
                                           ),
                                     ),
                                     showBadge:
@@ -345,8 +353,14 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily,
                                           color: Colors.white,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily),
                                         ),
                                   ),
                                   showBadge:
@@ -418,10 +432,37 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
-                                      child: wrapWithModel(
-                                        model: _model.helpsMapModel1,
-                                        updateCallback: () => setState(() {}),
-                                        child: const HelpsMapWidget(),
+                                      child: FlutterFlowGoogleMap(
+                                        controller:
+                                            _model.googleMapWidesController,
+                                        onCameraIdle: (latLng) => _model
+                                            .googleMapWidesCenter = latLng,
+                                        initialLocation:
+                                            _model.googleMapWidesCenter ??=
+                                                currentUserLocationValue!,
+                                        markers: helpRequestsRequestRecordList
+                                            .map((e) => e.location)
+                                            .withoutNulls
+                                            .toList()
+                                            .map(
+                                              (marker) => FlutterFlowMarker(
+                                                marker.serialize(),
+                                                marker,
+                                              ),
+                                            )
+                                            .toList(),
+                                        markerColor: GoogleMarkerColor.violet,
+                                        mapType: MapType.normal,
+                                        style: GoogleMapStyle.standard,
+                                        initialZoom: 14.0,
+                                        allowInteraction: true,
+                                        allowZoom: true,
+                                        showZoomControls: true,
+                                        showLocation: true,
+                                        showCompass: false,
+                                        showMapToolbar: false,
+                                        showTraffic: false,
+                                        centerMapOnMarkerTap: true,
                                       ),
                                     ),
                                   ],
@@ -440,14 +481,110 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                 ))
                                   Container(
                                     width: double.infinity,
-                                    height: 200.0,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.35,
                                     decoration: const BoxDecoration(
                                       color: Color(0x8E4B39EF),
                                     ),
-                                    child: wrapWithModel(
-                                      model: _model.helpsMapModel2,
-                                      updateCallback: () => setState(() {}),
-                                      child: const HelpsMapWidget(),
+                                    child: Stack(
+                                      children: [
+                                        FlutterFlowGoogleMap(
+                                          controller:
+                                              _model.googleMapMobilesController,
+                                          onCameraIdle: (latLng) => _model
+                                              .googleMapMobilesCenter = latLng,
+                                          initialLocation: _model
+                                                  .googleMapMobilesCenter ??=
+                                              _model.placePickerValue.latLng,
+                                          markers: helpRequestsRequestRecordList
+                                              .map((e) => e.location)
+                                              .withoutNulls
+                                              .toList()
+                                              .map(
+                                                (marker) => FlutterFlowMarker(
+                                                  marker.serialize(),
+                                                  marker,
+                                                ),
+                                              )
+                                              .toList(),
+                                          markerColor: GoogleMarkerColor.violet,
+                                          mapType: MapType.normal,
+                                          style: GoogleMapStyle.standard,
+                                          initialZoom: 14.0,
+                                          allowInteraction: true,
+                                          allowZoom: true,
+                                          showZoomControls: true,
+                                          showLocation: true,
+                                          showCompass: false,
+                                          showMapToolbar: false,
+                                          showTraffic: false,
+                                          centerMapOnMarkerTap: true,
+                                        ),
+                                        PointerInterceptor(
+                                          intercepting: isWeb,
+                                          child: FlutterFlowPlacePicker(
+                                            iOSGoogleMapsApiKey:
+                                                'AIzaSyDm9dUzg0tXX8GhKDrzHk581XK9wmMIwNk',
+                                            androidGoogleMapsApiKey:
+                                                'AIzaSyDg8-BC2IcmYxvrxHX8-f7n223YaM69QZs',
+                                            webGoogleMapsApiKey:
+                                                'AIzaSyD8c6ObN67Fy4Ub1MfyWKwuW5J-c-rht0A',
+                                            onSelect: (place) async {
+                                              setState(() => _model
+                                                  .placePickerValue = place);
+                                              (await _model
+                                                      .googleMapMobilesController
+                                                      .future)
+                                                  .animateCamera(
+                                                      CameraUpdate.newLatLng(
+                                                          place.latLng
+                                                              .toGoogleMaps()));
+                                            },
+                                            defaultText: 'Location',
+                                            icon: Icon(
+                                              Icons.place,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              size: 16.0,
+                                            ),
+                                            buttonOptions: FFButtonOptions(
+                                              width: 100.0,
+                                              height: 40.0,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmallFamily,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .info,
+                                                        fontSize: 12.0,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmallFamily),
+                                                      ),
+                                              elevation: 2.0,
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 Container(
@@ -496,9 +633,18 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .labelMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMediumFamily,
                                                         color:
                                                             const Color(0xFFFDFDFD),
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMediumFamily),
                                                       ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -562,9 +708,18 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Open Sans',
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily,
                                                   color: const Color(0xFFFDFDFD),
                                                   fontSize: 18.0,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMediumFamily),
                                                 ),
                                             validator: _model
                                                 .searchFieldControllerValidator
@@ -580,7 +735,9 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                               fontFamily: 'Uber',
                                               color: Colors.white,
                                               fontSize: 10.0,
-                                              useGoogleFonts: false,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey('Uber'),
                                             ),
                                       ),
                                       Padding(
@@ -833,125 +990,123 @@ class _HelpRequestsWidgetState extends State<HelpRequestsWidget>
                                                                     sigmaY: 2.0,
                                                                   ),
                                                                   child:
-                                                                      Container(
-                                                                    width: double
-                                                                        .infinity,
-                                                                    decoration:
-                                                                        const BoxDecoration(
-                                                                      color: Color(
-                                                                          0xDFFFFFFF),
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .only(
-                                                                        bottomLeft:
-                                                                            Radius.circular(12.0),
-                                                                        bottomRight:
-                                                                            Radius.circular(12.0),
-                                                                        topLeft:
-                                                                            Radius.circular(0.0),
-                                                                        topRight:
-                                                                            Radius.circular(0.0),
-                                                                      ),
-                                                                    ),
+                                                                      Opacity(
+                                                                    opacity:
+                                                                        0.8,
                                                                     child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              12.0),
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        color: Color(
+                                                                            0xDF000000),
+                                                                        borderRadius:
+                                                                            BorderRadius.only(
+                                                                          bottomLeft:
+                                                                              Radius.circular(12.0),
+                                                                          bottomRight:
+                                                                              Radius.circular(12.0),
+                                                                          topLeft:
+                                                                              Radius.circular(0.0),
+                                                                          topRight:
+                                                                              Radius.circular(0.0),
+                                                                        ),
+                                                                      ),
                                                                       child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Flexible(
-                                                                                child: Text(
-                                                                                  helpRequestsItem.shortDescription,
-                                                                                  style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                        fontFamily: 'Open Sans',
-                                                                                        color: const Color(0xFF0F1113),
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              if (helpRequestsItem.openPrice == false)
-                                                                                Text(
-                                                                                  valueOrDefault<String>(
-                                                                                    formatNumber(
-                                                                                      helpRequestsItem.totalPrice,
-                                                                                      formatType: FormatType.custom,
-                                                                                      currency: '\$',
-                                                                                      format: '###.00',
-                                                                                      locale: '',
-                                                                                    ),
-                                                                                    '0',
-                                                                                  ),
-                                                                                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                        fontFamily: 'Comfortaa',
-                                                                                        color: const Color(0xFF0F1113),
-                                                                                      ),
-                                                                                ),
-                                                                            ],
-                                                                          ),
                                                                           Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                5.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              helpRequestsItem.longDescription,
-                                                                              maxLines: 3,
-                                                                              style: FlutterFlowTheme.of(context).labelMedium,
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                5.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
+                                                                        padding:
+                                                                            const EdgeInsets.all(12.0),
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Row(
                                                                               mainAxisSize: MainAxisSize.max,
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
-                                                                                Row(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      valueOrDefault<String>(
-                                                                                        functions.distanceBetweenTwoPoints(isWeb == true ? FFAppState().kelowna : currentUserLocationValue, helpRequestsItem.location, ''),
-                                                                                        'Distance',
-                                                                                      ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Uber',
-                                                                                            color: helpRequestsItem.reference == FFAppState().highlightedRequestRef ? Colors.white : FlutterFlowTheme.of(context).primaryText,
-                                                                                            fontWeight: FontWeight.normal,
-                                                                                            useGoogleFonts: false,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ],
+                                                                                Flexible(
+                                                                                  child: Text(
+                                                                                    helpRequestsItem.shortDescription,
+                                                                                    style: FlutterFlowTheme.of(context).titleMedium.override(
+                                                                                          fontFamily: FlutterFlowTheme.of(context).titleMediumFamily,
+                                                                                          color: FlutterFlowTheme.of(context).info,
+                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleMediumFamily),
+                                                                                        ),
+                                                                                  ),
                                                                                 ),
-                                                                                if (helpRequestsItem.accepted == true)
+                                                                                if (helpRequestsItem.openPrice == false)
                                                                                   Text(
-                                                                                    'Offer Accepted',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Open Sans',
-                                                                                          color: const Color(0xFFF609F0),
+                                                                                    valueOrDefault<String>(
+                                                                                      formatNumber(
+                                                                                        helpRequestsItem.totalPrice,
+                                                                                        formatType: FormatType.custom,
+                                                                                        currency: '\$',
+                                                                                        format: '###.00',
+                                                                                        locale: '',
+                                                                                      ),
+                                                                                      '0',
+                                                                                    ),
+                                                                                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                          fontFamily: FlutterFlowTheme.of(context).headlineSmallFamily,
+                                                                                          color: FlutterFlowTheme.of(context).info,
+                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).headlineSmallFamily),
                                                                                         ),
                                                                                   ),
                                                                               ],
                                                                             ),
-                                                                          ),
-                                                                        ],
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                helpRequestsItem.longDescription,
+                                                                                maxLines: 3,
+                                                                                style: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                      fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
+                                                                                      color: FlutterFlowTheme.of(context).info,
+                                                                                      useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).labelMediumFamily),
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    children: [
+                                                                                      Text(
+                                                                                        valueOrDefault<String>(
+                                                                                          functions.distanceBetweenTwoPoints(isWeb == true ? FFAppState().kelowna : currentUserLocationValue, helpRequestsItem.location, ''),
+                                                                                          'Distance',
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Uber',
+                                                                                              color: FlutterFlowTheme.of(context).info,
+                                                                                              fontWeight: FontWeight.normal,
+                                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey('Uber'),
+                                                                                            ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                  if (helpRequestsItem.accepted == true)
+                                                                                    Text(
+                                                                                      'Offer Accepted',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                            color: const Color(0xFFF609F0),
+                                                                                            useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                                          ),
+                                                                                    ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),

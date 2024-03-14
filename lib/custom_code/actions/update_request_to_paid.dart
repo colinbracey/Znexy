@@ -2,6 +2,7 @@
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
@@ -90,6 +91,23 @@ Future<bool> updateRequestToPaid(List<ShoppingCartRecord> shoppingCartEntries,
 
       final trackOrderCollectionRef = firestore.collection("TrackOrder");
 
+      var newPositions = [
+        LatLng(49.874924, -119.39418),
+        LatLng(49.896382, -119.399677),
+        LatLng(49.901026, -119.409296),
+        LatLng(49.885101, -119.427504),
+        LatLng(49.882447, -119.457737),
+        LatLng(49.881562, -119.466326),
+        LatLng(49.883553, -119.486252),
+        LatLng(49.8893451, -119.4972178),
+        LatLng(0, 0)
+      ];
+
+      // Convert each LatLng object into a map and collect them into a list
+      var geoPoints = newPositions
+          .map((position) => GeoPoint(position.latitude, position.longitude))
+          .toList();
+
       await trackOrderCollectionRef.add({
         'AcceptedDate': DateTime.now(),
         'Accepted': true,
@@ -100,6 +118,7 @@ Future<bool> updateRequestToPaid(List<ShoppingCartRecord> shoppingCartEntries,
         'WorkUnderWay': false,
         'WorkUnderWayDate': null,
         'WorkCompletedOfferer': false,
+        'DriverPositions': geoPoints,
         'WorkCompletedDateOfferer': null,
         'WorkCompletedRequester': false,
         'WorkCompletedDateRequester': null,
@@ -107,6 +126,9 @@ Future<bool> updateRequestToPaid(List<ShoppingCartRecord> shoppingCartEntries,
         'Source': source,
         'OfferId': offerRef,
         'CongratulationsShown': false,
+        'StartDateAgreed': false,
+        'RequesterReviewLeft': false,
+        'OffererReviewLeft': false
       });
 
       shoppingCartRef = entry.reference;

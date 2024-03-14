@@ -4,6 +4,10 @@ import 'helps_map_widget.dart' show HelpsMapWidget;
 import 'package:flutter/material.dart';
 
 class HelpsMapModel extends FlutterFlowModel<HelpsMapWidget> {
+  ///  Local state fields for this component.
+
+  LatLng? currentLocation;
+
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for GoogleMap widget.

@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'register_email_widget.dart' show RegisterEmailWidget;
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class RegisterEmailModel extends FlutterFlowModel<RegisterEmailWidget> {
   TextEditingController? confirmPasswordController;
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
+  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
+  UsersRecord? userExists;
   // State field(s) for MouseRegion widget.
   bool mouseRegionHovered1 = false;
   // State field(s) for MouseRegion widget.

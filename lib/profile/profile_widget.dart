@@ -9,9 +9,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
 
@@ -44,17 +43,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -177,6 +165,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0.0, 2.0),
+                                    )
+                                  ],
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: FlutterFlowTheme.of(context)
@@ -206,8 +201,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       textAlign: TextAlign.center,
                       style:
                           FlutterFlowTheme.of(context).headlineSmall.override(
-                                fontFamily: 'Comfortaa',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .headlineSmallFamily,
                                 color: FlutterFlowTheme.of(context).info,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .headlineSmallFamily),
                               ),
                     ),
                   ),
@@ -215,8 +214,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 Text(
                   currentUserEmail,
                   style: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Open Sans',
+                        fontFamily:
+                            FlutterFlowTheme.of(context).titleSmallFamily,
                         color: FlutterFlowTheme.of(context).accent4,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                 ),
                 InkWell(
@@ -291,8 +293,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
                                           color: const Color(0xFFFDFDFD),
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ),
@@ -306,8 +314,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Open Sans',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
                                           color: const Color(0xFFFDFDFD),
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ),
@@ -510,14 +524,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                     ),
                                                     Text(
                                                       'Balance',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            color: Colors.white,
-                                                          ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                                color: Colors
+                                                                    .white,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily),
+                                                              ),
                                                     ),
                                                     Row(
                                                       mainAxisSize:
@@ -552,11 +574,17 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                   .of(context)
                                                               .displaySmall
                                                               .override(
-                                                                fontFamily:
-                                                                    'Comfortaa',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 32.0,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         if (containerTransactionRecordList.isNotEmpty)
@@ -566,13 +594,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                     .of(context)
                                                                 .displaySmall
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Comfortaa',
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .displaySmallFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
                                                                   fontSize:
                                                                       30.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .displaySmallFamily),
                                                                 ),
                                                           ),
                                                       ],
@@ -602,6 +636,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                       'Roboto Mono',
                                                                   color: Colors
                                                                       .white,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Roboto Mono'),
                                                                 ),
                                                           ),
                                                           Text(
@@ -614,6 +652,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                                       'Roboto Mono',
                                                                   color: Colors
                                                                       .white,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Roboto Mono'),
                                                                 ),
                                                           ),
                                                         ],
@@ -659,6 +701,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -687,11 +733,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ],
@@ -730,6 +785,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -741,11 +800,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ],
@@ -784,6 +852,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -795,11 +867,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ],
@@ -838,6 +919,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -885,6 +970,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -932,6 +1021,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
+                                                        useGoogleFonts:
+                                                            GoogleFonts.asMap()
+                                                                .containsKey(
+                                                                    'Comfortaa'),
                                                       ),
                                                 ),
                                               ),
@@ -955,16 +1048,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                               child: Text(
                                                 'Log Out?',
                                                 textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primary,
-                                                    ),
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMediumFamily),
+                                                        ),
                                               ),
                                             ),
                                           ],

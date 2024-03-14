@@ -4,10 +4,11 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'register_email_model.dart';
 export 'register_email_model.dart';
 
@@ -94,17 +95,6 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -251,13 +241,21 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'User Name',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelLarge
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    fontSize: 12.0,
-                                                  ),
+                                          labelStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelLarge
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLargeFamily,
+                                                fontSize: 12.0,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelLargeFamily),
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -307,8 +305,16 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLargeFamily,
                                               fontSize: 12.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLargeFamily),
                                             ),
                                         maxLength: 20,
                                         maxLengthEnforcement:
@@ -333,13 +339,21 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Email',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelLarge
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    fontSize: 12.0,
-                                                  ),
+                                          labelStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelLarge
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLargeFamily,
+                                                fontSize: 12.0,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelLargeFamily),
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -389,8 +403,16 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLargeFamily,
                                               fontSize: 12.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLargeFamily),
                                             ),
                                         keyboardType:
                                             TextInputType.emailAddress,
@@ -413,13 +435,21 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         obscureText: !_model.passwordVisibility,
                                         decoration: InputDecoration(
                                           labelText: 'Password',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelLarge
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    fontSize: 12.0,
-                                                  ),
+                                          labelStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelLarge
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLargeFamily,
+                                                fontSize: 12.0,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelLargeFamily),
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -487,8 +517,16 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLargeFamily,
                                               fontSize: 12.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLargeFamily),
                                             ),
                                         validator: _model
                                             .passwordControllerValidator
@@ -512,13 +550,21 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                             !_model.confirmPasswordVisibility,
                                         decoration: InputDecoration(
                                           labelText: 'Confirm Password',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelLarge
-                                                  .override(
-                                                    fontFamily: 'Open Sans',
-                                                    fontSize: 12.0,
-                                                  ),
+                                          labelStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelLarge
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLargeFamily,
+                                                fontSize: 12.0,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .labelLargeFamily),
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -588,8 +634,16 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLargeFamily,
                                               fontSize: 12.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLargeFamily),
                                             ),
                                         validator: _model
                                             .confirmPasswordControllerValidator
@@ -602,6 +656,42 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         0.0, 0.0, 0.0, 16.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        var shouldSetState = false;
+                                        _model.userExists =
+                                            await queryUsersRecordOnce(
+                                          queryBuilder: (usersRecord) =>
+                                              usersRecord.where(
+                                            'email',
+                                            isEqualTo: _model
+                                                .emailAddressController.text,
+                                          ),
+                                          singleRecord: true,
+                                        ).then((s) => s.firstOrNull);
+                                        shouldSetState = true;
+                                        if (_model.userExists?.reference !=
+                                            null) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title:
+                                                    const Text('User Already Exists'),
+                                                content: const Text(
+                                                    'This user already exists in the system. User another email'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: const Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          if (shouldSetState) setState(() {});
+                                          return;
+                                        }
                                         GoRouter.of(context).prepareAuthEvent();
                                         if (_model.passwordController.text !=
                                             _model.confirmPasswordController
@@ -638,6 +728,8 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
 
                                         context.goNamedAuth(
                                             'HelpRequests', context.mounted);
+
+                                        if (shouldSetState) setState(() {});
                                       },
                                       text: 'Register',
                                       options: FFButtonOptions(
@@ -652,8 +744,16 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily,
                                               color: Colors.white,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmallFamily),
                                             ),
                                         elevation: 3.0,
                                         borderSide: const BorderSide(
@@ -816,14 +916,20 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 15.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily),
                                                               ),
                                                         )),
                                                       ),
@@ -876,11 +982,20 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .titleSmall
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmallFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryText,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmallFamily),
                                                       ),
                                               elevation: 0.0,
                                               borderSide: BorderSide(
@@ -913,9 +1028,8 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                           context.pushNamed('LoginEmail');
                                         },
                                         child: RichText(
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                  .textScaleFactor,
+                                          textScaler:
+                                              MediaQuery.of(context).textScaler,
                                           text: TextSpan(
                                             children: [
                                               const TextSpan(
@@ -925,18 +1039,26 @@ class _RegisterEmailWidgetState extends State<RegisterEmailWidget>
                                               ),
                                               TextSpan(
                                                 text: 'Login',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .primary,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMediumFamily),
+                                                        ),
                                               )
                                             ],
                                             style: FlutterFlowTheme.of(context)

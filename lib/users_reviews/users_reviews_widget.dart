@@ -6,8 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'users_reviews_model.dart';
 export 'users_reviews_model.dart';
 
@@ -45,17 +44,6 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<ReviewRecord>>(
       stream: queryReviewRecord(
         queryBuilder: (reviewRecord) => reviewRecord
@@ -107,9 +95,12 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
             title: Text(
               'User Reviews',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Comfortaa',
+                    fontFamily:
+                        FlutterFlowTheme.of(context).headlineMediumFamily,
                     color: Colors.white,
                     fontSize: 22.0,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).headlineMediumFamily),
                   ),
             ),
             actions: const [],
@@ -194,8 +185,13 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .headlineSmall
                                   .override(
-                                    fontFamily: 'Comfortaa',
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineSmallFamily,
                                     color: FlutterFlowTheme.of(context).info,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineSmallFamily),
                                   ),
                             ),
                           ),
@@ -220,9 +216,15 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
                                           .override(
-                                            fontFamily: 'Comfortaa',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .displaySmallFamily,
                                             color: Colors.white,
                                             fontSize: 28.0,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .displaySmallFamily),
                                           ),
                                     ),
                                     Text(
@@ -230,8 +232,14 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Open Sans',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMediumFamily,
                                             color: Colors.white,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMediumFamily),
                                           ),
                                     ),
                                   ],
@@ -261,9 +269,17 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMediumFamily,
                                               color: Colors.white,
                                               fontSize: 14.0,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMediumFamily),
                                             ),
                                       ),
                                     ),
@@ -613,9 +629,11 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                                                                         .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              'Open Sans',
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                           color:
                                                                               const Color(0x8A000000),
+                                                                          useGoogleFonts:
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ),
@@ -633,9 +651,11 @@ class _UsersReviewsWidgetState extends State<UsersReviewsWidget> {
                                                                           .bodyMedium
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             color:
                                                                                 const Color(0x8A000000),
+                                                                            useGoogleFonts:
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],

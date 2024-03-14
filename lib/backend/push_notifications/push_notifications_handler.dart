@@ -154,12 +154,6 @@ final parametersBuilderMap =
         },
       ),
   'MyOffers': ParameterData.none(),
-  'AcceptedOfferRequester': (data) async => ParameterData(
-        allParams: {
-          'thisOffertDocRef':
-              getParameter<DocumentReference>(data, 'thisOffertDocRef'),
-        },
-      ),
   'CongratulationsOfferAccepted': ParameterData.none(),
   'AcceptedOfferOfferer': (data) async => ParameterData(
         allParams: {
@@ -168,16 +162,17 @@ final parametersBuilderMap =
         },
       ),
   'HelpRequests': ParameterData.none(),
-  'AcceptedOfferOffererCopy': (data) async => ParameterData(
-        allParams: {
-          'thisOffertDocRef':
-              getParameter<DocumentReference>(data, 'thisOffertDocRef'),
-        },
-      ),
   'RequestDetailCopy': (data) async => ParameterData(
         allParams: {
           'thisRequestDocRef':
               getParameter<DocumentReference>(data, 'thisRequestDocRef'),
+        },
+      ),
+  'comment': ParameterData.none(),
+  'AcceptedOfferRequester': (data) async => ParameterData(
+        allParams: {
+          'thisOffertDocRef':
+              getParameter<DocumentReference>(data, 'thisOffertDocRef'),
         },
       ),
 };

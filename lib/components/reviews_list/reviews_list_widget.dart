@@ -3,7 +3,7 @@ import '/components/user_rating/user_rating_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'reviews_list_model.dart';
 export 'reviews_list_model.dart';
 
@@ -47,8 +47,6 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<ReviewRecord>>(
       stream: queryReviewRecord(
         queryBuilder: (reviewRecord) => reviewRecord.where(
@@ -124,8 +122,12 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
                                   fontSize: 10.0,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily),
                                 ),
                           ),
                           Text(
@@ -134,8 +136,12 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
                                   fontSize: 8.0,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily),
                                 ),
                           ),
                         ],

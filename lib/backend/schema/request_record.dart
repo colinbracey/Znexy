@@ -95,6 +95,21 @@ class RequestRecord extends FirestoreRecord {
   bool get isAudioFile => _isAudioFile ?? false;
   bool hasIsAudioFile() => _isAudioFile != null;
 
+  // "StartTime" field.
+  DateTime? _startTime;
+  DateTime? get startTime => _startTime;
+  bool hasStartTime() => _startTime != null;
+
+  // "StartTimeAsap" field.
+  bool? _startTimeAsap;
+  bool get startTimeAsap => _startTimeAsap ?? false;
+  bool hasStartTimeAsap() => _startTimeAsap != null;
+
+  // "Address" field.
+  String? _address;
+  String get address => _address ?? '';
+  bool hasAddress() => _address != null;
+
   void _initializeFields() {
     _shortDescription = snapshotData['ShortDescription'] as String?;
     _longDescription = snapshotData['LongDescription'] as String?;
@@ -112,6 +127,9 @@ class RequestRecord extends FirestoreRecord {
     _createdAt = snapshotData['CreatedAt'] as DateTime?;
     _audioFile = snapshotData['AudioFile'] as String?;
     _isAudioFile = snapshotData['IsAudioFile'] as bool?;
+    _startTime = snapshotData['StartTime'] as DateTime?;
+    _startTimeAsap = snapshotData['StartTimeAsap'] as bool?;
+    _address = snapshotData['Address'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -164,6 +182,9 @@ Map<String, dynamic> createRequestRecordData({
   DateTime? createdAt,
   String? audioFile,
   bool? isAudioFile,
+  DateTime? startTime,
+  bool? startTimeAsap,
+  String? address,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -182,6 +203,9 @@ Map<String, dynamic> createRequestRecordData({
       'CreatedAt': createdAt,
       'AudioFile': audioFile,
       'IsAudioFile': isAudioFile,
+      'StartTime': startTime,
+      'StartTimeAsap': startTimeAsap,
+      'Address': address,
     }.withoutNulls,
   );
 
@@ -209,7 +233,10 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e1?.complete == e2?.complete &&
         e1?.createdAt == e2?.createdAt &&
         e1?.audioFile == e2?.audioFile &&
-        e1?.isAudioFile == e2?.isAudioFile;
+        e1?.isAudioFile == e2?.isAudioFile &&
+        e1?.startTime == e2?.startTime &&
+        e1?.startTimeAsap == e2?.startTimeAsap &&
+        e1?.address == e2?.address;
   }
 
   @override
@@ -229,7 +256,10 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e?.complete,
         e?.createdAt,
         e?.audioFile,
-        e?.isAudioFile
+        e?.isAudioFile,
+        e?.startTime,
+        e?.startTimeAsap,
+        e?.address
       ]);
 
   @override

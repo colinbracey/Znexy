@@ -1,4 +1,5 @@
 import '/components/user_rating/user_rating_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'request_detail_widget.dart' show RequestDetailWidget;
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ class RequestDetailModel extends FlutterFlowModel<RequestDetailWidget> {
   final unfocusNode = FocusNode();
   // Model for UserRating component.
   late UserRatingModel userRatingModel;
+  // State field(s) for GoogleMap widget.
+  LatLng? googleMapsCenter;
+  final googleMapsController = Completer<GoogleMapController>();
 
   /// Initialization and disposal methods.
 

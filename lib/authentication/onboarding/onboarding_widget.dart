@@ -4,9 +4,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
 
@@ -103,17 +102,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -235,10 +223,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleLarge
                                 .override(
-                                  fontFamily: 'Comfortaa',
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .titleLargeFamily,
                                   color: const Color(0xFFFDFDFD),
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w500,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .titleLargeFamily),
                                 ),
                             elevation: 0.0,
                             borderSide: BorderSide(
@@ -317,6 +309,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 color: Colors.white,
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w500,
+                                                useGoogleFonts:
+                                                    GoogleFonts.asMap()
+                                                        .containsKey(
+                                                            'Comfortaa'),
                                               ),
                                         )),
                                       ),
@@ -352,9 +348,13 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .titleMediumFamily,
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w500,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .titleMediumFamily),
                                 ),
                             elevation: 0.0,
                             borderSide: const BorderSide(
@@ -379,8 +379,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             context.pushNamed('LoginEmail');
                           },
                           child: RichText(
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor,
+                            textScaler: MediaQuery.of(context).textScaler,
                             text: TextSpan(
                               children: [
                                 const TextSpan(
@@ -392,9 +391,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
-                                        fontFamily: 'Open Sans',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyLargeFamily,
                                         fontWeight: FontWeight.bold,
                                         decoration: TextDecoration.underline,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLargeFamily),
                                       ),
                                 )
                               ],

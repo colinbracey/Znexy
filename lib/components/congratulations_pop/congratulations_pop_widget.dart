@@ -3,8 +3,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'congratulations_pop_model.dart';
 export 'congratulations_pop_model.dart';
 
@@ -47,8 +47,6 @@ class _CongratulationsPopWidgetState extends State<CongratulationsPopWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Material(
       color: Colors.transparent,
       elevation: 5.0,
@@ -138,8 +136,12 @@ class _CongratulationsPopWidgetState extends State<CongratulationsPopWidget> {
                         color: const Color(0xFFF609F0),
                         textStyle:
                             FlutterFlowTheme.of(context).titleMedium.override(
-                                  fontFamily: 'Open Sans',
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .titleMediumFamily,
                                   color: Colors.white,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .titleMediumFamily),
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

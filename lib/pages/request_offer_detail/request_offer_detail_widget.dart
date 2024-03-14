@@ -6,8 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'request_offer_detail_model.dart';
 export 'request_offer_detail_model.dart';
 
@@ -46,17 +45,6 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return StreamBuilder<OfferRecord>(
       stream: OfferRecord.getDocument(widget.offerDocRef!),
       builder: (context, snapshot) {
@@ -105,9 +93,12 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
               title: Text(
                 'Review Offer',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Comfortaa',
+                      fontFamily:
+                          FlutterFlowTheme.of(context).headlineMediumFamily,
                       color: Colors.white,
                       fontSize: 22.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).headlineMediumFamily),
                     ),
               ),
               actions: const [],
@@ -184,7 +175,7 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                 .totalPrice,
                                             formatType: FormatType.custom,
                                             currency: '\$',
-                                            format: '###.##',
+                                            format: '0.00',
                                             locale: '',
                                           ),
                                           '0',
@@ -192,9 +183,17 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Open Sans',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLargeFamily,
                                               fontSize: 25.0,
                                               fontWeight: FontWeight.bold,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLargeFamily),
                                             ),
                                       ),
                                     ),
@@ -348,9 +347,11 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                           .bodyMedium
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Open Sans',
+                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
+                                                                            useGoogleFonts:
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                     Row(
@@ -405,16 +406,23 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                               0.0),
                                                                           child:
                                                                               Text(
-                                                                            '\$${valueOrDefault<String>(
-                                                                              requestOfferDetailOfferRecord.value.toString(),
+                                                                            valueOrDefault<String>(
+                                                                              formatNumber(
+                                                                                requestOfferDetailOfferRecord.value,
+                                                                                formatType: FormatType.custom,
+                                                                                currency: '',
+                                                                                format: '0.00',
+                                                                                locale: '',
+                                                                              ),
                                                                               '0',
-                                                                            )}',
+                                                                            ),
                                                                             textAlign:
                                                                                 TextAlign.start,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 20.0,
                                                                                   fontWeight: FontWeight.w600,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -429,8 +437,9 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                             textAlign:
                                                                                 TextAlign.start,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 12.0,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -549,9 +558,11 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                       .titleSmall
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Open Sans',
+                                                                            FlutterFlowTheme.of(context).titleSmallFamily,
                                                                         color: Colors
                                                                             .white,
+                                                                        useGoogleFonts:
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
                                                                       ),
                                                               elevation: 3.0,
                                                               borderSide:
@@ -699,9 +710,11 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                                       .titleSmall
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Open Sans',
+                                                                            FlutterFlowTheme.of(context).titleSmallFamily,
                                                                         color: Colors
                                                                             .white,
+                                                                        useGoogleFonts:
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
                                                                       ),
                                                               elevation: 3.0,
                                                               borderSide:

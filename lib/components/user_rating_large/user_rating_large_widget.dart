@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 import 'user_rating_large_model.dart';
 export 'user_rating_large_model.dart';
 
@@ -43,8 +42,6 @@ class _UserRatingLargeWidgetState extends State<UserRatingLargeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return RatingBar.builder(
       onRatingUpdate: (newValue) =>
           setState(() => _model.leaveReviewRatingValue = newValue),

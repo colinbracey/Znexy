@@ -220,6 +220,43 @@ double calculateAverageRating(List<int> ratings) {
   return double.parse(average.toStringAsFixed(1));
 }
 
+List<RequestRecord> getPlacesMaximumDistance(
+  List<RequestRecord> places,
+  LatLng userGeo,
+  double maxDistance,
+) {
+  // First create some emptyList
+  List<RequestRecord> placesList = [];
+  List<double> listKm = [];
+  double lat1 = userGeo.latitude;
+  double lon1 = userGeo.longitude;
+  // This iterates through the single documents "places" in the List
+  for (RequestRecord place in places) {
+    double lat2 = place.location!.latitude;
+    double lon2 = place.location!.longitude;
+    // This is doing math for distance calculations on the surface of a spheroid
+    var c = math.cos;
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    // This is getting us the distance
+    var d = (12742 * math.asin(math.sqrt(a)));
+    String inString = d.toStringAsFixed(2); // '2.35'
+    double inDouble = double.parse(inString);
+    listKm.add(inDouble);
+    // Sort the documents that will be returned by distance
+    listKm.sort();
+    int listKmIndex = listKm.indexWhere((dist) => dist == inDouble);
+    // Check if the document we are currently processing is no farther away from userGeo than we defined as max.
+    if (inDouble <= maxDistance) {
+      // If its within our radius, add it to the list of places documents that will be returned
+      placesList.insert(listKmIndex, place);
+    }
+  }
+  return placesList;
+}
+
 Color workCompletedColor(
   bool? workCompletedOfferer,
   bool? workCompletedReferrer,
@@ -291,7 +328,10 @@ double calculateNewAverageRating(
   int numberOfRatings,
   double newRating,
 ) {
-  return ((oldAverage * numberOfRatings) + newRating) / (numberOfRatings + 1);
+  double updatedAverage =
+      ((oldAverage * numberOfRatings) + newRating) / (numberOfRatings + 1);
+  double roundedAverage = double.parse(updatedAverage.toStringAsFixed(1));
+  return roundedAverage;
 }
 
 double calculateAvailableBalance(List<double>? values) {

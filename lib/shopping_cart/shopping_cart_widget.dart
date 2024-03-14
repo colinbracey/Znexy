@@ -9,7 +9,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'shopping_cart_model.dart';
 export 'shopping_cart_model.dart';
@@ -43,15 +43,6 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<List<ShoppingCartRecord>>(
@@ -104,9 +95,12 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
             title: Text(
               'Shopping Cart',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Comfortaa',
+                    fontFamily:
+                        FlutterFlowTheme.of(context).headlineMediumFamily,
                     color: Colors.white,
                     fontSize: 22.0,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).headlineMediumFamily),
                   ),
             ),
             actions: const [],
@@ -246,143 +240,121 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                           width: 0.25,
                                                         ),
                                                       ),
-                                                      child: StreamBuilder<
-                                                          OfferRecord>(
-                                                        stream: OfferRecord
-                                                            .getDocument(
-                                                                shoppingCartEntriesItem
-                                                                    .offerId!),
-                                                        builder: (context,
-                                                            snapshot) {
-                                                          // Customize what your widget looks like when it's loading.
-                                                          if (!snapshot
-                                                              .hasData) {
-                                                            return const Center(
-                                                              child: SizedBox(
-                                                                width: 50.0,
-                                                                height: 50.0,
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  valueColor:
-                                                                      AlwaysStoppedAnimation<
-                                                                          Color>(
-                                                                    Color(
-                                                                        0xFFF609F0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        10.0,
+                                                                        8.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Flexible(
+                                                                  child: Text(
+                                                                    menuItemRequestRecord
+                                                                        .shortDescription,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleLarge,
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            );
-                                                          }
-                                                          final columnOfferRecord =
-                                                              snapshot.data!;
-                                                          return Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            12.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        10.0,
+                                                                        8.0,
+                                                                        12.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: const EdgeInsetsDirectional
+                                                                      .fromSTEB(
                                                                           0.0,
                                                                           1.0,
                                                                           1.0,
                                                                           1.0),
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                        child: Image
-                                                                            .network(
-                                                                          menuItemRequestRecord
-                                                                              .coverImage,
-                                                                          width:
-                                                                              70.0,
-                                                                          height:
-                                                                              70.0,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      menuItemRequestRecord
+                                                                          .coverImage,
+                                                                      width:
+                                                                          70.0,
+                                                                      height:
+                                                                          70.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
-                                                                    Expanded(
-                                                                      flex: 3,
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                            8.0,
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
-                                                                              child: Text(
-                                                                                menuItemRequestRecord.shortDescription,
-                                                                                style: FlutterFlowTheme.of(context).titleLarge,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsetsDirectional
+                                                                      .fromSTEB(
                                                                           8.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          formatNumber(
-                                                                            shoppingCartEntriesItem.value,
-                                                                            formatType:
-                                                                                FormatType.custom,
-                                                                            currency:
-                                                                                '\$',
-                                                                            format:
-                                                                                '###.00',
-                                                                            locale:
-                                                                                '',
-                                                                          ),
-                                                                          '0',
-                                                                        ),
-                                                                        textAlign:
-                                                                            TextAlign.end,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .titleLarge,
+                                                                  child: Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      formatNumber(
+                                                                        shoppingCartEntriesItem
+                                                                            .value,
+                                                                        formatType:
+                                                                            FormatType.custom,
+                                                                        currency:
+                                                                            '\$',
+                                                                        format:
+                                                                            '###.00',
+                                                                        locale:
+                                                                            '',
                                                                       ),
+                                                                      '0',
                                                                     ),
-                                                                  ],
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .end,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleLarge,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   );
@@ -471,6 +443,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Outfit'),
                                                                 ),
                                                       ),
                                                       Text(
@@ -527,6 +503,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Outfit'),
                                                                 ),
                                                       ),
                                                       Text(
@@ -583,6 +563,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Outfit'),
                                                                 ),
                                                       ),
                                                       Text(
@@ -639,6 +623,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Outfit'),
                                                                 ),
                                                       ),
                                                       Text(
@@ -698,6 +686,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          'Outfit'),
                                                                 ),
                                                           ),
                                                           FlutterFlowIconButton(
@@ -984,7 +976,7 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
                                 'AcceptedOfferRequester',
                                 queryParameters: {
                                   'thisOffertDocRef': serializeParam(
-                                    shoppingCartShoppingCartRecordList
+                                    bottomButtonShoppingCartRecordList
                                         .first.offerId,
                                     ParamType.DocumentReference,
                                   ),

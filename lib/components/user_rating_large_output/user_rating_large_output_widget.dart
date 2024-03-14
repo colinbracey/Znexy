@@ -1,7 +1,6 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 import 'user_rating_large_output_model.dart';
 export 'user_rating_large_output_model.dart';
 
@@ -45,8 +44,6 @@ class _UserRatingLargeOutputWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return RatingBarIndicator(
       itemBuilder: (context, index) => const Icon(
         Icons.star_rounded,

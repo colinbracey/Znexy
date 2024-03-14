@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'congratulations_offer_accepted_model.dart';
 export 'congratulations_offer_accepted_model.dart';
 
@@ -38,17 +37,6 @@ class _CongratulationsOfferAcceptedWidgetState
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -64,9 +52,12 @@ class _CongratulationsOfferAcceptedWidgetState
             child: Text(
               'Offer Acccepted',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Comfortaa',
+                    fontFamily:
+                        FlutterFlowTheme.of(context).headlineMediumFamily,
                     color: Colors.white,
                     fontSize: 22.0,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).headlineMediumFamily),
                   ),
             ),
           ),

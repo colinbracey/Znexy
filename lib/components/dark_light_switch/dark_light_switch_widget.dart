@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
 import 'dark_light_switch_model.dart';
 export 'dark_light_switch_model.dart';
 
@@ -64,8 +63,6 @@ class _DarkLightSwitchWidgetState extends State<DarkLightSwitchWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return InkWell(
       splashColor: Colors.transparent,
       focusColor: Colors.transparent,

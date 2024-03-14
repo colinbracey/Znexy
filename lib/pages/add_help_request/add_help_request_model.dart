@@ -1,6 +1,5 @@
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'add_help_request_widget.dart' show AddHelpRequestWidget;
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
@@ -10,13 +9,15 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
 
   LatLng? kelowna;
 
-  bool openPrice = false;
-
   bool isRecording = false;
 
   bool isShowPlayer = false;
 
   bool isAudioUploaded = false;
+
+  bool isTimePicked = false;
+
+  bool isAsapPicked = true;
 
   ///  State fields for stateful widgets in this page.
 
@@ -46,6 +47,7 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl1 = '';
 
+  DateTime? datePicked;
   bool isDataUploading2 = false;
   List<FFUploadedFile> uploadedLocalFiles2 = [];
   List<String> uploadedFileUrls2 = [];
@@ -55,9 +57,8 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   // State field(s) for GoogleMap widget.
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  // State field(s) for Switch widget.
+  bool? switchValue;
   // State field(s) for PriceField widget.
   FocusNode? priceFieldFocusNode;
   TextEditingController? priceFieldController;

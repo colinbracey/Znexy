@@ -2,8 +2,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'offer_accepted_model.dart';
 export 'offer_accepted_model.dart';
 
@@ -45,8 +45,6 @@ class _OfferAcceptedWidgetState extends State<OfferAcceptedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
       child: Container(
@@ -84,8 +82,11 @@ class _OfferAcceptedWidgetState extends State<OfferAcceptedWidget> {
                     Text(
                       'Your offer has been accepted and ',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Open Sans',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyMediumFamily,
                             fontSize: 16.0,
+                            useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),
                     ),
                   ],
@@ -98,8 +99,11 @@ class _OfferAcceptedWidgetState extends State<OfferAcceptedWidget> {
                   Text(
                     '${widget.requestersName}  has been notified',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Open Sans',
+                          fontFamily:
+                              FlutterFlowTheme.of(context).bodyMediumFamily,
                           fontSize: 16.0,
+                          useGoogleFonts: GoogleFonts.asMap().containsKey(
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ],
@@ -122,11 +126,16 @@ class _OfferAcceptedWidgetState extends State<OfferAcceptedWidget> {
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: const Color(0xFF142328),
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Open Sans',
-                                  color: Colors.white,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleSmall
+                            .override(
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).titleSmallFamily,
+                              color: Colors.white,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context)
+                                      .titleSmallFamily),
+                            ),
                         elevation: 3.0,
                         borderSide: const BorderSide(
                           color: Colors.transparent,

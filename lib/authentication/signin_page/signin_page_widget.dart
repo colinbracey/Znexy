@@ -5,9 +5,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'signin_page_model.dart';
 export 'signin_page_model.dart';
 
@@ -80,17 +79,6 @@ class _SigninPageWidgetState extends State<SigninPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -144,6 +132,8 @@ class _SigninPageWidgetState extends State<SigninPageWidget>
                                       color: Colors.white,
                                       fontSize: 32.0,
                                       fontWeight: FontWeight.w800,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey('Comfortaa'),
                                     ),
                               ).animateOnPageLoad(
                                   animationsMap['textOnPageLoadAnimation1']!),
@@ -161,6 +151,8 @@ class _SigninPageWidgetState extends State<SigninPageWidget>
                                         fontSize: 13.0,
                                         letterSpacing: 0.5,
                                         fontWeight: FontWeight.w300,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey('Comfortaa'),
                                         lineHeight: 1.5,
                                       ),
                                 ).animateOnPageLoad(

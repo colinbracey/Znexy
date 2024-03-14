@@ -220,15 +220,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const MyOffersWidget(),
         ),
         FFRoute(
-          name: 'AcceptedOfferRequester',
-          path: '/acceptedOfferRequester',
-          requireAuth: true,
-          builder: (context, params) => AcceptedOfferRequesterWidget(
-            thisOffertDocRef: params.getParam('thisOffertDocRef',
-                ParamType.DocumentReference, false, ['Offer']),
-          ),
-        ),
-        FFRoute(
           name: 'CongratulationsOfferAccepted',
           path: '/congratulationsOfferAccepted',
           requireAuth: true,
@@ -252,21 +243,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const HelpRequestsWidget(),
         ),
         FFRoute(
-          name: 'AcceptedOfferOffererCopy',
-          path: '/acceptedOfferOffererCopy',
-          requireAuth: true,
-          builder: (context, params) => AcceptedOfferOffererCopyWidget(
-            thisOffertDocRef: params.getParam('thisOffertDocRef',
-                ParamType.DocumentReference, false, ['Offer']),
-          ),
-        ),
-        FFRoute(
           name: 'RequestDetailCopy',
           path: '/requestDetailCopy',
           requireAuth: true,
           builder: (context, params) => RequestDetailCopyWidget(
             thisRequestDocRef: params.getParam('thisRequestDocRef',
                 ParamType.DocumentReference, false, ['Request']),
+          ),
+        ),
+        FFRoute(
+          name: 'comment',
+          path: '/comment',
+          requireAuth: true,
+          builder: (context, params) => const CommentWidget(),
+        ),
+        FFRoute(
+          name: 'AcceptedOfferRequester',
+          path: '/acceptedOfferRequester',
+          requireAuth: true,
+          builder: (context, params) => AcceptedOfferRequesterWidget(
+            thisOffertDocRef: params.getParam('thisOffertDocRef',
+                ParamType.DocumentReference, false, ['Offer']),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
@@ -440,6 +437,7 @@ class FFRoute {
           return null;
         },
         pageBuilder: (context, state) {
+          fixStatusBarOniOS16AndBelow(context);
           final ffParams = FFParameters(state, asyncParams);
           final page = ffParams.hasFutures
               ? FutureBuilder(

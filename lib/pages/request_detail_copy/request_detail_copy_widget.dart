@@ -8,8 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'request_detail_copy_model.dart';
 export 'request_detail_copy_model.dart';
 
@@ -48,17 +47,6 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return StreamBuilder<RequestRecord>(
       stream: RequestRecord.getDocument(widget.thisRequestDocRef!),
       builder: (context, snapshot) {
@@ -107,9 +95,12 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
               title: Text(
                 'Request Detail',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Comfortaa',
+                      fontFamily:
+                          FlutterFlowTheme.of(context).headlineMediumFamily,
                       color: Colors.white,
                       fontSize: 22.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).headlineMediumFamily),
                     ),
               ),
               actions: const [],
@@ -270,12 +261,14 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                       child:
                                                           FlutterFlowExpandedImageView(
                                                         image: Image.network(
-                                                          bodyContentUsersRecord.photoUrl,
+                                                          bodyContentUsersRecord
+                                                              .photoUrl,
                                                           fit: BoxFit.contain,
                                                         ),
                                                         allowRotation: false,
                                                         tag:
-                                                            bodyContentUsersRecord.photoUrl,
+                                                            bodyContentUsersRecord
+                                                                .photoUrl,
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
@@ -291,7 +284,8 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                         BorderRadius.circular(
                                                             100.0),
                                                     child: Image.network(
-                                                      bodyContentUsersRecord.photoUrl,
+                                                      bodyContentUsersRecord
+                                                          .photoUrl,
                                                       width: double.infinity,
                                                       height: double.infinity,
                                                       fit: BoxFit.cover,
@@ -372,10 +366,18 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                         .labelLarge
                                                         .override(
                                                           fontFamily:
-                                                              'Open Sans',
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelLargeFamily,
                                                           fontSize: 25.0,
                                                           fontWeight:
                                                               FontWeight.bold,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelLargeFamily),
                                                         ),
                                               ),
                                             ),
@@ -395,10 +397,19 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyLarge
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLargeFamily,
                                                         fontSize: 25.0,
                                                         fontWeight:
                                                             FontWeight.bold,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyLargeFamily),
                                                       ),
                                             ),
                                           ],
@@ -435,10 +446,18 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                         .labelLarge
                                                         .override(
                                                           fontFamily:
-                                                              'Open Sans',
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelLargeFamily,
                                                           fontSize: 25.0,
                                                           fontWeight:
                                                               FontWeight.bold,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelLargeFamily),
                                                         ),
                                               ),
                                             ),
@@ -459,10 +478,19 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyLarge
                                                       .override(
-                                                        fontFamily: 'Open Sans',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLargeFamily,
                                                         fontSize: 25.0,
                                                         fontWeight:
                                                             FontWeight.bold,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyLargeFamily),
                                                       ),
                                             ),
                                           ],
@@ -712,8 +740,17 @@ class _RequestDetailCopyWidgetState extends State<RequestDetailCopyWidget> {
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
                                                     .override(
-                                                      fontFamily: 'Open Sans',
+                                                      fontFamily:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmallFamily,
                                                       color: Colors.white,
+                                                      useGoogleFonts: GoogleFonts
+                                                              .asMap()
+                                                          .containsKey(
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .titleSmallFamily),
                                                     ),
                                             elevation: 3.0,
                                             borderSide: const BorderSide(

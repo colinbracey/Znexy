@@ -1,13 +1,12 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/schema/enums/enums.dart';
 import '/components/leave_review/leave_review_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'requester_set_completed_model.dart';
 export 'requester_set_completed_model.dart';
 
@@ -57,28 +56,33 @@ class _RequesterSetCompletedWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Material(
       color: Colors.transparent,
-      elevation: 5.0,
+      elevation: 8.0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
           bottomRight: Radius.circular(0.0),
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
         ),
       ),
       child: Container(
         width: 700.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 4.0,
+              color: Color(0x33000000),
+              offset: Offset(0.0, 2.0),
+            )
+          ],
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(0.0),
             bottomRight: Radius.circular(0.0),
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
           ),
         ),
         child: SingleChildScrollView(
@@ -97,8 +101,12 @@ class _RequesterSetCompletedWidgetState
                       'Congratulations!',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
-                                fontFamily: 'Comfortaa',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .headlineMediumFamily,
                                 fontWeight: FontWeight.bold,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily),
                               ),
                     ),
                   ),
@@ -107,7 +115,7 @@ class _RequesterSetCompletedWidgetState
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
                 child: Text(
-                  'The requester has set the status to \'Work Complete\', if you agree, click \'Complete\' below and your payment will be released to your account.\nGreat job!',
+                  'The requester has set the status to \'Work Complete\', if you agree, click \'Complete\' and leave them a review. \nYour payment has been received into your account.\nGreat job!',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).labelMedium,
                 ),
@@ -115,8 +123,8 @@ class _RequesterSetCompletedWidgetState
               Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Container(
-                  width: 250.0,
-                  height: 250.0,
+                  width: 150.0,
+                  height: 150.0,
                   decoration: const BoxDecoration(),
                   alignment: const AlignmentDirectional(0.0, -1.0),
                   child: Align(
@@ -146,32 +154,10 @@ class _RequesterSetCompletedWidgetState
                           const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 20.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await widget.trackOrderRef!
-                              .update(createTrackOrderRecordData(
-                            workCompletedOfferer: true,
-                            workCompletedDateOfferer: getCurrentTimestamp,
-                          ));
-
                           await widget.offerDocRef!.reference
                               .update(createOfferRecordData(
                             status: 7,
                           ));
-
-                          await TransactionRecord.collection.doc().set({
-                            ...createTransactionRecordData(
-                              totalValue: 5.0,
-                              createdAt: getCurrentTimestamp,
-                              tax: 0.0,
-                              znexyValue: 0.0,
-                              userId: currentUserReference,
-                              type: TransactionType.WorkCredit.name,
-                            ),
-                            ...mapToFirestore(
-                              {
-                                'OfferIds': [widget.offerDocRef?.reference],
-                              },
-                            ),
-                          });
                           await showDialog(
                             context: context,
                             builder: (dialogContext) {
@@ -181,14 +167,31 @@ class _RequesterSetCompletedWidgetState
                                 backgroundColor: Colors.transparent,
                                 alignment: const AlignmentDirectional(0.0, 0.0)
                                     .resolve(Directionality.of(context)),
-                                child: LeaveReviewWidget(
-                                  requestersName: widget.requesterUserName,
-                                  requesterUserId: widget.requesterUserId!,
-                                  requestDocRef: widget.offerDocRef!.requestId!,
+                                child: SizedBox(
+                                  height: 350.0,
+                                  width: 300.0,
+                                  child: LeaveReviewWidget(
+                                    requestersName: widget.requesterUserName,
+                                    requesterUserId: widget.requesterUserId!,
+                                    requestDocRef:
+                                        widget.offerDocRef!.requestId!,
+                                    trackOrderDocRef: widget.trackOrderRef!,
+                                    isRequester: false,
+                                  ),
                                 ),
                               );
                             },
                           ).then((value) => setState(() {}));
+
+                          unawaited(
+                            () async {
+                              await widget.trackOrderRef!
+                                  .update(createTrackOrderRecordData(
+                                workCompletedOfferer: true,
+                                workCompletedDateOfferer: getCurrentTimestamp,
+                              ));
+                            }(),
+                          );
 
                           context.pushNamed('Profile');
                         },
@@ -201,11 +204,16 @@ class _RequesterSetCompletedWidgetState
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: const Color(0xFFF609F0),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleMedium.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleMedium
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .titleMediumFamily,
+                                color: Colors.white,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .titleMediumFamily),
+                              ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,

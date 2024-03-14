@@ -3,12 +3,16 @@ import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'helps_map_model.dart';
 export 'helps_map_model.dart';
 
 class HelpsMapWidget extends StatefulWidget {
-  const HelpsMapWidget({super.key});
+  const HelpsMapWidget({
+    super.key,
+    required this.requetsToDisplay,
+  });
+
+  final List<RequestRecord>? requetsToDisplay;
 
   @override
   State<HelpsMapWidget> createState() => _HelpsMapWidgetState();
@@ -44,7 +48,6 @@ class _HelpsMapWidgetState extends State<HelpsMapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
       return Container(
         color: FlutterFlowTheme.of(context).primaryBackground,
@@ -64,58 +67,36 @@ class _HelpsMapWidgetState extends State<HelpsMapWidget> {
 
     return Stack(
       children: [
-        StreamBuilder<List<RequestRecord>>(
-          stream: queryRequestRecord(),
-          builder: (context, snapshot) {
-            // Customize what your widget looks like when it's loading.
-            if (!snapshot.hasData) {
-              return const Center(
-                child: SizedBox(
-                  width: 50.0,
-                  height: 50.0,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFFF609F0),
-                    ),
-                  ),
+        FlutterFlowGoogleMap(
+          controller: _model.googleMapsController,
+          onCameraIdle: (latLng) =>
+              setState(() => _model.googleMapsCenter = latLng),
+          initialLocation: _model.googleMapsCenter ??=
+              currentUserLocationValue!,
+          markers: (widget.requetsToDisplay
+                      ?.map((e) => e.location)
+                      .withoutNulls
+                      .toList() ??
+                  [])
+              .map(
+                (marker) => FlutterFlowMarker(
+                  marker.serialize(),
+                  marker,
                 ),
-              );
-            }
-            List<RequestRecord> googleMapRequestRecordList = snapshot.data!;
-            return FlutterFlowGoogleMap(
-              controller: _model.googleMapsController,
-              onCameraIdle: (latLng) =>
-                  setState(() => _model.googleMapsCenter = latLng),
-              initialLocation: _model.googleMapsCenter ??=
-                  currentUserLocationValue!,
-              markers: googleMapRequestRecordList
-                  .map(
-                    (googleMapRequestRecord) => FlutterFlowMarker(
-                      googleMapRequestRecord.reference.path,
-                      googleMapRequestRecord.location!,
-                      () async {
-                        FFAppState().update(() {
-                          FFAppState().highlightedRequestRef =
-                              googleMapRequestRecord.reference;
-                        });
-                      },
-                    ),
-                  )
-                  .toList(),
-              markerColor: GoogleMarkerColor.magenta,
-              mapType: MapType.normal,
-              style: GoogleMapStyle.standard,
-              initialZoom: 12.0,
-              allowInteraction: true,
-              allowZoom: true,
-              showZoomControls: true,
-              showLocation: true,
-              showCompass: false,
-              showMapToolbar: false,
-              showTraffic: true,
-              centerMapOnMarkerTap: true,
-            );
-          },
+              )
+              .toList(),
+          markerColor: GoogleMarkerColor.magenta,
+          mapType: MapType.normal,
+          style: GoogleMapStyle.standard,
+          initialZoom: 12.0,
+          allowInteraction: true,
+          allowZoom: true,
+          showZoomControls: true,
+          showLocation: true,
+          showCompass: false,
+          showMapToolbar: false,
+          showTraffic: true,
+          centerMapOnMarkerTap: true,
         ),
       ],
     );

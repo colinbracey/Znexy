@@ -6,8 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'notifications_model.dart';
 export 'notifications_model.dart';
 
@@ -40,17 +39,6 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -78,9 +66,11 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
           title: Text(
             'Notifications',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Comfortaa',
+                  fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
                   color: Colors.white,
                   fontSize: 22.0,
+                  useGoogleFonts: GoogleFonts.asMap().containsKey(
+                      FlutterFlowTheme.of(context).headlineMediumFamily),
                 ),
           ),
           actions: const [],
@@ -392,17 +382,18 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                                     Expanded(
                                                                       child:
                                                                           RichText(
-                                                                        textScaleFactor:
-                                                                            MediaQuery.of(context).textScaleFactor,
+                                                                        textScaler:
+                                                                            MediaQuery.of(context).textScaler,
                                                                         text:
                                                                             TextSpan(
                                                                           children: [
                                                                             TextSpan(
                                                                               text: containerUsersRecord.displayName,
                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                                     color: const Color(0xFFF609F0),
                                                                                     fontWeight: FontWeight.w600,
+                                                                                    useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyLargeFamily),
                                                                                   ),
                                                                             ),
                                                                             const TextSpan(
@@ -417,8 +408,13 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                                               style: const TextStyle(),
                                                                             )
                                                                           ],
-                                                                          style:
-                                                                              FlutterFlowTheme.of(context).bodyLarge,
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyLarge
+                                                                              .override(
+                                                                                fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                                fontSize: 12.0,
+                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyLargeFamily),
+                                                                              ),
                                                                         ),
                                                                         maxLines:
                                                                             2,
@@ -460,7 +456,18 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                                 ),
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .labelMedium,
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .labelMediumFamily,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              FlutterFlowTheme.of(context).labelMediumFamily),
+                                                                    ),
                                                               ),
                                                             ],
                                                           ),

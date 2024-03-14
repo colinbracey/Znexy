@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:geolocator/geolocator.dart';
@@ -44,10 +45,155 @@ String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
   return DateFormat(format, locale).format(dateTime);
 }
 
+Theme wrapInMaterialDatePickerTheme(
+  BuildContext context,
+  Widget child, {
+  required Color headerBackgroundColor,
+  required Color headerForegroundColor,
+  required TextStyle headerTextStyle,
+  required Color pickerBackgroundColor,
+  required Color pickerForegroundColor,
+  required Color selectedDateTimeBackgroundColor,
+  required Color selectedDateTimeForegroundColor,
+  required Color actionButtonForegroundColor,
+  required double iconSize,
+}) {
+  final baseTheme = Theme.of(context);
+  final dateTimeMaterialStateForegroundColor =
+      MaterialStateProperty.resolveWith((states) {
+    if (states.contains(MaterialState.disabled)) {
+      return pickerForegroundColor.withOpacity(0.60);
+    }
+    if (states.contains(MaterialState.selected)) {
+      return selectedDateTimeForegroundColor;
+    }
+    if (states.isEmpty) {
+      return pickerForegroundColor;
+    }
+    return null;
+  });
+
+  final dateTimeMaterialStateBackgroundColor =
+      MaterialStateProperty.resolveWith((states) {
+    if (states.contains(MaterialState.selected)) {
+      return selectedDateTimeBackgroundColor;
+    }
+    return null;
+  });
+
+  return Theme(
+    data: baseTheme.copyWith(
+      colorScheme: baseTheme.colorScheme.copyWith(
+        onSurface: pickerForegroundColor,
+      ),
+      disabledColor: pickerForegroundColor.withOpacity(0.3),
+      textTheme: baseTheme.textTheme.copyWith(
+        headlineSmall: headerTextStyle,
+        headlineMedium: headerTextStyle,
+      ),
+      iconTheme: baseTheme.iconTheme.copyWith(
+        size: iconSize,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            foregroundColor: MaterialStatePropertyAll(
+              actionButtonForegroundColor,
+            ),
+            overlayColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.hovered)) {
+                return actionButtonForegroundColor.withOpacity(0.04);
+              }
+              if (states.contains(MaterialState.focused) ||
+                  states.contains(MaterialState.pressed)) {
+                return actionButtonForegroundColor.withOpacity(0.12);
+              }
+              return null;
+            })),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: pickerBackgroundColor,
+        headerBackgroundColor: headerBackgroundColor,
+        headerForegroundColor: headerForegroundColor,
+        weekdayStyle: baseTheme.textTheme.labelMedium!.copyWith(
+          color: pickerForegroundColor,
+        ),
+        dayBackgroundColor: dateTimeMaterialStateBackgroundColor,
+        todayBackgroundColor: dateTimeMaterialStateBackgroundColor,
+        yearBackgroundColor: dateTimeMaterialStateBackgroundColor,
+        dayForegroundColor: dateTimeMaterialStateForegroundColor,
+        todayForegroundColor: dateTimeMaterialStateForegroundColor,
+        yearForegroundColor: dateTimeMaterialStateForegroundColor,
+      ),
+    ),
+    child: child,
+  );
+}
+
+Theme wrapInMaterialTimePickerTheme(
+  BuildContext context,
+  Widget child, {
+  required Color headerBackgroundColor,
+  required Color headerForegroundColor,
+  required TextStyle headerTextStyle,
+  required Color pickerBackgroundColor,
+  required Color pickerForegroundColor,
+  required Color selectedDateTimeBackgroundColor,
+  required Color selectedDateTimeForegroundColor,
+  required Color actionButtonForegroundColor,
+  required double iconSize,
+}) {
+  final baseTheme = Theme.of(context);
+  return Theme(
+    data: baseTheme.copyWith(
+      iconTheme: baseTheme.iconTheme.copyWith(
+        size: iconSize,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            foregroundColor: MaterialStatePropertyAll(
+              actionButtonForegroundColor,
+            ),
+            overlayColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.hovered)) {
+                return actionButtonForegroundColor.withOpacity(0.04);
+              }
+              if (states.contains(MaterialState.focused) ||
+                  states.contains(MaterialState.pressed)) {
+                return actionButtonForegroundColor.withOpacity(0.12);
+              }
+              return null;
+            })),
+      ),
+      timePickerTheme: baseTheme.timePickerTheme.copyWith(
+        backgroundColor: pickerBackgroundColor,
+        hourMinuteTextColor: pickerForegroundColor,
+        dialHandColor: selectedDateTimeBackgroundColor,
+        dialTextColor: MaterialStateColor.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? selectedDateTimeForegroundColor
+                : pickerForegroundColor),
+        dayPeriodBorderSide: BorderSide(
+          color: pickerForegroundColor,
+        ),
+        dayPeriodTextColor: MaterialStateColor.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? selectedDateTimeForegroundColor
+                : pickerForegroundColor),
+        dayPeriodColor: MaterialStateColor.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? selectedDateTimeBackgroundColor
+                : Colors.transparent),
+        entryModeIconColor: pickerForegroundColor,
+      ),
+    ),
+    child: child,
+  );
+}
+
 Future launchURL(String url) async {
-  var uri = Uri.parse(url).toString();
+  var uri = Uri.parse(url);
   try {
-    await launch(uri);
+    await launchUrl(uri);
   } catch (e) {
     throw 'Could not launch $uri: $e';
   }
@@ -235,7 +381,7 @@ bool responsiveVisibility({
 const kTextValidatorUsernameRegex = r'^[a-zA-Z][a-zA-Z0-9_-]{2,16}$';
 // https://stackoverflow.com/a/201378
 const kTextValidatorEmailRegex =
-    "^(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])\$";
+    "^(?:[a-z0-9!#\$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&\'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])\$";
 const kTextValidatorWebsiteRegex =
     r'(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
 
@@ -379,5 +525,37 @@ extension StatefulWidgetExtensions on State<StatefulWidget> {
       // ignore: invalid_use_of_protected_member
       setState(fn);
     }
+  }
+}
+
+// For iOS 16 and below, set the status bar color to match the app's theme.
+// https://github.com/flutter/flutter/issues/41067
+Brightness? _lastBrightness;
+void fixStatusBarOniOS16AndBelow(BuildContext context) {
+  if (!isiOS) {
+    return;
+  }
+  final brightness = Theme.of(context).brightness;
+  if (_lastBrightness != brightness) {
+    _lastBrightness = brightness;
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarBrightness: brightness,
+        systemStatusBarContrastEnforced: true,
+      ),
+    );
+  }
+}
+
+extension ListUniqueExt<T> on Iterable<T> {
+  List<T> unique(dynamic Function(T) getKey) {
+    var distinctSet = <T>{};
+    var distinctList = <T>[];
+    for (var item in this) {
+      if (distinctSet.add(getKey(item))) {
+        distinctList.add(getKey(item));
+      }
+    }
+    return distinctList;
   }
 }

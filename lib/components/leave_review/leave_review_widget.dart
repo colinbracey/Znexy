@@ -5,7 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'leave_review_model.dart';
 export 'leave_review_model.dart';
 
@@ -15,11 +15,15 @@ class LeaveReviewWidget extends StatefulWidget {
     String? requestersName,
     required this.requesterUserId,
     required this.requestDocRef,
+    required this.trackOrderDocRef,
+    required this.isRequester,
   }) : requestersName = requestersName ?? 'the requester';
 
   final String requestersName;
   final DocumentReference? requesterUserId;
   final DocumentReference? requestDocRef;
+  final DocumentReference? trackOrderDocRef;
+  final bool? isRequester;
 
   @override
   State<LeaveReviewWidget> createState() => _LeaveReviewWidgetState();
@@ -54,13 +58,10 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
       child: Container(
         width: 420.0,
-        height: 310.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: const [
@@ -124,9 +125,11 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        'Please leave a review for ${widget.requestersName}',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      Flexible(
+                        child: Text(
+                          'Please leave a review for ${widget.requestersName}',
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        ),
                       ),
                     ],
                   ),
@@ -145,7 +148,8 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                         ),
                         direction: Axis.horizontal,
                         initialRating: _model.ratingBarValue ??= 0.0,
-                        unratedColor: const Color(0x33F609F0),
+                        unratedColor:
+                            FlutterFlowTheme.of(context).secondaryText,
                         itemCount: 5,
                         itemSize: 40.0,
                         glowColor: const Color(0xFFF609F0),
@@ -164,137 +168,176 @@ class _LeaveReviewWidgetState extends State<LeaveReviewWidget> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 0.0),
-                  child: TextFormField(
-                    controller: _model.textController,
-                    focusNode: _model.textFieldFocusNode,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                fontFamily: 'Open Sans',
-                                fontSize: 10.0,
-                              ),
-                      hintText: 'Leave a description of how things went',
-                      hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
+                Flexible(
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 0.0),
+                    child: TextFormField(
+                      controller: _model.textController,
+                      focusNode: _model.textFieldFocusNode,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .labelMediumFamily,
+                                  fontSize: 10.0,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .labelMediumFamily),
+                                ),
+                        hintText: 'Leave a description of how things went',
+                        hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium,
-                    maxLines: 5,
-                    validator:
-                        _model.textControllerValidator.asValidator(context),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          if (_model.ratingBarValue == 0.0) {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: const Text('No rating set'),
-                                  content: const Text(
-                                      'Please select a rating between 1 and 5'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            return;
-                          }
-
-                          await ReviewRecord.collection
-                              .doc()
-                              .set(createReviewRecordData(
-                                userId: widget.requesterUserId,
-                                requestId: widget.requestDocRef,
-                                rating: _model.ratingBarValue?.round(),
-                                description: _model.textController.text,
-                                createdAt: getCurrentTimestamp,
-                              ));
-
-                          await widget.requesterUserId!.update({
-                            ...createUsersRecordData(
-                              averageRating: valueOrDefault<double>(
-                                functions.calculateNewAverageRating(
-                                    columnUsersRecord.averageRating,
-                                    columnUsersRecord.numberOfReviews,
-                                    _model.ratingBarValue!),
-                                0.0,
-                              ),
-                            ),
-                            ...mapToFirestore(
-                              {
-                                'numberOfReviews': FieldValue.increment(1),
-                              },
-                            ),
-                          });
-                          Navigator.pop(context);
-                        },
-                        text: 'Submit',
-                        options: FFButtonOptions(
-                          height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: const Color(0xFFF609F0),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                  ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      maxLines: 5,
+                      validator:
+                          _model.textControllerValidator.asValidator(context),
                     ),
-                  ],
+                  ),
+                ),
+                Flexible(
+                  child: Align(
+                    alignment: const AlignmentDirectional(0.0, 1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                if (_model.ratingBarValue == 0.0) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('No rating set'),
+                                        content: const Text(
+                                            'Please select a rating between 1 and 5'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+
+                                await ReviewRecord.collection
+                                    .doc()
+                                    .set(createReviewRecordData(
+                                      userId: widget.requesterUserId,
+                                      requestId: widget.requestDocRef,
+                                      rating: _model.ratingBarValue?.round(),
+                                      description: _model.textController.text,
+                                      createdAt: getCurrentTimestamp,
+                                    ));
+
+                                await widget.requesterUserId!.update({
+                                  ...createUsersRecordData(
+                                    averageRating: valueOrDefault<double>(
+                                      functions.calculateNewAverageRating(
+                                          columnUsersRecord.averageRating,
+                                          columnUsersRecord.numberOfReviews,
+                                          _model.ratingBarValue!),
+                                      0.0,
+                                    ),
+                                  ),
+                                  ...mapToFirestore(
+                                    {
+                                      'numberOfReviews':
+                                          FieldValue.increment(1),
+                                    },
+                                  ),
+                                });
+                                if (widget.isRequester == true) {
+                                  await widget.trackOrderDocRef!
+                                      .update(createTrackOrderRecordData(
+                                    requesterReviewLeft: true,
+                                    requesterReviewLeftDate:
+                                        getCurrentTimestamp,
+                                  ));
+                                } else {
+                                  await widget.trackOrderDocRef!
+                                      .update(createTrackOrderRecordData(
+                                    offererReviewLeft: true,
+                                    offererReviewLeftDate: getCurrentTimestamp,
+                                  ));
+                                }
+
+                                Navigator.pop(context);
+                              },
+                              text: 'Submit',
+                              options: FFButtonOptions(
+                                height: 40.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: const Color(0xFFF609F0),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
+                                      color: Colors.white,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             );

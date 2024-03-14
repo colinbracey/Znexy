@@ -1,9 +1,7 @@
 import '/flutter_flow/chat/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'all_chats_page_model.dart';
 export 'all_chats_page_model.dart';
 
@@ -36,17 +34,6 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
-    context.watch<FFAppState>();
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -55,9 +42,11 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
         title: Text(
           'All Chats',
           style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: 'Comfortaa',
+                fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 fontSize: 22.0,
+                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                    FlutterFlowTheme.of(context).headlineMediumFamily),
               ),
         ),
         actions: const [],
@@ -139,7 +128,8 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
                           ),
                           lastChatText: chatInfo.chatPreviewMessage(),
                           lastChatTime: listViewChatsRecord.lastMessageTime,
-                          seen: listViewChatsRecord.lastMessageSeenBy.contains(currentUserReference),
+                          seen: listViewChatsRecord.lastMessageSeenBy
+                              .contains(currentUserReference),
                           title: chatInfo.chatPreviewTitle(),
                           userProfilePic: chatInfo.chatPreviewPic(),
                           color: const Color(0xFFEEF0F5),
