@@ -650,6 +650,12 @@ class _MyOffersWidgetState extends State<MyOffersWidget>
                                                               ParamType
                                                                   .DocumentReference,
                                                             ),
+                                                            'image':
+                                                                serializeParam(
+                                                              columnRequestRecord
+                                                                  .coverImage,
+                                                              ParamType.String,
+                                                            ),
                                                           }.withoutNulls,
                                                           extra: <String,
                                                               dynamic>{

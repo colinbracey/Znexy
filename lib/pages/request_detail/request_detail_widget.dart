@@ -23,9 +23,11 @@ class RequestDetailWidget extends StatefulWidget {
   const RequestDetailWidget({
     super.key,
     required this.thisRequestDocRef,
+    required this.image,
   });
 
   final DocumentReference? thisRequestDocRef;
+  final String? image;
 
   @override
   State<RequestDetailWidget> createState() => _RequestDetailWidgetState();
@@ -274,16 +276,13 @@ class _RequestDetailWidgetState extends State<RequestDetailWidget>
                                                               FlutterFlowExpandedImageView(
                                                             image:
                                                                 Image.network(
-                                                              requestDetailRequestRecord
-                                                                  .coverImage,
+                                                              widget.image!,
                                                               fit: BoxFit
                                                                   .contain,
                                                             ),
                                                             allowRotation:
                                                                 false,
-                                                            tag:
-                                                                requestDetailRequestRecord
-                                                                    .coverImage,
+                                                            tag: widget.image!,
                                                             useHeroAnimation:
                                                                 true,
                                                           ),
@@ -291,9 +290,7 @@ class _RequestDetailWidgetState extends State<RequestDetailWidget>
                                                       );
                                                     },
                                                     child: Hero(
-                                                      tag:
-                                                          requestDetailRequestRecord
-                                                              .coverImage,
+                                                      tag: widget.image!,
                                                       transitionOnUserGestures:
                                                           true,
                                                       child: ClipRRect(
@@ -313,8 +310,7 @@ class _RequestDetailWidgetState extends State<RequestDetailWidget>
                                                                   8.0),
                                                         ),
                                                         child: Image.network(
-                                                          requestDetailRequestRecord
-                                                              .coverImage,
+                                                          widget.image!,
                                                           width:
                                                               double.infinity,
                                                           height:
@@ -585,7 +581,6 @@ class _RequestDetailWidgetState extends State<RequestDetailWidget>
                                                     isScrollControlled: true,
                                                     backgroundColor:
                                                         Colors.transparent,
-                                                    enableDrag: false,
                                                     context: context,
                                                     builder: (context) {
                                                       return GestureDetector(
@@ -1875,7 +1870,6 @@ class _RequestDetailWidgetState extends State<RequestDetailWidget>
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
-                            enableDrag: false,
                             context: context,
                             builder: (context) {
                               return GestureDetector(

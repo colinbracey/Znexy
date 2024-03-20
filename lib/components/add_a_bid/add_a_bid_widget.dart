@@ -104,9 +104,19 @@ class _AddABidWidgetState extends State<AddABidWidget> {
             ),
           ),
           child: Container(
-            width: 700.0,
+            width: 400.0,
+            constraints: const BoxConstraints(
+              maxWidth: 750.0,
+            ),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 4.0,
+                  color: Color(0x33000000),
+                  offset: Offset(0.0, 2.0),
+                )
+              ],
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(0.0),
                 bottomRight: Radius.circular(0.0),
@@ -522,7 +532,7 @@ class _AddABidWidgetState extends State<AddABidWidget> {
                                 },
                                 text: 'Confirm Bid',
                                 options: FFButtonOptions(
-                                  width: 270.0,
+                                  width: 175.0,
                                   height: 50.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),

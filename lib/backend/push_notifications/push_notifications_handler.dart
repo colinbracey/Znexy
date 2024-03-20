@@ -114,11 +114,11 @@ final parametersBuilderMap =
   'LoginEmail': ParameterData.none(),
   'RegisterEmail': ParameterData.none(),
   'AddHelpRequestFull': ParameterData.none(),
-  'AddHelpRequest': ParameterData.none(),
   'RequestDetail': (data) async => ParameterData(
         allParams: {
           'thisRequestDocRef':
               getParameter<DocumentReference>(data, 'thisRequestDocRef'),
+          'image': getParameter<String>(data, 'image'),
         },
       ),
   'Profile': ParameterData.none(),
@@ -154,14 +154,12 @@ final parametersBuilderMap =
         },
       ),
   'MyOffers': ParameterData.none(),
-  'CongratulationsOfferAccepted': ParameterData.none(),
   'AcceptedOfferOfferer': (data) async => ParameterData(
         allParams: {
           'thisOffertDocRef':
               getParameter<DocumentReference>(data, 'thisOffertDocRef'),
         },
       ),
-  'HelpRequests': ParameterData.none(),
   'RequestDetailCopy': (data) async => ParameterData(
         allParams: {
           'thisRequestDocRef':
@@ -175,6 +173,9 @@ final parametersBuilderMap =
               getParameter<DocumentReference>(data, 'thisOffertDocRef'),
         },
       ),
+  'ForgotPassword': ParameterData.none(),
+  'HelpRequests': ParameterData.none(),
+  'InsertHelp': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

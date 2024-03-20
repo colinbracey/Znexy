@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/components/congratulations_pop/congratulations_pop_widget.dart';
 import '/components/offerer_set_completed/offerer_set_completed_widget.dart';
 import '/components/please_leave_review/please_leave_review_widget.dart';
+import '/components/request_complete/request_complete_widget.dart';
 import '/components/requester_set_completed/requester_set_completed_widget.dart';
 import '/components/user_rating/user_rating_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -23,6 +24,8 @@ class AcceptedOfferOffererModel
   late RequesterSetCompletedModel requesterSetCompletedModel;
   // Model for OffererSetCompleted component.
   late OffererSetCompletedModel offererSetCompletedModel;
+  // Model for RequestComplete component.
+  late RequestCompleteModel requestCompleteModel;
 
   /// Initialization and disposal methods.
 
@@ -37,6 +40,7 @@ class AcceptedOfferOffererModel
         createModel(context, () => RequesterSetCompletedModel());
     offererSetCompletedModel =
         createModel(context, () => OffererSetCompletedModel());
+    requestCompleteModel = createModel(context, () => RequestCompleteModel());
   }
 
   @override
@@ -47,6 +51,7 @@ class AcceptedOfferOffererModel
     pleaseLeaveReviewModel.dispose();
     requesterSetCompletedModel.dispose();
     offererSetCompletedModel.dispose();
+    requestCompleteModel.dispose();
   }
 
   /// Action blocks are added here.

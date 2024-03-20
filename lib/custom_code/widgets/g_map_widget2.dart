@@ -90,10 +90,10 @@ class _GMapWidget2State extends State<GMapWidget2> {
                       onTapInfoWindow: (_) {
                         print("Tapped on source info window");
                       },
-                      //assetPath: "assets/images/restaurant-marker-icon.png",
+                      assetPath: "assets/images/restaurant-marker-icon.png",
                     ),
                     destinationMarkerIconInfo: GM.MarkerIconInfo(
-                      //assetPath: "assets/images/house-marker-icon.png",
+                      assetPath: "assets/images/house-marker-icon.png",
                       infoWindowTitle: "Requester",
                       onTapMarker: (currentLocation) {
                         print("Requester is currently at $currentLocation");
@@ -103,7 +103,7 @@ class _GMapWidget2State extends State<GMapWidget2> {
                     driverMarkerIconInfo: GM.MarkerIconInfo(
                       infoWindowTitle: "Alex",
                       //assetPath: widget.offerUserImage,
-                      //assetPath: "assets/images/driver-marker-icon.png",
+                      assetPath: "assets/images/driver-marker-icon.png",
                       onTapMarker: (currentLocation) {
                         print("Driver is currently at $currentLocation");
                       },

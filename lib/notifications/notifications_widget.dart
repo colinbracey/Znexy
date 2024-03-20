@@ -258,13 +258,9 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
-                                                  color:
-                                                      listViewNotificationRecord
-                                                              .read
-                                                          ? FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground
-                                                          : const Color(0xFF8E9AC2),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBackground,
                                                   boxShadow: [
                                                     BoxShadow(
                                                       blurRadius: 0.0,
@@ -290,14 +286,46 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                 child: Padding(
                                                   padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                          16.0, 8.0, 16.0, 8.0),
+                                                          5.0, 8.0, 16.0, 8.0),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
-                                                            .start,
+                                                            .center,
                                                     children: [
+                                                      Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                0.0, 0.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Container(
+                                                            width: 15.0,
+                                                            height: 15.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: listViewNotificationRecord
+                                                                      .read
+                                                                  ? FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground
+                                                                  : const Color(
+                                                                      0xFFF609F0),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                       Align(
                                                         alignment:
                                                             const AlignmentDirectional(
@@ -343,7 +371,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Flexible(
+                                                      Expanded(
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
@@ -360,116 +388,77 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
+                                                              Text(
+                                                                containerUsersRecord
+                                                                    .displayName,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                    ),
+                                                              ),
                                                               Padding(
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
+                                                                            10.0,
                                                                             0.0,
-                                                                            0.0,
-                                                                            12.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          RichText(
-                                                                        textScaler:
-                                                                            MediaQuery.of(context).textScaler,
-                                                                        text:
-                                                                            TextSpan(
-                                                                          children: [
-                                                                            TextSpan(
-                                                                              text: containerUsersRecord.displayName,
-                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                    fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                                    color: const Color(0xFFF609F0),
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyLargeFamily),
-                                                                                  ),
-                                                                            ),
-                                                                            const TextSpan(
-                                                                              text: ' ',
-                                                                              style: TextStyle(),
-                                                                            ),
-                                                                            TextSpan(
-                                                                              text: valueOrDefault<String>(
-                                                                                listViewNotificationRecord.message,
-                                                                                'Message',
-                                                                              ),
-                                                                              style: const TextStyle(),
-                                                                            )
-                                                                          ],
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyLarge
-                                                                              .override(
-                                                                                fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                                fontSize: 12.0,
-                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyLargeFamily),
-                                                                              ),
-                                                                        ),
-                                                                        maxLines:
-                                                                            2,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  listViewNotificationRecord
+                                                                      .message,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        useGoogleFonts:
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
-                                                                    ),
-                                                                    if (listViewNotificationRecord
-                                                                            .read ==
-                                                                        false)
-                                                                      Align(
-                                                                        alignment: const AlignmentDirectional(
-                                                                            0.0,
-                                                                            -1.0),
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              12.0,
-                                                                          height:
-                                                                              12.0,
-                                                                          decoration:
-                                                                              const BoxDecoration(
-                                                                            color:
-                                                                                Color(0xFFCC0E3A),
-                                                                            shape:
-                                                                                BoxShape.circle,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                  ],
                                                                 ),
-                                                              ),
-                                                              Text(
-                                                                valueOrDefault<
-                                                                    String>(
-                                                                  dateTimeFormat(
-                                                                      'relative',
-                                                                      listViewNotificationRecord
-                                                                          .createdAt),
-                                                                  '0',
-                                                                ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .labelMediumFamily,
-                                                                      fontSize:
-                                                                          12.0,
-                                                                      useGoogleFonts: GoogleFonts
-                                                                              .asMap()
-                                                                          .containsKey(
-                                                                              FlutterFlowTheme.of(context).labelMediumFamily),
-                                                                    ),
                                                               ),
                                                             ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                1.0, 0.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              dateTimeFormat(
+                                                                  'relative',
+                                                                  listViewNotificationRecord
+                                                                      .createdAt),
+                                                              '0',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium,
                                                           ),
                                                         ),
                                                       ),

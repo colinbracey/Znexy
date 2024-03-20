@@ -1,5 +1,6 @@
 import '/components/offerer_set_offer_completed/offerer_set_offer_completed_widget.dart';
 import '/components/please_leave_review/please_leave_review_widget.dart';
+import '/components/request_complete/request_complete_widget.dart';
 import '/components/requester_offer_set_completed/requester_offer_set_completed_widget.dart';
 import '/components/user_rating/user_rating_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -17,6 +18,8 @@ class AcceptedOfferRequesterModel
   late OffererSetOfferCompletedModel offererSetOfferCompletedModel;
   // Model for PleaseLeaveReview component.
   late PleaseLeaveReviewModel pleaseLeaveReviewModel;
+  // Model for RequestComplete component.
+  late RequestCompleteModel requestCompleteModel;
   // Model for RequesterOfferSetCompleted component.
   late RequesterOfferSetCompletedModel requesterOfferSetCompletedModel;
 
@@ -29,6 +32,7 @@ class AcceptedOfferRequesterModel
         createModel(context, () => OffererSetOfferCompletedModel());
     pleaseLeaveReviewModel =
         createModel(context, () => PleaseLeaveReviewModel());
+    requestCompleteModel = createModel(context, () => RequestCompleteModel());
     requesterOfferSetCompletedModel =
         createModel(context, () => RequesterOfferSetCompletedModel());
   }
@@ -39,6 +43,7 @@ class AcceptedOfferRequesterModel
     userRatingModel.dispose();
     offererSetOfferCompletedModel.dispose();
     pleaseLeaveReviewModel.dispose();
+    requestCompleteModel.dispose();
     requesterOfferSetCompletedModel.dispose();
   }
 

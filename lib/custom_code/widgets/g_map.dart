@@ -57,17 +57,17 @@ class _GMapState extends State<GMap> {
         onTapInfoWindow: (_) {
           print("Tapped on source info window");
         },
-        //assetPath: "assets/images/restaurant-marker-icon.png",
+        assetPath: "assets/images/restaurant-marker-icon.png",
         assetMarkerSize: Size.square(125),
         // assetPath:
         //   "https://firebasestorage.googleapis.com/v0/b/helpme-502f1.appspot.com/o/users%2FLrzKJtsED9O1DOL0RQXn7sG4Amc2%2Fuploads%2F1699987800006000.jpg?alt=media&token=3ae328c5-6461-4fd6-ac0f-1a2bad797aed",
       ),
       destinationMarkerIconInfo: GM.MarkerIconInfo(
-          //assetPath: "assets/images/restaurant-marker-icon.png",
-          ),
+        assetPath: "assets/images/restaurant-marker-icon.png",
+      ),
       driverMarkerIconInfo: GM.MarkerIconInfo(
         infoWindowTitle: "Alex",
-        //assetPath: "assets/images/driver-marker-icon.png",
+        assetPath: "assets/images/driver-marker-icon.png",
         onTapMarker: (currentLocation) {
           print("Driver is currently at $currentLocation");
         },

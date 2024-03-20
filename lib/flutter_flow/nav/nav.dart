@@ -120,18 +120,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const AddHelpRequestFullWidget(),
         ),
         FFRoute(
-          name: 'AddHelpRequest',
-          path: '/addHelpRequest',
-          requireAuth: true,
-          builder: (context, params) => const AddHelpRequestWidget(),
-        ),
-        FFRoute(
           name: 'RequestDetail',
           path: '/requestDetail',
           requireAuth: true,
           builder: (context, params) => RequestDetailWidget(
             thisRequestDocRef: params.getParam('thisRequestDocRef',
                 ParamType.DocumentReference, false, ['Request']),
+            image: params.getParam('image', ParamType.String),
           ),
         ),
         FFRoute(
@@ -220,12 +215,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const MyOffersWidget(),
         ),
         FFRoute(
-          name: 'CongratulationsOfferAccepted',
-          path: '/congratulationsOfferAccepted',
-          requireAuth: true,
-          builder: (context, params) => const CongratulationsOfferAcceptedWidget(),
-        ),
-        FFRoute(
           name: 'AcceptedOfferOfferer',
           path: '/acceptedOfferOfferer',
           requireAuth: true,
@@ -233,14 +222,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             thisOffertDocRef: params.getParam('thisOffertDocRef',
                 ParamType.DocumentReference, false, ['Offer']),
           ),
-        ),
-        FFRoute(
-          name: 'HelpRequests',
-          path: '/helpRequests',
-          requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'HelpRequests')
-              : const HelpRequestsWidget(),
         ),
         FFRoute(
           name: 'RequestDetailCopy',
@@ -265,6 +246,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             thisOffertDocRef: params.getParam('thisOffertDocRef',
                 ParamType.DocumentReference, false, ['Offer']),
           ),
+        ),
+        FFRoute(
+          name: 'ForgotPassword',
+          path: '/forgotPassword',
+          requireAuth: true,
+          builder: (context, params) => const ForgotPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'HelpRequests',
+          path: '/helpRequests',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'HelpRequests')
+              : const HelpRequestsWidget(),
+        ),
+        FFRoute(
+          name: 'InsertHelp',
+          path: '/insertHelp',
+          requireAuth: true,
+          builder: (context, params) => const InsertHelpWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

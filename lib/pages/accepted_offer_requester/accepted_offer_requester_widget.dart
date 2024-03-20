@@ -4,6 +4,7 @@ import '/components/leave_review/leave_review_widget.dart';
 import '/components/offerer_profile_drawer/offerer_profile_drawer_widget.dart';
 import '/components/offerer_set_offer_completed/offerer_set_offer_completed_widget.dart';
 import '/components/please_leave_review/please_leave_review_widget.dart';
+import '/components/request_complete/request_complete_widget.dart';
 import '/components/requester_offer_set_completed/requester_offer_set_completed_widget.dart';
 import '/components/user_rating/user_rating_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -1997,6 +1998,9 @@ class _AcceptedOfferRequesterWidgetState
                                           ),
                                         ),
                                         Container(
+                                          constraints: const BoxConstraints(
+                                            maxWidth: 750.0,
+                                          ),
                                           decoration: const BoxDecoration(),
                                           child: Padding(
                                             padding:
@@ -2324,27 +2328,6 @@ class _AcceptedOfferRequesterWidgetState
                                                                           .forward(
                                                                               from: 0.0);
                                                                     }
-                                                                    var confirmDialogResponse =
-                                                                        await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: const Text('Complete Request?'),
-                                                                                  content: const Text('Confirm that the request is complete'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: const Text('Cancel'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: const Text('Confirm'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
 
                                                                     await columnTrackOrderRecord
                                                                         .reference
@@ -2944,7 +2927,7 @@ class _AcceptedOfferRequesterWidgetState
                                       child: OffererSetOfferCompletedWidget(
                                         offerUserName:
                                             columnUsersRecord.displayName,
-                                        offerDocRef:
+                                        offerDoc:
                                             acceptedOfferRequesterOfferRecord,
                                         trackOrderRef:
                                             columnTrackOrderRecord!.reference,
@@ -2982,43 +2965,25 @@ class _AcceptedOfferRequesterWidgetState
                                     ),
                                   ],
                                 ),
-                            ],
-                          );
-                        },
-                      ),
-                      StreamBuilder<List<TrackOrderRecord>>(
-                        stream: queryTrackOrderRecord(
-                          queryBuilder: (trackOrderRecord) =>
-                              trackOrderRecord.where(
-                            'OfferId',
-                            isEqualTo: widget.thisOffertDocRef,
-                          ),
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Color(0xFFF609F0),
-                                  ),
+                              if ((columnTrackOrderRecord
+                                          ?.requesterReviewLeft ==
+                                      true) &&
+                                  ((columnTrackOrderRecord
+                                              ?.workCompletedOfferer ==
+                                          true) &&
+                                      (columnTrackOrderRecord
+                                              ?.workCompletedRequester ==
+                                          true)))
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    wrapWithModel(
+                                      model: _model.requestCompleteModel,
+                                      updateCallback: () => setState(() {}),
+                                      child: const RequestCompleteWidget(),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            );
-                          }
-                          List<TrackOrderRecord> columnTrackOrderRecordList =
-                              snapshot.data!;
-                          final columnTrackOrderRecord =
-                              columnTrackOrderRecordList.isNotEmpty
-                                  ? columnTrackOrderRecordList.first
-                                  : null;
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
                               if ((columnTrackOrderRecord
                                           ?.workCompletedRequester ==
                                       true) &&

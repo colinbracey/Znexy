@@ -146,58 +146,64 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 12.0, 12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      parentColumnRequestRecord
-                                          .shortDescription,
-                                      style: FlutterFlowTheme.of(context)
-                                          .headlineSmall,
-                                    ),
-                                  ),
-                                  if (parentColumnRequestRecord.openPrice ==
-                                      false)
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 12.0, 0.0),
+                            Container(
+                              constraints: const BoxConstraints(
+                                maxWidth: 750.0,
+                              ),
+                              decoration: const BoxDecoration(),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 10.0, 12.0, 12.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Flexible(
                                       child: Text(
-                                        valueOrDefault<String>(
-                                          formatNumber(
-                                            parentColumnRequestRecord
-                                                .totalPrice,
-                                            formatType: FormatType.custom,
-                                            currency: '\$',
-                                            format: '0.00',
-                                            locale: '',
-                                          ),
-                                          '0',
-                                        ),
+                                        parentColumnRequestRecord
+                                            .shortDescription,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLargeFamily,
-                                              fontSize: 25.0,
-                                              fontWeight: FontWeight.bold,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLargeFamily),
-                                            ),
+                                            .headlineSmall,
                                       ),
                                     ),
-                                ],
+                                    if (parentColumnRequestRecord.openPrice ==
+                                        false)
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 12.0, 0.0),
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            formatNumber(
+                                              parentColumnRequestRecord
+                                                  .totalPrice,
+                                              formatType: FormatType.custom,
+                                              currency: '\$',
+                                              format: '0.00',
+                                              locale: '',
+                                            ),
+                                            '0',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLargeFamily,
+                                                fontSize: 25.0,
+                                                fontWeight: FontWeight.bold,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLargeFamily),
+                                              ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
                             Flexible(
@@ -259,215 +265,231 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        5.0,
-                                                                        0.0,
-                                                                        5.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                      const AlignmentDirectional(
+                                                          Material(
+                                                            color: Colors
+                                                                .transparent,
+                                                            elevation: 8.0,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                            child: Container(
+                                                              constraints:
+                                                                  const BoxConstraints(
+                                                                maxWidth: 750.0,
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .info,
+                                                                boxShadow: const [
+                                                                  BoxShadow(
+                                                                    blurRadius:
+                                                                        4.0,
+                                                                    color: Color(
+                                                                        0x33000000),
+                                                                    offset:
+                                                                        Offset(
+                                                                            0.0,
+                                                                            2.0),
+                                                                  )
+                                                                ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            5.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Align(
+                                                                      alignment: const AlignmentDirectional(
                                                                           -1.0,
                                                                           -1.0),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             10.0,
                                                                             0.0),
-                                                                    child:
-                                                                        AnimatedContainer(
-                                                                      duration: const Duration(
-                                                                          milliseconds:
-                                                                              150),
-                                                                      curve: Curves
-                                                                          .easeInOut,
-                                                                      width:
-                                                                          50.0,
-                                                                      height:
-                                                                          50.0,
-                                                                      decoration:
-                                                                          const BoxDecoration(
-                                                                        color: Color(
-                                                                            0xFFF609F0),
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                      ),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(2.0),
                                                                         child:
-                                                                            Container(
+                                                                            AnimatedContainer(
+                                                                          duration:
+                                                                              const Duration(milliseconds: 150),
+                                                                          curve:
+                                                                              Curves.easeInOut,
                                                                           width:
-                                                                              120.0,
+                                                                              50.0,
                                                                           height:
-                                                                              120.0,
-                                                                          clipBehavior:
-                                                                              Clip.antiAlias,
+                                                                              50.0,
                                                                           decoration:
                                                                               const BoxDecoration(
+                                                                            color:
+                                                                                Color(0xFFF609F0),
                                                                             shape:
                                                                                 BoxShape.circle,
                                                                           ),
                                                                           child:
-                                                                              Image.network(
-                                                                            containerUsersRecord.photoUrl,
-                                                                            fit:
-                                                                                BoxFit.cover,
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.all(2.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: 120.0,
+                                                                              height: 120.0,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: const BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.network(
+                                                                                containerUsersRecord.photoUrl,
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                                Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      containerUsersRecord
-                                                                          .displayName,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                          ),
-                                                                    ),
-                                                                    Row(
+                                                                    Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
-                                                                              .center,
+                                                                              .start,
                                                                       children: [
                                                                         Text(
-                                                                          '${valueOrDefault<String>(
-                                                                            containerUsersRecord.numberOfReviews.toString(),
-                                                                            '0',
-                                                                          )} Reviews',
-                                                                          style:
-                                                                              FlutterFlowTheme.of(context).bodyMedium,
+                                                                          containerUsersRecord
+                                                                              .displayName,
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                              ),
                                                                         ),
-                                                                        wrapWithModel(
-                                                                          model:
-                                                                              _model.userRatingModel,
-                                                                          updateCallback: () =>
-                                                                              setState(() {}),
-                                                                          child:
-                                                                              UserRatingWidget(
-                                                                            userRating:
-                                                                                containerUsersRecord.averageRating,
-                                                                          ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(
+                                                                              '${valueOrDefault<String>(
+                                                                                containerUsersRecord.numberOfReviews.toString(),
+                                                                                '0',
+                                                                              )} Reviews',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                            ),
+                                                                            wrapWithModel(
+                                                                              model: _model.userRatingModel,
+                                                                              updateCallback: () => setState(() {}),
+                                                                              child: UserRatingWidget(
+                                                                                userRating: containerUsersRecord.averageRating,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                Flexible(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    Flexible(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             10.0,
                                                                             0.0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            valueOrDefault<String>(
-                                                                              formatNumber(
-                                                                                requestOfferDetailOfferRecord.value,
-                                                                                formatType: FormatType.custom,
-                                                                                currency: '',
-                                                                                format: '0.00',
-                                                                                locale: '',
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: const AlignmentDirectional(1.0, 0.0),
+                                                                              child: Text(
+                                                                                valueOrDefault<String>(
+                                                                                  formatNumber(
+                                                                                    requestOfferDetailOfferRecord.value,
+                                                                                    formatType: FormatType.custom,
+                                                                                    currency: '',
+                                                                                    format: '0.00',
+                                                                                    locale: '',
+                                                                                  ),
+                                                                                  '0',
+                                                                                ),
+                                                                                textAlign: TextAlign.start,
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                      fontSize: 20.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                                    ),
                                                                               ),
-                                                                              '0',
                                                                             ),
-                                                                            textAlign:
-                                                                                TextAlign.start,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                  fontSize: 20.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                                ),
-                                                                          ),
+                                                                            Align(
+                                                                              alignment: const AlignmentDirectional(1.0, 0.0),
+                                                                              child: Text(
+                                                                                dateTimeFormat('relative', requestOfferDetailOfferRecord.createdAt!),
+                                                                                textAlign: TextAlign.start,
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                      fontSize: 12.0,
+                                                                                      useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
-                                                                        Align(
-                                                                          alignment: const AlignmentDirectional(
-                                                                              1.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            dateTimeFormat('relative',
-                                                                                requestOfferDetailOfferRecord.createdAt!),
-                                                                            textAlign:
-                                                                                TextAlign.start,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                  fontSize: 12.0,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
+                                                                      ),
                                                                     ),
-                                                                  ),
+                                                                  ],
                                                                 ),
-                                                              ],
+                                                              ),
                                                             ),
                                                           ),
                                                           Align(
                                                             alignment:
                                                                 const AlignmentDirectional(
                                                                     -1.0, 0.0),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                requestOfferDetailOfferRecord
-                                                                    .description,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium,
+                                                            child: Container(
+                                                              constraints:
+                                                                  const BoxConstraints(
+                                                                maxWidth: 750.0,
+                                                              ),
+                                                              decoration:
+                                                                  const BoxDecoration(),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            10.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  requestOfferDetailOfferRecord
+                                                                      .description,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -488,249 +510,257 @@ class _RequestOfferDetailWidgetState extends State<RequestOfferDetailWidget> {
                                                     alignment:
                                                         const AlignmentDirectional(
                                                             0.0, 1.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      10.0),
-                                                          child: FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              context.pushNamed(
-                                                                'ChatPage',
-                                                                queryParameters:
-                                                                    {
-                                                                  'chatUser':
-                                                                      serializeParam(
-                                                                    containerUsersRecord,
-                                                                    ParamType
-                                                                        .Document,
-                                                                  ),
-                                                                }.withoutNulls,
-                                                                extra: <String,
-                                                                    dynamic>{
-                                                                  'chatUser':
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        maxWidth: 750.0,
+                                                      ),
+                                                      decoration:
+                                                          const BoxDecoration(),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        10.0),
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                context
+                                                                    .pushNamed(
+                                                                  'ChatPage',
+                                                                  queryParameters:
+                                                                      {
+                                                                    'chatUser':
+                                                                        serializeParam(
                                                                       containerUsersRecord,
-                                                                },
-                                                              );
-                                                            },
-                                                            text: 'Message ',
-                                                            icon: const Icon(
-                                                              Icons.message,
-                                                              size: 15.0,
-                                                            ),
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 170.0,
-                                                              height: 40.0,
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          24.0,
-                                                                          0.0,
-                                                                          24.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: const Color(
-                                                                  0xFF142328),
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).titleSmallFamily,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
-                                                                      ),
-                                                              elevation: 3.0,
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                width: 1.0,
+                                                                      ParamType
+                                                                          .Document,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                  extra: <String,
+                                                                      dynamic>{
+                                                                    'chatUser':
+                                                                        containerUsersRecord,
+                                                                  },
+                                                                );
+                                                              },
+                                                              text: 'Message ',
+                                                              icon: const Icon(
+                                                                Icons.message,
+                                                                size: 15.0,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 170.0,
+                                                                height: 40.0,
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        24.0,
+                                                                        0.0,
+                                                                        24.0,
+                                                                        0.0),
+                                                                iconPadding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                color: const Color(
+                                                                    0xFF142328),
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .titleSmallFamily,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                    ),
+                                                                elevation: 3.0,
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      10.0),
-                                                          child: FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              var confirmDialogResponse =
-                                                                  await showDialog<
-                                                                          bool>(
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (alertDialogContext) {
-                                                                          return AlertDialog(
-                                                                            title:
-                                                                                const Text('Accept Bid'),
-                                                                            content:
-                                                                                Text('Confirm that you accept the bid of ${valueOrDefault<String>(
-                                                                              formatNumber(
-                                                                                requestOfferDetailOfferRecord.value,
-                                                                                formatType: FormatType.decimal,
-                                                                                decimalType: DecimalType.automatic,
-                                                                                currency: '\$',
-                                                                              ),
-                                                                              '0',
-                                                                            )} from user ${containerUsersRecord.displayName}'),
-                                                                            actions: [
-                                                                              TextButton(
-                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                child: const Text('Cancel'),
-                                                                              ),
-                                                                              TextButton(
-                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                child: const Text('Confirm'),
-                                                                              ),
-                                                                            ],
-                                                                          );
-                                                                        },
-                                                                      ) ??
-                                                                      false;
-                                                              if (confirmDialogResponse) {
-                                                                await parentColumnRequestRecord
-                                                                    .reference
-                                                                    .update(
-                                                                        createRequestRecordData(
-                                                                  accepted:
-                                                                      true,
-                                                                  acceptedUser:
-                                                                      requestOfferDetailOfferRecord
-                                                                          .userId,
-                                                                  acceptedOfferId:
-                                                                      requestOfferDetailOfferRecord
-                                                                          .reference,
-                                                                  acceptedPrice:
-                                                                      requestOfferDetailOfferRecord
-                                                                          .value,
-                                                                ));
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        10.0),
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                var confirmDialogResponse =
+                                                                    await showDialog<
+                                                                            bool>(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              title: const Text('Accept Bid'),
+                                                                              content: Text('Confirm that you accept the bid of ${valueOrDefault<String>(
+                                                                                formatNumber(
+                                                                                  requestOfferDetailOfferRecord.value,
+                                                                                  formatType: FormatType.decimal,
+                                                                                  decimalType: DecimalType.automatic,
+                                                                                  currency: '\$',
+                                                                                ),
+                                                                                '0',
+                                                                              )} from user ${containerUsersRecord.displayName}'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                  child: const Text('Cancel'),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                  child: const Text('Confirm'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        ) ??
+                                                                        false;
+                                                                if (confirmDialogResponse) {
+                                                                  await parentColumnRequestRecord
+                                                                      .reference
+                                                                      .update(
+                                                                          createRequestRecordData(
+                                                                    accepted:
+                                                                        true,
+                                                                    acceptedUser:
+                                                                        requestOfferDetailOfferRecord
+                                                                            .userId,
+                                                                    acceptedOfferId:
+                                                                        requestOfferDetailOfferRecord
+                                                                            .reference,
+                                                                    acceptedPrice:
+                                                                        requestOfferDetailOfferRecord
+                                                                            .value,
+                                                                  ));
 
-                                                                await widget
-                                                                    .offerDocRef!
-                                                                    .update(
-                                                                        createOfferRecordData(
-                                                                  accepted:
-                                                                      true,
-                                                                  acceptedAt:
-                                                                      getCurrentTimestamp,
-                                                                  status: 4,
-                                                                ));
+                                                                  await widget
+                                                                      .offerDocRef!
+                                                                      .update(
+                                                                          createOfferRecordData(
+                                                                    accepted:
+                                                                        true,
+                                                                    acceptedAt:
+                                                                        getCurrentTimestamp,
+                                                                    status: 4,
+                                                                  ));
 
-                                                                await ShoppingCartRecord
-                                                                    .collection
-                                                                    .doc()
-                                                                    .set(
-                                                                        createShoppingCartRecordData(
-                                                                      userId:
-                                                                          currentUserReference,
-                                                                      offerId:
-                                                                          widget
-                                                                              .offerDocRef,
-                                                                      requestId:
-                                                                          parentColumnRequestRecord
-                                                                              .reference,
-                                                                      value: requestOfferDetailOfferRecord
-                                                                          .value,
-                                                                      offerUserId:
-                                                                          requestOfferDetailOfferRecord
-                                                                              .userId,
-                                                                    ));
-                                                              } else {
-                                                                return;
-                                                              }
+                                                                  await ShoppingCartRecord
+                                                                      .collection
+                                                                      .doc()
+                                                                      .set(
+                                                                          createShoppingCartRecordData(
+                                                                        userId:
+                                                                            currentUserReference,
+                                                                        offerId:
+                                                                            widget.offerDocRef,
+                                                                        requestId:
+                                                                            parentColumnRequestRecord.reference,
+                                                                        value: requestOfferDetailOfferRecord
+                                                                            .value,
+                                                                        offerUserId:
+                                                                            requestOfferDetailOfferRecord.userId,
+                                                                      ));
+                                                                } else {
+                                                                  return;
+                                                                }
 
-                                                              context.goNamed(
-                                                                  'ShoppingCart');
-                                                            },
-                                                            text:
-                                                                'Accept Offer ',
-                                                            icon: const Icon(
-                                                              Icons.check_box,
-                                                              size: 15.0,
-                                                            ),
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 170.0,
-                                                              height: 40.0,
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          24.0,
-                                                                          0.0,
-                                                                          24.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: const Color(
-                                                                  0xFFF609F0),
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).titleSmallFamily,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
-                                                                      ),
-                                                              elevation: 3.0,
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                width: 1.0,
+                                                                context.goNamed(
+                                                                    'ShoppingCart');
+                                                              },
+                                                              text:
+                                                                  'Accept Offer ',
+                                                              icon: const Icon(
+                                                                Icons.check_box,
+                                                                size: 15.0,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 170.0,
+                                                                height: 40.0,
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        24.0,
+                                                                        0.0,
+                                                                        24.0,
+                                                                        0.0),
+                                                                iconPadding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                color: const Color(
+                                                                    0xFFF609F0),
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .titleSmallFamily,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                    ),
+                                                                elevation: 3.0,
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ],

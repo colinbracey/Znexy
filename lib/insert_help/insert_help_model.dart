@@ -1,13 +1,13 @@
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'add_help_request_widget.dart' show AddHelpRequestWidget;
+import 'insert_help_widget.dart' show InsertHelpWidget;
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 
-class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
+class InsertHelpModel extends FlutterFlowModel<InsertHelpWidget> {
   ///  Local state fields for this page.
 
-  LatLng? kelowna;
+  int pageNumber = 1;
 
   bool isRecording = false;
 
@@ -22,35 +22,40 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for PageView widget.
-  PageController? pageViewController;
-
-  int get pageViewCurrentIndex => pageViewController != null &&
-          pageViewController!.hasClients &&
-          pageViewController!.page != null
-      ? pageViewController!.page!.round()
-      : 0;
-  // State field(s) for ShortDescription widget.
-  FocusNode? shortDescriptionFocusNode;
-  TextEditingController? shortDescriptionController;
-  String? Function(BuildContext, String?)? shortDescriptionControllerValidator;
-  // State field(s) for LongDescription widget.
-  FocusNode? longDescriptionFocusNode;
-  TextEditingController? longDescriptionController;
-  String? Function(BuildContext, String?)? longDescriptionControllerValidator;
-  AudioRecorder? audioRecorder;
-  String? recording;
-  FFUploadedFile recordedFileBytes =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl1 = '';
 
-  DateTime? datePicked;
+  // State field(s) for RequestPageView widget.
+  PageController? requestPageViewController;
+
+  int get requestPageViewCurrentIndex => requestPageViewController != null &&
+          requestPageViewController!.hasClients &&
+          requestPageViewController!.page != null
+      ? requestPageViewController!.page!.round()
+      : 0;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode1;
+  TextEditingController? textController1;
+  String? Function(BuildContext, String?)? textController1Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode2;
+  TextEditingController? textController2;
+  String? Function(BuildContext, String?)? textController2Validator;
+  AudioRecorder? audioRecorder;
+  String? recording;
+  FFUploadedFile recordedFileBytes =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
   bool isDataUploading2 = false;
-  List<FFUploadedFile> uploadedLocalFiles2 = [];
-  List<String> uploadedFileUrls2 = [];
+  FFUploadedFile uploadedLocalFile2 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl2 = '';
+
+  DateTime? datePicked;
+  bool isDataUploading3 = false;
+  List<FFUploadedFile> uploadedLocalFiles3 = [];
+  List<String> uploadedFileUrls3 = [];
 
   // State field(s) for PlacePicker widget.
   var placePickerValue = const FFPlace();
@@ -63,10 +68,6 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   FocusNode? priceFieldFocusNode;
   TextEditingController? priceFieldController;
   String? Function(BuildContext, String?)? priceFieldControllerValidator;
-  bool isDataUploading3 = false;
-  FFUploadedFile uploadedLocalFile3 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl3 = '';
 
   /// Initialization and disposal methods.
 
@@ -76,11 +77,11 @@ class AddHelpRequestModel extends FlutterFlowModel<AddHelpRequestWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    shortDescriptionFocusNode?.dispose();
-    shortDescriptionController?.dispose();
+    textFieldFocusNode1?.dispose();
+    textController1?.dispose();
 
-    longDescriptionFocusNode?.dispose();
-    longDescriptionController?.dispose();
+    textFieldFocusNode2?.dispose();
+    textController2?.dispose();
 
     priceFieldFocusNode?.dispose();
     priceFieldController?.dispose();

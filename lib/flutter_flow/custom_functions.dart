@@ -348,3 +348,8 @@ double calculateAvailableBalance(List<double>? values) {
   // Round the total value to 2 decimal places
   return double.parse(totalValue.toStringAsFixed(2));
 }
+
+List<RequestRecord>? newCustomFunction(List<RequestRecord>? originalList) {
+  // accept simple query list of documents, return list of documents
+  return originalList;
+}

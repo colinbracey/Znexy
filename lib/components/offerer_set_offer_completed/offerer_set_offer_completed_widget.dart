@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 import '/components/leave_review/leave_review_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,13 +14,13 @@ export 'offerer_set_offer_completed_model.dart';
 class OffererSetOfferCompletedWidget extends StatefulWidget {
   const OffererSetOfferCompletedWidget({
     super.key,
-    required this.offerDocRef,
+    required this.offerDoc,
     required this.trackOrderRef,
     String? offerUserName,
     required this.offererUserId,
   }) : offerUserName = offerUserName ?? 'Offerer Name';
 
-  final OfferRecord? offerDocRef;
+  final OfferRecord? offerDoc;
   final DocumentReference? trackOrderRef;
   final String offerUserName;
   final DocumentReference? offererUserId;
@@ -157,7 +158,7 @@ class _OffererSetOfferCompletedWidgetState
                           const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 20.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await widget.offerDocRef!.reference
+                          await widget.offerDoc!.reference
                               .update(createOfferRecordData(
                             status: 8,
                           ));
@@ -176,8 +177,7 @@ class _OffererSetOfferCompletedWidgetState
                                   child: LeaveReviewWidget(
                                     requestersName: widget.offerUserName,
                                     requesterUserId: widget.offererUserId!,
-                                    requestDocRef:
-                                        widget.offerDocRef!.requestId!,
+                                    requestDocRef: widget.offerDoc!.requestId!,
                                     trackOrderDocRef: widget.trackOrderRef!,
                                     isRequester: true,
                                   ),
@@ -195,6 +195,26 @@ class _OffererSetOfferCompletedWidgetState
                               ));
                             }(),
                           );
+
+                          await TransactionRecord.collection.doc().set({
+                            ...createTransactionRecordData(
+                              totalValue: valueOrDefault<double>(
+                                widget.offerDoc?.value,
+                                0.0,
+                              ),
+                              createdAt: getCurrentTimestamp,
+                              tax: 0.0,
+                              znexyValue: 0.0,
+                              userId: widget.offerDoc?.userId,
+                              type: TransactionType.WorkCredit.name,
+                              withdrawn: false,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'OfferIds': [widget.offerDoc?.reference],
+                              },
+                            ),
+                          });
 
                           context.pushNamed('HelpRequests');
                         },
