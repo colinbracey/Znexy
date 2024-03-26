@@ -83,9 +83,9 @@ dependencies:
   go_router: 7.1.1
   google_fonts: 6.1.0
   google_maps: 6.3.0
-  google_maps_flutter: 2.5.0
-  google_maps_flutter_platform_interface: 2.4.1
-  google_maps_flutter_web: 0.5.4+2
+  google_maps_flutter: ^2.5.0
+  google_maps_flutter_platform_interface: ^2.4.1
+  google_maps_flutter_web: ^0.5.2
   google_maps_widget: ^1.0.5+1
   google_sign_in: 6.1.5
   google_sign_in_android: 6.1.20
@@ -129,7 +129,6 @@ dependencies:
   stripe_ios: 9.4.1
   stripe_js: 3.2.0
   stripe_platform_interface: 9.4.0
-  text_search: 1.0.1
   timeago: 3.2.2
   url_launcher: 6.2.5
   url_launcher_android: 6.3.0

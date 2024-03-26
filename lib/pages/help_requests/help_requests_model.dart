@@ -1,5 +1,5 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_google_map.dart';
+import '/components/request_listing_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'help_requests_widget.dart' show HelpRequestsWidget;
 import 'package:flutter/material.dart';
@@ -11,6 +11,8 @@ class HelpRequestsModel extends FlutterFlowModel<HelpRequestsWidget> {
 
   bool showMap = false;
 
+  bool displaySearchContainer = true;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -18,24 +20,32 @@ class HelpRequestsModel extends FlutterFlowModel<HelpRequestsWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  List<RequestRecord> simpleSearchResults = [];
-  // State field(s) for GoogleMap widget.
-  LatLng? googleMapsCenter1;
-  final googleMapsController1 = Completer<GoogleMapController>();
-  // State field(s) for GoogleMap widget.
-  LatLng? googleMapsCenter2;
-  final googleMapsController2 = Completer<GoogleMapController>();
+  // Stores action output result for [Custom Action - searchRequests] action in TextField widget.
+  List<RequestRecord>? searchAllRequests;
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
+
+  // Models for RequestListing dynamic component.
+  late FlutterFlowDynamicModels<RequestListingModel> requestListingModels2;
 
   /// Initialization and disposal methods.
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    requestListingModels2 =
+        FlutterFlowDynamicModels(() => RequestListingModel());
+  }
 
   @override
   void dispose() {
     unfocusNode.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
+
+    tabBarController?.dispose();
+    requestListingModels2.dispose();
   }
 
   /// Action blocks are added here.

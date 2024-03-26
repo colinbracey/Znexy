@@ -210,9 +210,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'MyOffers',
           path: '/myOffers',
           requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'MyOffers')
-              : const MyOffersWidget(),
+          builder: (context, params) => const MyOffersWidget(),
         ),
         FFRoute(
           name: 'AcceptedOfferOfferer',
@@ -265,7 +263,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'InsertHelp',
           path: '/insertHelp',
           requireAuth: true,
-          builder: (context, params) => const InsertHelpWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'InsertHelp')
+              : const InsertHelpWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

@@ -137,8 +137,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'MyOffers': const MyOffersWidget(),
       'HelpRequests': const HelpRequestsWidget(),
+      'InsertHelp': const InsertHelpWidget(),
       'Profile': const ProfileWidget(),
       'AllChatsPage': const AllChatsPageWidget(),
     };
@@ -175,13 +175,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.front_hand_sharp,
+                  Icons.home,
                   color:
                       currentIndex == 0 ? const Color(0xFFF609F0) : const Color(0xFF142328),
                   size: 24.0,
                 ),
                 Text(
-                  'My Offers',
+                  'Home',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -198,13 +198,12 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.hail,
+                  Icons.add_box,
                   color:
                       currentIndex == 1 ? const Color(0xFFF609F0) : const Color(0xFF142328),
-                  size: 24.0,
                 ),
                 Text(
-                  'Requests',
+                  'Add Request',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1

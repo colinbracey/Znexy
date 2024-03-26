@@ -349,7 +349,26 @@ double calculateAvailableBalance(List<double>? values) {
   return double.parse(totalValue.toStringAsFixed(2));
 }
 
-List<RequestRecord>? newCustomFunction(List<RequestRecord>? originalList) {
-  // accept simple query list of documents, return list of documents
-  return originalList;
+List<RequestRecord>? searchRequestsMap(
+  String searchString,
+  List<RequestRecord>? requestDocuments,
+) {
+  // Add your function code here!
+  if (requestDocuments == null) {
+    return null;
+  }
+
+  print("In function <$searchString>");
+  List<RequestRecord> filteredRequests = [];
+  for (RequestRecord place in requestDocuments) {
+    String shortDescription = place.shortDescription.toLowerCase();
+    String longDescription = place.longDescription.toLowerCase();
+
+    if (shortDescription.contains(searchString.toLowerCase()) ||
+        longDescription.contains(searchString.toLowerCase())) {
+      filteredRequests.add(place);
+    }
+  }
+
+  return filteredRequests;
 }

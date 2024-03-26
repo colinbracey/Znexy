@@ -339,6 +339,22 @@ class _SigninPageWidgetState extends State<SigninPageWidget>
                                     ),
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 0.0, 0.0, 0.0),
+                                      child: Container(
+                                        width: 40.0,
+                                        height: 40.0,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Image.asset(
+                                          'assets/images/Map-Marker-Marker-Outside-Pink-icon.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           10.0, 5.0, 10.0, 5.0),
                                       child: FlutterFlowDropDown<String>(
                                         controller: _model

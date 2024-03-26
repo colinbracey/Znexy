@@ -110,6 +110,11 @@ class RequestRecord extends FirestoreRecord {
   String get address => _address ?? '';
   bool hasAddress() => _address != null;
 
+  // "MapIconUrl" field.
+  String? _mapIconUrl;
+  String get mapIconUrl => _mapIconUrl ?? '';
+  bool hasMapIconUrl() => _mapIconUrl != null;
+
   void _initializeFields() {
     _shortDescription = snapshotData['ShortDescription'] as String?;
     _longDescription = snapshotData['LongDescription'] as String?;
@@ -130,6 +135,7 @@ class RequestRecord extends FirestoreRecord {
     _startTime = snapshotData['StartTime'] as DateTime?;
     _startTimeAsap = snapshotData['StartTimeAsap'] as bool?;
     _address = snapshotData['Address'] as String?;
+    _mapIconUrl = snapshotData['MapIconUrl'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -185,6 +191,7 @@ Map<String, dynamic> createRequestRecordData({
   DateTime? startTime,
   bool? startTimeAsap,
   String? address,
+  String? mapIconUrl,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -206,6 +213,7 @@ Map<String, dynamic> createRequestRecordData({
       'StartTime': startTime,
       'StartTimeAsap': startTimeAsap,
       'Address': address,
+      'MapIconUrl': mapIconUrl,
     }.withoutNulls,
   );
 
@@ -236,7 +244,8 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e1?.isAudioFile == e2?.isAudioFile &&
         e1?.startTime == e2?.startTime &&
         e1?.startTimeAsap == e2?.startTimeAsap &&
-        e1?.address == e2?.address;
+        e1?.address == e2?.address &&
+        e1?.mapIconUrl == e2?.mapIconUrl;
   }
 
   @override
@@ -259,7 +268,8 @@ class RequestRecordDocumentEquality implements Equality<RequestRecord> {
         e?.isAudioFile,
         e?.startTime,
         e?.startTimeAsap,
-        e?.address
+        e?.address,
+        e?.mapIconUrl
       ]);
 
   @override

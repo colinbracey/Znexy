@@ -127,28 +127,43 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
               color: FlutterFlowTheme.of(context).info,
               size: 24.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              if (_model.textController1.text != '') {
+                var confirmDialogResponse = await showDialog<bool>(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: const Text('Data will be lost'),
+                          content: const Text(
+                              'If you back out from here, you will lose all the data you have entered. Confirm to go back.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, true),
+                              child: const Text('Confirm'),
+                            ),
+                          ],
+                        );
+                      },
+                    ) ??
+                    false;
+                if (!confirmDialogResponse) {
+                  return;
+                }
+              }
+              context.safePop();
             },
           ),
           title: Text(
             'Add a Request',
             style: FlutterFlowTheme.of(context).titleMedium,
           ),
-          actions: [
-            FlutterFlowIconButton(
-              borderRadius: 20.0,
-              buttonSize: 40.0,
-              icon: Icon(
-                Icons.more_vert,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
-            ),
-          ],
+          actions: const [],
           centerTitle: false,
           elevation: 0.0,
         ),
@@ -257,57 +272,65 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                               ) ??
                                               false;
                                       if (confirmDialogResponse) {
-                                        {
-                                          setState(() =>
-                                              _model.isDataUploading1 = true);
-                                          var selectedUploadedFiles =
-                                              <FFUploadedFile>[];
-                                          var selectedFiles =
-                                              <SelectedFile>[];
-                                          var downloadUrls = <String>[];
-                                          try {
-                                            selectedUploadedFiles = _model
-                                                    .recordedFileBytes
-                                                    .bytes!
-                                                    .isNotEmpty
-                                                ? [_model.recordedFileBytes]
-                                                : <FFUploadedFile>[];
-                                            selectedFiles =
-                                                selectedFilesFromUploadedFiles(
-                                              selectedUploadedFiles,
-                                            );
-                                            downloadUrls = (await Future.wait(
-                                              selectedFiles.map(
-                                                (f) async => await uploadData(
-                                                    f.storagePath, f.bytes),
-                                              ),
-                                            ))
-                                                .where((u) => u != null)
-                                                .map((u) => u!)
-                                                .toList();
-                                          } finally {
-                                            _model.isDataUploading1 = false;
+                                        if ((_model.recordedFileBytes.bytes
+                                                    ?.isNotEmpty ??
+                                                false)) {
+                                          {
+                                            setState(() =>
+                                                _model.isDataUploading1 = true);
+                                            var selectedUploadedFiles =
+                                                <FFUploadedFile>[];
+                                            var selectedFiles =
+                                                <SelectedFile>[];
+                                            var downloadUrls = <String>[];
+                                            try {
+                                              selectedUploadedFiles = _model
+                                                      .recordedFileBytes
+                                                      .bytes!
+                                                      .isNotEmpty
+                                                  ? [_model.recordedFileBytes]
+                                                  : <FFUploadedFile>[];
+                                              selectedFiles =
+                                                  selectedFilesFromUploadedFiles(
+                                                selectedUploadedFiles,
+                                              );
+                                              downloadUrls = (await Future.wait(
+                                                selectedFiles.map(
+                                                  (f) async => await uploadData(
+                                                      f.storagePath, f.bytes),
+                                                ),
+                                              ))
+                                                  .where((u) => u != null)
+                                                  .map((u) => u!)
+                                                  .toList();
+                                            } finally {
+                                              _model.isDataUploading1 = false;
+                                            }
+                                            if (selectedUploadedFiles.length ==
+                                                    selectedFiles.length &&
+                                                downloadUrls.length ==
+                                                    selectedFiles.length) {
+                                              setState(() {
+                                                _model.uploadedLocalFile1 =
+                                                    selectedUploadedFiles.first;
+                                                _model.uploadedFileUrl1 =
+                                                    downloadUrls.first;
+                                              });
+                                            } else {
+                                              setState(() {});
+                                              return;
+                                            }
                                           }
-                                          if (selectedUploadedFiles.length ==
-                                                  selectedFiles.length &&
-                                              downloadUrls.length ==
-                                                  selectedFiles.length) {
-                                            setState(() {
-                                              _model.uploadedLocalFile1 =
-                                                  selectedUploadedFiles.first;
-                                              _model.uploadedFileUrl1 =
-                                                  downloadUrls.first;
-                                            });
-                                          } else {
-                                            setState(() {});
-                                            return;
-                                          }
+
+                                          setState(() {
+                                            _model.isAudioUploaded = true;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _model.isAudioUploaded = false;
+                                          });
                                         }
 
-                                        setState(() {
-                                          _model.isAudioUploaded = true;
-                                        });
-                                      
                                         await RequestRecord.collection
                                             .doc()
                                             .set({
@@ -316,7 +339,7 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                                 _model.textController1.text,
                                             longDescription:
                                                 _model.textController2.text,
-                                            coverImage: _model.uploadedFileUrl1,
+                                            coverImage: _model.uploadedFileUrl2,
                                             location:
                                                 _model.placePickerValue.latLng,
                                             totalPrice: valueOrDefault<double>(
@@ -330,7 +353,7 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                             openPrice: !_model.switchValue!,
                                             complete: false,
                                             createdAt: getCurrentTimestamp,
-                                            audioFile: _model.recording,
+                                            audioFile: _model.uploadedFileUrl2,
                                             isAudioFile: _model.isAudioUploaded,
                                             startTime: _model.datePicked,
                                             startTimeAsap: _model.isAsapPicked,
@@ -507,7 +530,7 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                            .accent2,
                                         width: 2.0,
                                       ),
                                       borderRadius: BorderRadius.circular(8.0),
@@ -570,7 +593,7 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                            .accent2,
                                         width: 2.0,
                                       ),
                                       borderRadius: BorderRadius.circular(8.0),
@@ -2271,7 +2294,7 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                           .labelMedium,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
-                                      enabledBorder: OutlineInputBorder(
+                                      enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
@@ -2280,25 +2303,16 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
+                                              .accent2,
                                           width: 2.0,
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
+                                      errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
                                               .error,
@@ -2307,6 +2321,18 @@ class _InsertHelpWidgetState extends State<InsertHelpWidget>
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              10.0, 0.0, 0.0, 0.0),
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,

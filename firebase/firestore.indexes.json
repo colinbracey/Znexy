@@ -57,6 +57,34 @@
       ]
     },
     {
+      "collectionGroup": "Request",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Complete",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CreatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Request",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "UserId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "CreatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "chat_messages",
       "queryScope": "COLLECTION",
       "fields": [
